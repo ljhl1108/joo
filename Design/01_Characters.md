@@ -31,8 +31,3 @@
 - 작물마다 능력 세트가 고정 (교체 불가)
 - 추후 CropData ScriptableObject로 관리
 
----
-## [2026-05-31] 리서치: Hades + Enter the Gungeon
-- 아이디어 1: **호랑이 고양이 (Tiger Cat)** — Hades의 스택 기반 강화(Boon stacking) 참고: 이동속도가 기본 고양이보다 느리지만 근접 공격 명중 시 "분노 스택" +1, 5스택 달성 시 다음 대쉬가 자동으로 360° 스핀 공격(MeleeAttack_Spin)으로 전환. CatData ScriptableObject의 `uniquePassive` 필드로 구현 예정.
-- 아이디어 2: **당근 (Carrot)** — Enter the Gungeon의 빠른 연사 총기 컨셉 참고: 마우스 클릭 유지 시 소형 당근 파편을 연사(발사 간격 0.08초). 실드 대신 "땅굴" 능력으로 0.5초간 화분 속에 숨어 P2 히트박스만 무적 처리. BaseDash와 유사하게 CarrotBurrow 클래스로 구현, OnionShield를 상속하지 않고 별도 작물 능력으로 분리.
-- 아이디어 3: **마늘 (Garlic)** — Hades의 Cast(광역 투척) 메카닉 참고: 마우스 클릭 시 단발 대신 전방 3방향 동시 산탄 발사. 방향 실드 없이 CropHolder 주변 원형 마늘 오라를 지속 방출 — 오라 범위 내 적 이동속도 -30%. 패링 윈도우는 없지만 오라가 약한 투사체(데미지 1 이하)를 자동 소각하는 패시브 방어 역할.
