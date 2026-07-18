@@ -1,0 +1,11 @@
+.claude/
+
+# Unity가 이 폴더를 프로젝트로 잘못 열어 생성된 파일 (문서 저장소이므로 전부 제외)
+Assets/
+Library/
+Logs/
+Temp/
+Packages/
+ProjectSettings/
+UserSettings/
+*.meta

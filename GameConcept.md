@@ -1,133 +1,204 @@
 # OnionCat — 게임 컨셉 문서
 
+> 2026-07-18 전면 개정: 스토리·스테이지·성장 초안 확정.
+> 세부 설계는 `Design/01~05_*.md`, 일일 아이디어는 `Design/IdeaPool/` 참고.
+
 ---
 
-## 기본 설정
+## 한 줄 컨셉
 
-- **장르**: 2인 협동 탑다운 로그라이크
+**"고양이가 몸, 양파가 방패" — 두 명이 한 캐릭터를 조종하는 2인 협동 탑다운 로그라이크.**
+
+- **장르**: 2인 협동 탑다운 로그라이크 (1인 플레이는 AI 보조로 지원 예정)
 - **비주얼**: 픽셀 아트 (Binding of Isaac / Enter the Gungeon 참고)
 - **플랫폼**: PC — P1 게임패드, P2 키보드+마우스
+- **런 길이 목표**: 20~30분 (3스테이지 × 7방)
 
 ### 2인 1캐릭터 구조
 
-| | Player 1 — 고양이 | Player 2 — 작물 |
+| | Player 1 — 고양이 (Cat) | Player 2 — 작물 (Crop) |
 |---|---|---|
 | 담당 | 이동 · 대쉬 · 근접 공격 | 원거리 공격 · 방향 실드 · 패링 |
 | 입력 | 게임패드 (WASD 호환) | 키보드 + 마우스 |
-| 이동 | 직접 이동 | 이동 없음 |
+| 이동 | 직접 이동 | 이동 없음 (Cat 등의 화분에 탑승) |
 
-- 고양이 등에 화분을 메고 다님. 화분 속 작물이 P2 캐릭터.
+- **철칙**: 고양이는 절대 원거리 불가, 작물은 절대 이동 불가. 이 비대칭이 협동을 강제한다.
 - 런 시작 시 고양이 종류 + 작물 종류 각각 선택 → 로그라이크 핵심 선택
-- 일부 적은 근접만, 일부는 원거리만 유효 → 협력 자연스럽게 강제
+- 일부 적은 근접만, 일부는 원거리만 유효 → 협력이 자연스럽게 강제됨
 
 ---
 
-## 실드 시스템 (2레이어)
+## 스토리 (초안)
+
+### 세계관 — 역할 반전 동화
+
+무대는 위대한 마법사가 가꾸던 **"떠도는 정원"**.
+어느 날 인간 **"영웅 파티"**가 정원에 침입해 마법사를 붙잡아 가고,
+정원의 심장인 **"살아있는 씨앗"**마저 노리기 시작한다.
+정원의 식물과 골렘들은 영웅들의 마법에 오염되어 침입자를 공격하는 괴물이 되었다.
+
+- **Cat** — 마법사가 기르던 정원지기 고양이. 정원에 남은 마지막 지킴이.
+- **Onion(Crop)** — "살아있는 씨앗"에서 싹튼 작물. **화분 밖에서는 시들어 죽는다.**
+  고양이의 체온이 화분의 흙을 데워 살아있고, 작물의 빛이 어두워진 정원에서 길을 밝힌다.
+  → 고양이가 화분을 등에 메고 다니는 이유이자, 두 캐릭터가 떨어질 수 없는 이유.
+- **악당 = "영웅 파티"** (Skul식 역할 반전): 갑옷의 **영웅 기사**, 빛의 화살을 쏘는 **성녀 궁수**,
+  모든 마법의 근원 **현자 마법사**. 각자가 스테이지 보스.
+
+### 이야기의 목표
+
+정원 심장부(마법사의 탑)를 점거한 영웅 파티 3인을 물리치고 정원을 되찾는다.
+최종 보스 격파 시 붙잡혀간 마법사의 단서가 드러난다 (후속 확장 여지).
+
+### 로그라이크 루프의 서사
+
+- 죽으면 정원 입구의 **온실(홈베이스)**로 되돌아온다 — 살아있는 씨앗의 힘.
+- 런마다 **씨앗**(메타 통화)을 모아 온실을 성장시킨다 (정원이 눈에 띄게 회복됨).
+- **기억 파편**: 던전 곳곳에서 마법사와 정원의 과거가 담긴 조각 수집 → 전부 모으면 진엔딩.
+- 대사는 상황 트리거식 짧은 대화 (보스 방 진입 / 위기 / 클리어 시 Cat·Crop 한 줄씩).
+
+---
+
+## 스테이지 구성 (MVP: 3스테이지)
+
+| 스테이지 | 컨셉 | 등장 적 성향 | 조명/팔레트 | 보스 |
+|----------|------|------------|------------|------|
+| 1 | **무너진 정원** (지상) | 식물형 — 근접 취약 위주 (Cat 주도) | 따뜻한 초록·노랑 | **영웅 기사** — 방패 돌진형. 패링 학습 보스 |
+| 2 | **뿌리 지하 온실** | 골렘·정원 관리 구조물 — 원거리 취약 위주 (Crop 주도) | 차가운 파랑·금속 | **성녀 궁수** — 탄막형. 원형 8방향 → 나선 → 조준 산탄 |
+| 3 | **마법사의 탑** | 혼합 + 협동 필수 적 (실드/반사 어픽스) | 보라·암흑 | **현자 마법사** — 근접·원거리 패턴 혼합, 3페이즈 |
+
+- 스테이지별 취약 성향 비율로 난이도 곡선 형성: 1층은 Cat 60%, 갈수록 균등·협동 필수로 (Cuphead 7/15 참고)
+- 층 테마는 RuleTile 에셋 교체만으로 전환 (7/03 기술 메모)
+- 기존 보스 초안 "대포 화분", "씨앗 마녀"는 **엘리트방 미니보스**로 배치
+
+### 스테이지 내부 구조 (1스테이지 = 7방)
+
+```
+전투방 5개 + 특수방 1개 + 보스방 1개
+특수방 = 상점 / 이벤트 / 엘리트(미니보스) 중 랜덤 1종
+보스방 직전에 회복 샘 배치 (긴장-해소 리듬)
+```
+
+- MVP 총 21방. 방 프리팹 기반 (Room.cs + Door.cs 구현 완료)
+- 방 종류: 전투 / 엘리트 / 상점 / 이벤트 / 보스 (`RoomType` enum 구현됨)
+- 확장(후순위): 씨드 기반 랜덤 배치, 비밀 방, 분기 경로 선택
+
+---
+
+## 전투 메커니즘
+
+### 무기 (모듈형 — 교체 가능한 컴포넌트)
+
+```
+Cat 근접 무기               Crop 품종 = 원거리 무기
+BaseMeleeAttack             양파: 표준 투사체 + 방향 실드 + 패링 (기준)
+├── Slash (180° · 구현됨)    당근: 소형 파편 연사, 실드 없음, 땅굴(이속 버프)
+├── Stab  (직선 관통 · 예정)  마늘: 3방향 산탄, 원형 감속 오라, 실드 없음
+└── Spin  (360° · 예정)     부추: 미정
+
+BaseDash
+├── Dash_Default (직선 돌진 + 무적 · 구현됨)
+└── Dash_Blink   (순간이동 · 예정)
+```
+
+- **작물 = 무기 선택**: 작물 품종이 P2의 무기이자 특성 세트 (제약 기반 설계, Brotato 참고)
+- 속성(불/얼음/전기)은 업그레이드로 무기에 부여
+
+### 상성 시스템 (구현 완료)
+
+물리 상성과 속성 상성이 **곱산**으로 중복 적용. 최종 데미지 = 기본 × 물리 배율 × 속성 배율
+
+| 공격 타입 | WeakToMelee 적 | WeakToRanged 적 | Neutral 적 |
+|-----------|---------------|----------------|-----------|
+| 근접 (Cat) | **2배** 🔴 | 0.5배 🔵 | 1배 🟡 |
+| 원거리 (Crop) | 0.5배 🔵 | **2배** 🔴 | 1배 🟡 |
+
+속성(ElementType): `None·Fire·Ice·Electric`. weakElements 2배 / resistElements 0.5배.
+조합 최대 4배(금색 플래시) ~ 최소 0.25배(파랑 플래시). 피격 색상 피드백 구현됨.
+
+### 실드 시스템 (2레이어 · 구현 완료)
 
 | 레이어 | 스크립트 | 역할 |
 |--------|----------|------|
 | 패시브 실드 | `PlayerHealth.cs` | HP 버퍼. 피격 시 먼저 소모. 4초 대기 후 2초마다 1칸 자동 회복 |
 | 액티브 실드 | `OnionShield.cs` | 마우스 방향 차단막. 활성화 직후 0.2~0.3초 = 패링 윈도우 |
 
----
+### 협동 핵심 메커니즘 3종 (채택 확정 초안)
 
-## 모듈형 공격 / 대쉬 구조
+1. **협동 콤보** — Cat 슬래시 명중 후 1초 내 Crop 투사체가 같은 적에 명중 시 ×1.5 보너스 (6/15)
+2. **패리 마크** — Crop 패리 성공 시 적에게 3초 마크 부착. Cat이 마크된 적 슬래시 시 폭발 + 추가 데미지 (7/07)
+3. **협동 게이지 → 합동기** — 협동 콤보·패리 마크 발동 시 게이지 충전. 만충 시 두 플레이어 동시 입력으로 합동 필살기 (여러 루틴 아이디어 통합)
 
-교체 가능한 컴포넌트 방식. 추후 고양이·작물 종류 추가 시 구현체만 교체.
+### 타격 피드백 (채택 확정 초안)
 
-```
-BaseMeleeAttack
-├── MeleeAttack_Slash   (현재 — 180° 부채꼴)
-├── MeleeAttack_Stab    (예정 — 직선 찌르기)
-└── MeleeAttack_Spin    (예정 — 360° 회전)
-
-BaseDash
-├── Dash_Default        (현재 — 직선 돌진 + 무적)
-└── Dash_Blink          (예정 — 순간이동)
-```
+- **데미지 숫자**: 근접=주황 / 원거리=하늘 / 약점=빨강 "WEAK!" / 면역="BLOCK" + 금속음 (7/04, 7/11)
+- **히트스톱 3단계**: 일반 0.04초 / 패리 성공 0.08초 / 보스 처치 0.15초 (7/05)
+- **넉백 차별화**: Cat 슬래시 force 15~20 / Crop 투사체 5~8, 보스 저항 0.8 (7/06)
+- 히트스톱은 Time.timeScale 대신 맞은 적의 Rigidbody2D+Animator만 정지 (P2 흐름 방해 없음)
 
 ---
 
-## Unity Hierarchy
+## 성장 시스템
+
+### 런 내 성장 — 업그레이드 카드
+
+- 방 클리어 시 카드 3장 제시: **Cat 전용 1 + Crop 전용 1 + 공용 1 보장** (7/15)
+- 카드 테두리 색으로 대상 구분: Cat=주황 / Crop=초록 / 공용=흰색
+- 희귀도 3단계: Common / Rare / Epic (Epic은 공격 패턴 자체를 교체 — 예: 슬래시→360° 회전)
+- **듀오 시너지 카드**: Cat이 A, Crop이 B를 보유하면 합성 카드 등장 (Hades Duo Boon 참고)
+- **트레이드오프 카드**: "Cat 강화 + Crop 약화" 류 — 두 플레이어의 협의 자체가 게임플레이 (6/27)
+- 데이터 구조: `UpgradeData` ScriptableObject + `Apply(PlayerStats)` 오버라이드 (6/13)
+
+### 장비 개념 — 가젯 슬롯 (초안)
+
+- 인벤토리 없음. 대신 **가젯 슬롯 1개** (액티브 아이템): 폭탄 / 부활 씨앗 / 회복 물뿌리개 등
+- 런 중 상점·이벤트로 교체 가능 (Sparklite 6/22)
+
+### 런 간 성장 — 메타 진행
+
+- **씨앗** 메타 통화: 런 실패해도 처치 수 비례 획득 (실패 런에도 성취감)
+- **온실(홈베이스)**: 씨앗으로 업그레이드 → 정원이 시각적으로 회복되며 성장 체감
+  - 영구 스탯 소폭 강화 (첫 업그레이드는 "최대 체력 +10%"처럼 즉시 체감형)
+  - 작물 품종 해금 (당근·마늘·부추)
+  - 기억 파편 열람 (스토리)
+- 구현: `MetaProgressManager` DontDestroyOnLoad 싱글턴 + JSON 저장 (6/18)
+
+---
+
+## Unity Hierarchy (현재 구현 상태)
 
 ```
 [씬]
 ├── Player_Cat                         (Tag: Player)
-│     ├── CatController.cs
-│     ├── CropHolderOffset.cs
-│     ├── Dash_Default.cs
-│     ├── PlayerHealth.cs
-│     ├── PlayerInput
-│     ├── Rigidbody2D
-│     ├── CircleCollider2D
-│     │
-│     ├── CatBody
-│     │     ├── SpriteRenderer
-│     │     └── Animator               (CatAnimator 연결)
-│     │
-│     ├── MeleePivot
-│     │     ├── MeleeAttack_Slash.cs
-│     │     └── AttackPoint
-│     │
-│     └── CropHolder
-│           ├── OnionController.cs
-│           ├── OnionShield.cs
-│           ├── PotSprite / SpriteRenderer
-│           ├── CropSprite / SpriteRenderer
-│           └── AimPivot
-│                 └── ShootPoint
-│
-├── Main Camera
-│     ├── Camera
-│     ├── CameraController.cs
-│     └── AudioListener
-│
-├── HUD                                (Canvas)
-│     └── HUDPanel                    (Horizontal Layout Group)
-│           ├── HeartContainer        (Horizontal Layout Group + Content Size Fitter)
-│           └── ShieldContainer       (Horizontal Layout Group + Content Size Fitter)
-│                 └── HUDController.cs
-│
-├── DungeonManager
-│     └── DungeonManager.cs
-│
-└── Map
-      ├── SimpleMapGenerator.cs       (임시 — 제거 예정)
-      └── Grid
-            ├── FloorTilemap
-            └── WallTilemap
+│     ├── CatController.cs / CropHolderOffset.cs / Dash_Default.cs / PlayerHealth.cs
+│     ├── PlayerInput / Rigidbody2D / CircleCollider2D
+│     ├── CatBody (SpriteRenderer + Animator)
+│     ├── MeleePivot (MeleeAttack_Slash.cs + AttackPoint)
+│     └── CropHolder (OnionController.cs + OnionShield.cs + AimPivot/ShootPoint)
+├── Main Camera (CameraController.cs)
+├── HUD (HUDController.cs — HP/실드 아이콘)
+├── DungeonManager (방 연결 + 페이드 전환)
+└── Map (SimpleMapGenerator — 제거 예정 → Room 프리팹 방식 전환 중)
 ```
-
----
 
 ## 스크립트 현황
 
 ### Player
-| 파일 | 상태 | 비고 |
-|------|------|------|
-| `CatController.cs` | 완료 | 이동 · Animator 연동 · 공격/대쉬 위임 |
-| `PlayerHealth.cs` | 완료 | HP + 패시브 실드 |
-| `Dash_Default.cs` | 완료 | 직선 대쉬 + 무적 |
-| `MeleeAttack_Slash.cs` | 완료 | 180° 부채꼴 근접 |
-| `OnionController.cs` | 완료 | 마우스 조준 + 투사체 발사 |
-| `OnionShield.cs` | 완료 | 액티브 실드 + 패링 |
-| `CropHolderOffset.cs` | 완료 | 방향별 화분 위치 + 레이어 정렬 |
+| 파일 | 상태 |
+|------|------|
+| `CatController.cs` / `PlayerHealth.cs` / `Dash_Default.cs` | 완료 |
+| `MeleeAttack_Slash.cs` / `OnionController.cs` / `OnionShield.cs` / `CropHolderOffset.cs` | 완료 |
 
-### Map / UI / 기타
-| 파일 | 상태 | 비고 |
-|------|------|------|
-| `DungeonManager.cs` | 완료 | 방 연결 + 페이드 전환 |
-| `Room.cs` | 완료 | 방 클리어 감지 |
-| `HUDController.cs` | 완료 | HP/실드 아이콘 HUD |
-| `CameraController.cs` | 완료 | SmoothDamp 추적 |
-| `EnemyController.cs` | 완료 | 슬라임 AI |
-| `GameOverManager.cs` | 미구현 | |
-
----
+### Enemy / Map / UI
+| 파일 | 상태 |
+|------|------|
+| `EnemyBase.cs` — 상태머신(Wander/Chase/Attack/Dead) + 상성 + 전투기억 | 완료 |
+| `SlimeEnemy.cs` / `RangedEnemy.cs` / `EnemyFOV.cs` | 완료 |
+| `DungeonManager.cs` / `Room.cs`(RoomType 포함) / `Door.cs` / `ExitTrigger.cs` | 완료 |
+| `HUDController.cs` / `CameraController.cs` / `MainMenuUI` / `GameOverManager` | 완료 |
+| 방 프리팹 제작 (유니티 에디터 작업 — `Guides/room_prefab_setup.md`) | **진행 중** |
 
 ## 애니메이션
 
-- 8방향 걷기 + Idle: Blend Tree (MoveX, MoveY 파라미터)
-- 정지 시 Idle = Blend Tree 중앙 (MoveX=0, MoveY=0)
+- 8방향 걷기 + Idle: Blend Tree (MoveX, MoveY)
 - CropHolder 위치: `CropHolderOffset.cs`로 방향별 자동 오프셋
-- 레이어 정렬: NE/N/NW + 이동 중일 때만 양파가 앞 레이어. 정지 시 항상 뒤.
+- 레이어 정렬: NE/N/NW + 이동 중일 때만 양파가 앞 레이어
