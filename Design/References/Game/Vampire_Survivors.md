@@ -1,5 +1,7 @@
 # Vampire Survivors
 
+리서치 날짜: 2026-09-07
+
 ## 기본 정보
 
 - **장르**: 불릿 헤븐(Bullet Heaven) / 서바이버 라이크(Survivors-like)
