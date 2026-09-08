@@ -1,5 +1,7 @@
 # Curse of the Dead Gods
 
+리서치 날짜: 2026-09-08
+
 ## 기본 정보
 - **개발사**: Passtech Games (프랑스 소규모 스튜디오)
 - **출시**: 2021년 2월 (Early Access 2019)
