@@ -20,16 +20,17 @@
 
 ## M0 — 플레이 가능한 루프 (현재 진행 중)
 
-대부분 유니티 에디터 작업. 코드는 준비 완료.
+2026-09-18: Unity CLI 도입 후 에디터 작업을 직접 수행. 조사해보니 일부는 이미 되어 있었음.
 
-- [ ] **충돌 레이어 & 태그 정리** — Player/PlayerAttack/Enemy/EnemyProjectile/Wall/Props 레이어 일괄 정의 +
-      Physics2D Layer Matrix 설정 (8/25). 아래 wallMask 작업의 선행 조건
-- [ ] Wall 레이어 생성 + EnemyBase wallMask / EnemyFOV obstacleMask 연결
-- [ ] 방 프리팹 제작 — 전투방 3~4종 + 보스방 1종 (`Guides/room_prefab_setup.md`)
-- [ ] SimpleMapGenerator.cs 제거
-- [ ] 씬의 적을 SlimeEnemy/RangedEnemy 프리팹으로 교체 (`Guides/enemy_ai_refactor.md`)
-- [ ] **픽셀아트 임포터** — `Assets/Editor/PixelArtImporter.cs`로 Filter=Point, MipMap=off, PPU 일괄 적용
-      + Pixel Perfect Camera + MSAA 비활성화 (7/25). 에셋 들이기 전에 먼저 세팅
+- [x] **충돌 레이어 & 태그 정리** — 레이어 7종(8~14) + Physics2D 충돌 무시 7쌍
+- [x] Wall 레이어 → EnemyBase wallMask 연결 (기존 `wallMask=0`이라 벽 회피가 무동작이었음)
+- [x] 방 프리팹 — Room_01·02가 이미 씬에 존재 (문서 미반영 상태였음)
+- [x] SimpleMapGenerator 제거 — 이미 씬에서 빠져 있었음
+- [x] **ExitDoor 연결 버그 수리** — Door 컴포넌트 중복 + openVisual/exitTrigger NULL. 플레이 모드로 개방 검증
+- [x] **픽셀아트 임포터** — `Assets/Editor/PixelArtImporter.cs`. `Assets/Sprite/` 자동 적용 + 우클릭 메뉴
+- [x] 카메라 HDR 끄기
+- [ ] **Pixel Perfect Camera** — PPU/기준 해상도 결정 후 추가 (아래 '결정 필요' 참고)
+- [ ] 씬 적 프리팹 교체 확인 (`Guides/enemy_ai_refactor.md`) — Slime/RangeSlime 프리팹은 이미 SlimeEnemy/RangedEnemy 사용 중
 - [ ] HP / 실드 수치 1차 밸런스 (플레이해보고 감으로)
 - [ ] 공격 / 대쉬 애니메이션 (스프라이트 에셋 확보 후 — 8방향은 8/10 참고)
 
@@ -115,8 +116,11 @@
 
 ## 결정 필요 (보류 중)
 
-- [ ] 픽셀 기준 해상도 — 에셋 팩 고를 때 함께 결정: 16px 팩 → 320×180 / 32px 팩 → 640×360.
-      결정 후 Pixel Perfect Camera + 임포트 프리셋(PPU=타일 크기, Filter=Point) 세팅 (6/16 참고)
+- [ ] **PPU / 기준 해상도** — Pixel Perfect Camera와 타일 제작이 이것에 막혀 있음.
+      실측(2026-09-18): 기존 고양이 시트는 **64×64 프레임**, 현재 PPU 64, 카메라 ortho 5, 방 폭 약 15유닛.
+      - A) PPU 64 유지: 고양이=타일 1칸. 타일도 64px 필요. 64px 에셋팩 드묾, 1440p 정수배 불가
+      - B) PPU 32: 고양이=타일 2칸. 32px 에셋팩 풍부. 640×360으로 1080p/1440p/4K 전부 정수배
+      변경 시: `PixelArtImporter.PixelsPerUnit` 상수 1줄 + Sprite 폴더 우클릭 재적용
 
 ## 저순위 아이디어 (IdeaPool 보관)
 
