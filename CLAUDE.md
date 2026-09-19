@@ -61,6 +61,10 @@ P="C:/workspace/unity/Onioncat_AG"
 - **씬 변경 후 `save_scene` 호출 필수.** 안 하면 에디터 메모리에만 남는다
 - **백그라운드 에디터는 틱이 느리다.** 플레이 모드 상태 확인은 몇 초 여유를 두고 재확인
 - 파괴적 명령은 `--confirm` 필요. 먼저 `--dry_run`으로 확인할 것
+- **MCP `eval`에서는 `using` 문 불가** → `UnityEngine.InputSystem.Keyboard`처럼 전체 이름으로 쓸 것. 기본 타임아웃 5초라 재임포트 등은 `timeout`을 늘릴 것
+- **입력 시뮬레이션 불가**: 에디터가 백그라운드면 가상 키 입력이 액션까지 전달되지 않는다. 조작 확인은 사용자에게 요청
+- **캡처 `save_path`는 `Assets/` 기준이고 `..` 불가** → 저장 후 반드시 `AssetDatabase.DeleteAsset`으로 지울 것
+- **플레이 테스트 시 적을 먼저 제거**: 입력 없이 서 있는 고양이는 약 5초 만에 슬라임에게 죽는다
 
 ### 알아낸 파라미터 형식
 
@@ -138,6 +142,12 @@ npx skills update           # npx로 받은 스킬 갱신
 - **레이어**: 8 Wall / 9 Player / 10 PlayerAttack / 11 PlayerProjectile / 12 Enemy / 13 EnemyProjectile / 14 Props
 - **태그**: Player, Enemy, Wall (코드가 `CompareTag`로 참조하므로 레이어와 별개로 유지)
 - 투사체는 `targetTag`로 피아 구분: `Projectile_Seed`=플레이어용, `Projectile_Seed 1`=적용
+- **게임 상태 전환은 `GameManager.Instance.ChangeState()`로만.** `Time.timeScale`을 직접 바꾸지 말 것
+- 상태에 반응하는 시스템은 `GameManager.OnStateChanged`를 `OnEnable/OnDisable`에서 구독/해제
+- 런 누적 데이터는 `GameManager.Instance.Run`(RunData). 씬 이름은 `SceneNames` 상수 사용
+- **입력**: 컨트롤 스킴 `Cat`(키보드+게임패드) / `Onion`(마우스). 고양이 키보드 = WASD / Space 대쉬 / F 할퀴기
+- **UI 문구는 영어로** — TMP 폰트에 한글 글리프가 없음 (로컬라이제이션 작업 전까지)
+- **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
 
 ---
 

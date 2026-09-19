@@ -39,10 +39,11 @@
 
 핵심 시스템 구현 순서대로 정렬.
 
-- [ ] **Bootstrap 씬 + GameState FSM** — `BootstrapScene → MainMenu → Game` 흐름, `SceneNames.cs` 상수,
-      GameManager/AudioManager/RunData를 DontDestroyOnLoad (6/30, 9/05, 9/08)
-- [ ] **RunDataSO** — 런 상태(Cat/Onion 업그레이드 ID, HP, 진행도)를 SO 에셋 1개에 보관.
-      씬 전환에도 유지됨. MainMenu에서 `ResetForNewRun()` 필수 (8/02)
+- [x] **GameManager + GameState FSM + RunData** (2026-09-19) — `Assets/Scripts/Core/`
+      · Bootstrap 씬 대신 `RuntimeInitializeOnLoadMethod`로 자동 생성 → 어느 씬에서 Play 해도 동작
+      · RunData는 SO 대신 일반 클래스 (SO는 플레이 중 값이 에셋에 남는 문제)
+      · 처치 수 기록 버그 수정 (`RunStatsTracker`가 씬에 없어 한 번도 집계 안 됐음)
+      · 게임오버 화면에 런 기록 표시, 재시작/메인메뉴/시작 흐름 플레이 모드 검증 완료
 - [ ] **PlayerStats + UpgradeData SO** — 업그레이드 데이터 구조 (6/13 참고)
 - [ ] **협동 업그레이드 선택 UI** — 카드 3장(Cat 주황/Crop 초록/공용 흰색), P1 스틱·P2 마우스 각자 호버 →
       둘 다 확정해야 적용, 같은 카드 선택 시 금색 글로우, 30초 타임아웃 (6/27, 7/15, 8/02)
@@ -102,6 +103,7 @@
 - [ ] 도감(Bestiary) — 약점 발견 루프 (7/03)
 - [ ] 업적 / 통계 (Steam Stats는 초반부터 쌓기, 7/18)
 - [ ] 로컬라이제이션 — 한/영 String Table (UI 텍스트 하드코딩 금지 습관, 6/20)
+      ⚠️ 현재 TMP 폰트에 **한글 글리프가 없음** (한글이 □로 표시됨). 그 전까지 UI 문구는 영어로 작성
 - [ ] Steamworks 기초 연동 (7/18)
 - [ ] itch.io 비공개 링크 → 지인 5명 플레이테스트 (6/13) + 플레이테스트 세션 로그 (9/01)
 - [ ] 폴리싱 체크리스트 일괄 점검 (8/15)
