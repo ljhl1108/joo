@@ -69,7 +69,8 @@ P="C:/workspace/unity/Onioncat_AG"
   단, 방금 만든 스크립트는 recompile 후에 쓸 것. private 메서드는 리플렉션으로 호출해 입력 없이 로직 검증
 - **씬 diff가 수천 줄이어도 당황하지 말 것**: 오브젝트를 추가하면 Unity가 파일 내 순서를 재정렬한다.
   `grep -c '^--- !u!1 &'`로 GameObject 수가 (이전 + 추가분)과 맞는지, 삭제된 이름이 다시 추가됐는지 확인
-- **유니티 저장소에는 git 사용자 설정이 없다** → `git -c user.name=ljhl1108 -c user.email=feedback7544@gmail.com commit ...`
+- **유니티 저장소에는 git 사용자 설정이 없다** → 직전 커밋 작성자를 재사용:
+  `git -c user.name="$(git log -1 --format=%an)" -c user.email="$(git log -1 --format=%ae)" commit ...`
 
 ### 알아낸 파라미터 형식
 
