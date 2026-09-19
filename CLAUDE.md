@@ -61,6 +61,8 @@ P="C:/workspace/unity/Onioncat_AG"
 - **씬 변경 후 `save_scene` 호출 필수.** 안 하면 에디터 메모리에만 남는다
 - **백그라운드 에디터에서는 플레이 모드 게임 시간이 멈춘다** (Player Settings `Run In Background` 꺼짐).
   플레이 테스트 시작 직후 `eval`로 `UnityEngine.Application.runInBackground = true;` (런타임 값만, 설정 파일 불변)
+- **캡처 전 일시정지 요령**: `isPaused = true` 직후엔 TMP 메시가 아직 없어 글자가 안 찍힘 →
+  `UnityEditor.EditorApplication.Step()`으로 한 프레임 진행 후 `capture_game_view`
 - **시간 대기는 `sleep` 대신 `wait_for`** — 예: `{"member":"GameManager.Instance.State","op":"equals","value":"Victory"}`.
   단 `findType` 대상 멤버는 **public 읽기 가능 멤버만** (private 필드 불가)
 - **플레이 테스트 중 고양이 생존**: `typeof(PlayerHealth).GetProperty("CurrentHealth").SetValue(ph, 999)` — 적을 죽여야 하는 테스트용

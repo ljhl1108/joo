@@ -63,7 +63,10 @@
       (이전엔 마지막 방을 깨도 아무 일도 안 일어났음). 마지막 방에서는 업그레이드 카드 생략
 - [x] **에디터 Play를 메인메뉴부터** (2026-09-20) — `Editor/PlayFromMainMenu.cs`. 빌드는 원래 메인메뉴부터였음.
       특정 씬 바로 테스트하려면 메뉴 `OnionCat > Play From Main Menu` 체크 해제
-- [ ] **데미지 숫자** — 색상 코딩 + "BLOCK" 면역 피드백 (7/04, 7/11)
+- [x] **데미지 숫자** (2026-09-20) — `UI/DamageNumber.cs`, `UI/DamageNumberSpawner.cs`, 씬의 `DamageNumbers`
+      · 약점(2배↑) 주황 "N!" 크게 / 보통 흰색 / 저항(0.5배↓) 하늘색 작게 / "BLOCK" 회색
+      · `ShowBlock`은 API만 준비 — 현재 면역 판정이 없음. 방향 약점(방패 근위병) 구현 때 연결
+      · 플레이어 피격 숫자는 미적용 (필요하면 디테일 설계에서 결정)
 - [ ] **넉백 & 스태거 + 히트스톱** — KnockbackReceiver + 3단계 강도. 발동 순서 엄수:
       데미지→SFX→TimeScale=0→`WaitForSecondsRealtime`→TimeScale=1→카메라 흔들림→파티클.
       P1 근접은 전역 TimeScale, P2 원거리는 적 Animator.speed만 정지 (7/05, 7/06, 9/08)
