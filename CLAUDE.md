@@ -65,6 +65,11 @@ P="C:/workspace/unity/Onioncat_AG"
 - **입력 시뮬레이션 불가**: 에디터가 백그라운드면 가상 키 입력이 액션까지 전달되지 않는다. 조작 확인은 사용자에게 요청
 - **캡처 `save_path`는 `Assets/` 기준이고 `..` 불가** → 저장 후 반드시 `AssetDatabase.DeleteAsset`으로 지울 것
 - **플레이 테스트 시 적을 먼저 제거**: 입력 없이 서 있는 고양이는 약 5초 만에 슬라임에게 죽는다
+- **`eval`은 게임 스크립트 타입을 직접 참조 가능** (`GameManager.Instance`, `UnityEngine.Object.FindFirstObjectByType<PlayerHealth>()`).
+  단, 방금 만든 스크립트는 recompile 후에 쓸 것. private 메서드는 리플렉션으로 호출해 입력 없이 로직 검증
+- **씬 diff가 수천 줄이어도 당황하지 말 것**: 오브젝트를 추가하면 Unity가 파일 내 순서를 재정렬한다.
+  `grep -c '^--- !u!1 &'`로 GameObject 수가 (이전 + 추가분)과 맞는지, 삭제된 이름이 다시 추가됐는지 확인
+- **유니티 저장소에는 git 사용자 설정이 없다** → `git -c user.name=ljhl1108 -c user.email=feedback7544@gmail.com commit ...`
 
 ### 알아낸 파라미터 형식
 
@@ -145,6 +150,9 @@ npx skills update           # npx로 받은 스킬 갱신
 - **게임 상태 전환은 `GameManager.Instance.ChangeState()`로만.** `Time.timeScale`을 직접 바꾸지 말 것
 - 상태에 반응하는 시스템은 `GameManager.OnStateChanged`를 `OnEnable/OnDisable`에서 구독/해제
 - 런 누적 데이터는 `GameManager.Instance.Run`(RunData). 씬 이름은 `SceneNames` 상수 사용
+- **플레이어 행동 입력**(공격·대쉬·발사·실드)은 `GameManager.IsGameplayActive`로 막을 것 (업그레이드 선택·일시정지 중 새지 않게)
+- **업그레이드 스탯**: 기본값은 Inspector, 보정은 `PlayerStats.Current`에서 읽어 합산/곱셈. 컴포넌트 필드를 직접 바꾸지 말 것.
+  새 스탯 = `StatType` 추가 + `PlayerStats.Modify` 분기 + 사용하는 곳에서 읽기
 - **입력**: 컨트롤 스킴 `Cat`(키보드+게임패드) / `Onion`(마우스). 고양이 키보드 = WASD / Space 대쉬 / F 할퀴기
 - **UI 문구는 영어로** — TMP 폰트에 한글 글리프가 없음 (로컬라이제이션 작업 전까지)
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
