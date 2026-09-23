@@ -79,7 +79,11 @@
 | Min Lunge Distance | 2.5 | 이보다 가까우면 물러나서 거리부터 만듦 (코앞 돌진 방지) |
 | Windup Pullback | 1.5 | 예고 중 뒤로 빼는 속도 (활시위 효과) |
 | Attack Range (Slime) | 4.5 | 돌진을 시작하는 거리 |
-| Fire Interval | 2초 | 원거리 슬라임 발사 간격 (RangedEnemy) |
+| Fire Interval | 1.4초 | 원거리 슬라임 발사 간격 (RangedEnemy) |
+| Turn Speed | 110°/s | 방패 근위병 회전 속도. **느릴수록 뒤를 잡기 쉬움 → 난이도 조절 후보** |
+| Bash Speed / Duration / Cooldown | 10 / 0.35 / 2초 | 방패 근위병 밀치기 |
+| Front / Back Multiplier | 0 / 2 | 방패 근위병 정면 차단·등 약점 배율 |
+| Split Count / Child Health / Child Scale | 2 / 3 / 0.65 | 분열 슬라임 |
 
 **점검 포인트**: 예고를 보고 피할 시간이 실제로 있는가, 적이 여럿일 때 누가 공격하는지 구분되는가,
 적 기본색과 경고색이 헷갈리지 않는가.
