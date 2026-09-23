@@ -66,6 +66,20 @@
 
 ---
 
+## 3.5 공격 예고 (텔레그래프) — 적 프리팹 `EnemyBase`
+
+| 항목 | 기본값 | 느낌 |
+|---|---|---|
+| **Telegraph Duration** | 0.5초 | 예고 시간. 길수록 피하기 쉬움 → **난이도 조절 1순위 후보** |
+| Blockable Color | 노랑 (1, 0.9, 0.2) | 막을 수 있는 공격 |
+| Unblockable Color | 빨강 (1, 0.25, 0.2) | 피해야 하는 공격 |
+| Telegraph Scale | 1.15 | 예고 중 부풀어 오르는 정도 |
+| Lunge Speed / Duration / Cooldown | 9 / 0.25 / 1.4초 | 슬라임 돌진 (SlimeEnemy) |
+| Fire Interval | 2초 | 원거리 슬라임 발사 간격 (RangedEnemy) |
+
+**점검 포인트**: 예고를 보고 피할 시간이 실제로 있는가, 적이 여럿일 때 누가 공격하는지 구분되는가,
+적 기본색과 경고색이 헷갈리지 않는가.
+
 ## 4. 화면 — Main Camera (`CameraController`)
 
 | 항목 | 기본값 | 느낌 |
