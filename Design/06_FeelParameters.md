@@ -27,6 +27,7 @@
 | Light / Medium / Heavy · Hit Stop Duration | 0.02 / 0.04 / 0.08초 | 0~0.3 | 맞은 적이 멈칫하는 시간. 길수록 묵직, 짧을수록 경쾌 |
 | Light / Medium / Heavy · Shake Amplitude | 0 / 0.06 / 0.14 | 0~0.5 | 화면 흔들림 크기 |
 | Shake Duration | 0.12초 | 0~0.5 | 흔들림이 잦아드는 시간 |
+| Combo Window / Multiplier | 1초 / 1.5 | 협동 콤보 제한 시간·배율 |
 | Freeze Movement During Hit Stop | 꺼짐 | on/off | **켜면** 제자리에 멈췄다 밀려남(묵직) / **끄면** 즉시 밀려남(경쾌) |
 
 강도 구분: Light = 양파 투사체 / Medium = 고양이 할퀴기 / Heavy = 약점 공격·마지막 일격
