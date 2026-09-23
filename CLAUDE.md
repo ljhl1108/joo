@@ -111,6 +111,29 @@ batch                                                               # 트랜잭�
 
 ---
 
+## 픽셀아트 파이프라인
+
+| 항목 | 값 |
+|------|-----|
+| Aseprite | `D:\SteamLibrary\steamapps\common\Aseprite\Aseprite.exe` (1.3.18.5, Steam판) |
+| 유니티 임포터 | `com.unity.2d.aseprite` 3.0.1 — **`.aseprite` 파일을 `Assets/`에 넣으면 스프라이트·애니메이션 클립 자동 생성** |
+| 작업 분담 | 그림은 사람이 Aseprite에서, 반복 작업(슬라이스·팔레트 검사·유니티 연결·프리팹 교체)은 CLI로 자동화 |
+
+```bash
+A="/d/SteamLibrary/steamapps/common/Aseprite/Aseprite.exe"
+"$A" --batch --list-layers <파일>             # 레이어 확인
+"$A" --batch <파일> --list-tags --list-slices  # 애니메이션 태그·슬라이스 확인
+"$A" --batch <파일.aseprite> --sheet out.png --data out.json --sheet-type packed  # 시트 추출
+"$A" --batch --script <스크립트.lua> <파일>    # Lua 스크립트 실행 (일괄 편집)
+```
+
+- **Aseprite 태그 이름이 유니티 애니메이션 클립 이름이 된다** → `idle` / `walk` / `attack` 규칙으로 달 것
+- PixelLab 확장은 구독 해지 후 제거됨 (2026-09-24). 백업: `%APPDATA%\Aseprite\pixellab_disabled_backup`
+  → 남겨두면 CLI 배치 실행마다 `handle-pose.lua` 에러가 출력된다
+- 구매한 에셋스토어 패키지는 계정에 묶여 있어 로컬에서 확인 불가. 확인하려면 Package Manager → My Assets에서 다운로드 필요
+
+---
+
 ## 설치된 Unity 스킬
 
 `~/.claude/skills/`에 15종. **세션(프로세스) 시작 시 로드**되므로 설치 직후에는 안 잡힌다.
