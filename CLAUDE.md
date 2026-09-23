@@ -70,6 +70,8 @@ P="C:/workspace/unity/Onioncat_AG"
 - **MCP `eval`에서는 `using` 문 불가** → `UnityEngine.InputSystem.Keyboard`처럼 전체 이름으로 쓸 것. 기본 타임아웃 5초라 재임포트 등은 `timeout`을 늘릴 것
 - **입력 시뮬레이션 불가**: 에디터가 백그라운드면 가상 키 입력이 액션까지 전달되지 않는다. 조작 확인은 사용자에게 요청
 - **캡처 `save_path`는 `Assets/` 기준이고 `..` 불가** → 저장 후 반드시 `AssetDatabase.DeleteAsset`으로 지울 것
+- **사용자가 플레이 중일 때 recompile 금지**: 플레이 모드 중 도메인 리로드가 일어나면 `GameManager.Instance` 등 static이 null이 되어 게임이 반쯤 죽는다.
+  `editor_status`로 playing 여부를 먼저 확인하고, 플레이 중이면 컴파일·플레이 모드 조작을 하지 말 것 (사용자 테스트를 방해함)
 - **플레이 테스트 시 적을 먼저 제거**: 입력 없이 서 있는 고양이는 약 5초 만에 슬라임에게 죽는다
 - **`eval`은 게임 스크립트 타입을 직접 참조 가능** (`GameManager.Instance`, `UnityEngine.Object.FindFirstObjectByType<PlayerHealth>()`).
   단, 방금 만든 스크립트는 recompile 후에 쓸 것. private 메서드는 리플렉션으로 호출해 입력 없이 로직 검증
@@ -163,6 +165,7 @@ npx skills update           # npx로 받은 스킬 갱신
   새 스탯 = `StatType` 추가 + `PlayerStats.Modify` 분기 + 사용하는 곳에서 읽기
 - **입력**: 컨트롤 스킴 `Cat`(키보드+게임패드) / `Onion`(마우스). 고양이 키보드 = WASD / Space 대쉬 / F 할퀴기
 - **UI 문구는 영어로** — TMP 폰트에 한글 글리프가 없음 (로컬라이제이션 작업 전까지)
+- **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
 
 ---
