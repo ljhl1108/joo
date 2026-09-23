@@ -75,6 +75,10 @@ P="C:/workspace/unity/Onioncat_AG"
 - **플레이 테스트 시 적을 먼저 제거**: 입력 없이 서 있는 고양이는 약 5초 만에 슬라임에게 죽는다
 - **`eval`은 게임 스크립트 타입을 직접 참조 가능** (`GameManager.Instance`, `UnityEngine.Object.FindFirstObjectByType<PlayerHealth>()`).
   단, 방금 만든 스크립트는 recompile 후에 쓸 것. private 메서드는 리플렉션으로 호출해 입력 없이 로직 검증
+- **코드의 기본값을 바꿔도 이미 저장된 프리팹·씬 값이 우선한다** (`[SerializeField] float x = 9f`를 14로 고쳐도 프리팹은 9 유지).
+  수치를 바꿨으면 **프리팹/씬 값도 SerializedObject로 함께 갱신**하고, 플레이에서 실제 값을 확인할 것
+- **`EditorApplication.Step()`은 일시정지 상태를 남긴다** → 이후 Start/Update가 전혀 안 돌아 "적이 안 나온다"처럼 보인다.
+  캡처 후에는 반드시 `isPaused = false`로 되돌릴 것
 - **씬 diff가 수천 줄이어도 당황하지 말 것**: 오브젝트를 추가하면 Unity가 파일 내 순서를 재정렬한다.
   `grep -c '^--- !u!1 &'`로 GameObject 수가 (이전 + 추가분)과 맞는지, 삭제된 이름이 다시 추가됐는지 확인
 - **유니티 저장소에는 git 사용자 설정이 없다** → 직전 커밋 작성자를 재사용:

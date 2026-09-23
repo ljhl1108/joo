@@ -74,7 +74,11 @@
 | Blockable Color | 노랑 (1, 0.9, 0.2) | 막을 수 있는 공격 |
 | Unblockable Color | 빨강 (1, 0.25, 0.2) | 피해야 하는 공격 |
 | Telegraph Scale | 1.15 | 예고 중 부풀어 오르는 정도 |
-| Lunge Speed / Duration / Cooldown | 9 / 0.25 / 1.4초 | 슬라임 돌진 (SlimeEnemy) |
+| Lunge Speed / Duration | 14 / 0.4초 | 슬라임 돌진. **걸어올 때(2)와 확실히 차이 나야 '온다'가 읽힘** |
+| Lunge Cooldown | 1.2초 | 다음 돌진까지 |
+| Min Lunge Distance | 2.5 | 이보다 가까우면 물러나서 거리부터 만듦 (코앞 돌진 방지) |
+| Windup Pullback | 1.5 | 예고 중 뒤로 빼는 속도 (활시위 효과) |
+| Attack Range (Slime) | 4.5 | 돌진을 시작하는 거리 |
 | Fire Interval | 2초 | 원거리 슬라임 발사 간격 (RangedEnemy) |
 
 **점검 포인트**: 예고를 보고 피할 시간이 실제로 있는가, 적이 여럿일 때 누가 공격하는지 구분되는가,
