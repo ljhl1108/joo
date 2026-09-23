@@ -81,6 +81,11 @@ P="C:/workspace/unity/Onioncat_AG"
   캡처 후에는 반드시 `isPaused = false`로 되돌릴 것
 - **씬 diff가 수천 줄이어도 당황하지 말 것**: 오브젝트를 추가하면 Unity가 파일 내 순서를 재정렬한다.
   `grep -c '^--- !u!1 &'`로 GameObject 수가 (이전 + 추가분)과 맞는지, 삭제된 이름이 다시 추가됐는지 확인
+- **에셋스토어 패키지가 ProjectSettings를 덮어쓸 수 있다** (실제로 Cainos 팩이 레이어·태그·물리·품질 설정을 날림).
+  증상: 월드가 전혀 렌더링되지 않음. 확인: 임포트 직후 `git status ProjectSettings`.
+  복구: 에디터 종료 → `git checkout -- ProjectSettings` → 에디터 재기동 (ProjectSettings는 기동 시 읽으므로 재시작 필수)
+- **대용량 패키지 임포트 중에는 MCP 명령이 모두 타임아웃된다** (메인 스레드 점유).
+  `du -s Library`가 안정될 때까지 기다린 뒤 진행할 것
 - **유니티 저장소에는 git 사용자 설정이 없다** → 직전 커밋 작성자를 재사용:
   `git -c user.name="$(git log -1 --format=%an)" -c user.email="$(git log -1 --format=%ae)" commit ...`
 
