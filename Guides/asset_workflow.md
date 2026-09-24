@@ -76,22 +76,38 @@ solid white background, character centered with margin, full body, no text, no s
 
 **① 고양이 — 정면(아래 보는 방향), 기본 자세**
 
-> ⚠️ **두 발로 서는 것과 당찬 인상은 별개다.**
-> `standing upright on two legs`를 빼면 AI는 네 발 짐승으로 그린다. 두 발 서기는 **유지하되**,
-> "영웅 포즈"를 만드는 단어(`brave`, `heroic`, `confident`, `hero pose`)만 피할 것.
+> ⚠️ **세 가지를 분리해서 조절할 것.**
+> ① 두 발 서기(`bipedal`) ② 인상(눈·눈썹) ③ 포즈(앞발).
+> `brave`·`heroic` 같은 단어는 과하게 당차지고, `sleepy`·`gentle`만 쓰면 맹해 보인다.
+> **정답은 "귀여운 얼굴 + 또렷한 눈 + 싸울 자세"의 조합.**
 
 ```
 a tiny cute cat game character, orange and white fur,
 bipedal, standing on two hind legs like a plush toy,
-short stubby arms hanging down relaxed, small round belly,
-2-head-tall chibi proportions, big simple dot eyes, gentle sleepy expression,
-small green leaf on its head,
+battle ready stance, leaning slightly forward,
+front paws raised with tiny claws out, ready to fight,
+2-head-tall chibi proportions, round head, small round belly,
+sharp focused eyes with bright highlights, slightly furrowed brow, determined little face,
+green scarf fluttering, small green leaf on its head,
 very simple design, minimal details, few pixels, low detail,
 pixel art sprite, 3/4 top-down view, chunky readable shapes,
 1px dark brown outline, flat colors, limited palette of 12 muted colors,
 soft olive-green and warm stone tones, no gradients, no anti-aliasing,
 solid white background, character centered with margin, full body, no text, no shadow
 ```
+
+### 인상 조절 다이얼 (단어만 갈아끼우기)
+
+| 축 | 더 순하게 ← | 기본 | → 더 사납게 |
+|---|---|---|---|
+| **눈** | `big round innocent eyes` | `sharp focused eyes with bright highlights` | `narrowed fierce eyes, sharp pupils` |
+| **눈썹** | (생략) | `slightly furrowed brow` | `angry furrowed brow` |
+| **입** | `tiny smile` | `small closed mouth` | `open mouth showing tiny fangs` |
+| **앞발** | `paws hanging down relaxed` | `front paws raised with tiny claws out` | `both paws up, claws fully out, mid-swipe` |
+| **자세** | `standing calmly` | `battle ready stance, leaning slightly forward` | `crouching low, about to pounce` |
+
+**맹해 보이는 주범은 `눈`이다.** 점 눈(`dot eyes`)은 표정이 없어서 멍하게 읽힌다.
+`sharp focused eyes with bright highlights`(또렷한 눈 + 눈동자 하이라이트)로 바꾸면 같은 얼굴도 살아난다.
 
 **②-a 고양이 — 옆모습 (오른쪽을 봄, 애니메이션 생성용)**
 
@@ -168,6 +184,8 @@ solid white background, character centered with margin, full body, no text, no s
 | 배경이 딸려 나올 때 | `plain solid white background only, isolated character` |
 | 외곽선이 없을 때 | `strong 1px dark outline around the whole character` |
 | **네 발로 서 있을 때** | `bipedal, standing on two hind legs like a plush toy` |
+| **맹해 보일 때** | `sharp focused eyes with bright highlights, slightly furrowed brow` |
+| 싸울 것 같지 않을 때 | `battle ready stance, front paws raised with tiny claws out` |
 | 자세가 뻣뻣할 때 | `relaxed posture, slightly tilted head, soft pose` |
 
 - **작게 줄일 것을 전제로 뽑는다**: 32px로 줄이면 디테일은 어차피 사라진다. "단순하게"를 강하게 요구할수록 축소 결과가 좋다
