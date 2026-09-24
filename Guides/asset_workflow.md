@@ -76,25 +76,45 @@ solid white background, character centered with margin, full body, no text, no s
 
 **① 고양이 — 정면(아래 보는 방향), 기본 자세**
 
+> ⚠️ **두 발로 서는 것과 당찬 인상은 별개다.**
+> `standing upright on two legs`를 빼면 AI는 네 발 짐승으로 그린다. 두 발 서기는 **유지하되**,
+> "영웅 포즈"를 만드는 단어(`brave`, `heroic`, `confident`, `hero pose`)만 피할 것.
+
 ```
-a small chubby cat game character, orange and white fur, big round eyes,
-standing upright on two legs, facing the viewer, friendly and brave expression,
-tiny scarf, game character sprite for a top-down roguelike,
+a tiny cute cat game character, orange and white fur,
+bipedal, standing on two hind legs like a plush toy,
+short stubby arms hanging down relaxed, small round belly,
+2-head-tall chibi proportions, big simple dot eyes, gentle sleepy expression,
+small green leaf on its head,
+very simple design, minimal details, few pixels, low detail,
 pixel art sprite, 3/4 top-down view, chunky readable shapes,
-1px dark brown outline, flat colors, limited palette of 16 muted colors,
+1px dark brown outline, flat colors, limited palette of 12 muted colors,
 soft olive-green and warm stone tones, no gradients, no anti-aliasing,
 solid white background, character centered with margin, full body, no text, no shadow
 ```
 
-**② 고양이 — 옆모습 (애니메이션 생성용, 오른쪽을 봄)**
-
-> 튜토리얼이 "캐릭터가 오른쪽을 보고 단색 배경"을 요구하므로, 애니메이션을 뽑을 때는 이 버전을 쓴다.
+**②-a 고양이 — 옆모습 (오른쪽을 봄, 애니메이션 생성용)**
 
 ```
-the same small orange and white cat character, side view facing right,
-walking pose, keep the same face, keep the same colors and outfit,
+the same tiny cute cat character, side view facing right,
+bipedal, standing on two hind legs, walking pose,
+keep the same face, keep the same colors, keep the leaf on its head,
+very simple design, minimal details, few pixels, low detail,
 pixel art sprite, 3/4 top-down view, chunky readable shapes,
-1px dark brown outline, flat colors, limited palette of 16 muted colors,
+1px dark brown outline, flat colors, limited palette of 12 muted colors,
+soft olive-green and warm stone tones, no gradients, no anti-aliasing,
+solid white background, character centered with margin, full body, no text, no shadow
+```
+
+**②-b 고양이 — 뒷모습 (위로 걸어갈 때)**
+
+```
+the same tiny cute cat character, seen from behind, back view,
+bipedal, standing on two hind legs, tail visible,
+keep the same colors, keep the leaf on its head,
+very simple design, minimal details, few pixels, low detail,
+pixel art sprite, 3/4 top-down view, chunky readable shapes,
+1px dark brown outline, flat colors, limited palette of 12 muted colors,
 soft olive-green and warm stone tones, no gradients, no anti-aliasing,
 solid white background, character centered with margin, full body, no text, no shadow
 ```
@@ -147,6 +167,8 @@ solid white background, character centered with margin, full body, no text, no s
 | 원근이 이상할 때 | `flat 3/4 top-down view, no perspective distortion` |
 | 배경이 딸려 나올 때 | `plain solid white background only, isolated character` |
 | 외곽선이 없을 때 | `strong 1px dark outline around the whole character` |
+| **네 발로 서 있을 때** | `bipedal, standing on two hind legs like a plush toy` |
+| 자세가 뻣뻣할 때 | `relaxed posture, slightly tilted head, soft pose` |
 
 - **작게 줄일 것을 전제로 뽑는다**: 32px로 줄이면 디테일은 어차피 사라진다. "단순하게"를 강하게 요구할수록 축소 결과가 좋다
 - **한 번에 끝내지 않는다**: 같은 프롬프트로 여러 장 뽑아 고르는 게 프롬프트를 다듬는 것보다 빠르다
