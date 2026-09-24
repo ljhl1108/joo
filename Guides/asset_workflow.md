@@ -62,13 +62,95 @@ Claude가 하는 일: 적 프리팹의 자식으로 교체 → `SpumEnemyVisual`
   - 한 번에 끝내려 하지 말고 **여러 번 생성**해서 고르기
   - 얼굴·의상을 유지하고 싶으면 `keep the same face`, `keep the costume design` 같은 문구를 덧붙인다
 
-우리 고양이용 프롬프트 예시 (영어):
+### C-1-1. 프롬프트 모음 (복사해서 쓰기)
+
+**핵심 원칙: 아래 `STYLE` 문구를 모든 캐릭터에 똑같이 붙인다.** 이게 통일감을 만든다.
 
 ```
-top-down 2D game sprite, small orange and white cat character,
-standing upright, facing camera, simple pixel art, thick dark outline,
-flat colors, limited palette, solid white background, centered, full body
+STYLE (모든 프롬프트 끝에 그대로 붙일 것)
+pixel art sprite, 3/4 top-down view, chunky readable shapes,
+1px dark brown outline, flat colors, limited palette of 16 muted colors,
+soft olive-green and warm stone tones, no gradients, no anti-aliasing,
+solid white background, character centered with margin, full body, no text, no shadow
 ```
+
+**① 고양이 — 정면(아래 보는 방향), 기본 자세**
+
+```
+a small chubby cat game character, orange and white fur, big round eyes,
+standing upright on two legs, facing the viewer, friendly and brave expression,
+tiny scarf, game character sprite for a top-down roguelike,
+pixel art sprite, 3/4 top-down view, chunky readable shapes,
+1px dark brown outline, flat colors, limited palette of 16 muted colors,
+soft olive-green and warm stone tones, no gradients, no anti-aliasing,
+solid white background, character centered with margin, full body, no text, no shadow
+```
+
+**② 고양이 — 옆모습 (애니메이션 생성용, 오른쪽을 봄)**
+
+> 튜토리얼이 "캐릭터가 오른쪽을 보고 단색 배경"을 요구하므로, 애니메이션을 뽑을 때는 이 버전을 쓴다.
+
+```
+the same small orange and white cat character, side view facing right,
+walking pose, keep the same face, keep the same colors and outfit,
+pixel art sprite, 3/4 top-down view, chunky readable shapes,
+1px dark brown outline, flat colors, limited palette of 16 muted colors,
+soft olive-green and warm stone tones, no gradients, no anti-aliasing,
+solid white background, character centered with margin, full body, no text, no shadow
+```
+
+**③ 고양이 + 등에 멘 화분 (이 게임의 상징)**
+
+```
+a small chubby orange and white cat standing upright,
+carrying a round clay flower pot strapped on its back,
+a cute onion sprout with green leaves growing from the pot,
+keep the same cat face and colors,
+pixel art sprite, 3/4 top-down view, chunky readable shapes,
+1px dark brown outline, flat colors, limited palette of 16 muted colors,
+soft olive-green and warm stone tones, no gradients, no anti-aliasing,
+solid white background, character centered with margin, full body, no text, no shadow
+```
+
+**④ 양파 단독 (화분 위 작물)**
+
+```
+a cute onion character with green sprout leaves, round body, simple face,
+sitting in a small clay flower pot, facing the viewer,
+pixel art sprite, 3/4 top-down view, chunky readable shapes,
+1px dark brown outline, flat colors, limited palette of 16 muted colors,
+soft olive-green and warm stone tones, no gradients, no anti-aliasing,
+solid white background, character centered with margin, full body, no text, no shadow
+```
+
+**⑤ 슬라임 3종 (적)** — `[ ]` 안만 바꿔서 세 번 생성
+
+```
+a small round slime monster, [cyan blue] jelly body, simple dot eyes,
+slightly squashed blob shape, top-down game enemy sprite,
+pixel art sprite, 3/4 top-down view, chunky readable shapes,
+1px dark brown outline, flat colors, limited palette of 16 muted colors,
+soft olive-green and warm stone tones, no gradients, no anti-aliasing,
+solid white background, character centered with margin, full body, no text, no shadow
+```
+
+- 일반 슬라임: `[cyan blue]`
+- 원거리 슬라임: `[purple]` + `holding a small seed`
+- 분열 슬라임: `[bright green]` + `with a crack line on its body`
+
+### C-1-2. 프롬프트 요령
+
+| 상황 | 덧붙일 문구 |
+|---|---|
+| 얼굴·색이 자꾸 바뀔 때 | `keep the same face, keep the same colors` |
+| 너무 디테일하게 나올 때 | `very simple shapes, minimal details, low detail` |
+| 원근이 이상할 때 | `flat 3/4 top-down view, no perspective distortion` |
+| 배경이 딸려 나올 때 | `plain solid white background only, isolated character` |
+| 외곽선이 없을 때 | `strong 1px dark outline around the whole character` |
+
+- **작게 줄일 것을 전제로 뽑는다**: 32px로 줄이면 디테일은 어차피 사라진다. "단순하게"를 강하게 요구할수록 축소 결과가 좋다
+- **한 번에 끝내지 않는다**: 같은 프롬프트로 여러 장 뽑아 고르는 게 프롬프트를 다듬는 것보다 빠르다
+- **고양이를 먼저 확정**한 뒤, 그 이미지를 참고 이미지로 넣고 나머지를 뽑으면 그림체가 붙는다
 
 ### C-2. 애니메이션 만들기 (선택)
 
