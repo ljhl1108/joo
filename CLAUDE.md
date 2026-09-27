@@ -15,11 +15,12 @@
 
 | 항목 | 경로 |
 |------|------|
-| Unity 프로젝트 | `C:\workspace\unity\Onioncat_AG` (**git 저장소, 원격 없음**) |
+| Unity 프로젝트 | `C:\workspace\unity\Onioncat_AG` (**git, → GitHub 비공개 저장소, 브랜치 `master`**) |
 | 문서 / 설계 워크스페이스 | `C:\workspace\claude\Game_Develop\OnionCat` (**git, → GitHub**) |
 | 스크립트 | `C:\workspace\unity\Onioncat_AG\Assets\Scripts\` |
 | **Unity CLI** | `C:\Users\feedb\AppData\Local\Unity\bin\unity.exe` (**PATH에 없음 — 전체 경로로 호출**) |
-| GitHub 저장소 (문서) | `https://github.com/ljhl1108/joo` |
+| GitHub 저장소 (문서) | `https://github.com/ljhl1108/joo` (브랜치 `main`) |
+| GitHub 저장소 (유니티) | `https://github.com/ljhl1108/OnionCat-Unity` (**Private**, 브랜치 `master`) |
 
 - 두 저장소 모두 git으로 관리됨. **에디터를 조작하기 전에 작업트리가 깨끗한지 확인**하면 실패 시 `git checkout`으로 되돌릴 수 있다.
 - 유니티 버전 `6000.3.9f1`, URP 2D, New Input System.
@@ -171,7 +172,8 @@ npx skills update           # npx로 받은 스킬 갱신
 - `.unity` / `.prefab` / `.asset` 파일을 **텍스트로 직접 수정 금지** → 반드시 Unity CLI 도구 사용
 - 에디터를 조작하는 변경 후에는 **`git diff`로 실제 파일 변경을 확인**할 것 (의도치 않은 대량 변경 탐지)
 - `[SerializeField]` 변수가 생기면 CLI로 직접 연결하고, 못 하면 그때 안내
-- 유니티 프로젝트는 원격이 없으므로 **push 하지 말 것** (로컬 커밋만)
+- 유니티 프로젝트는 **비공개** 원격 `OnionCat-Unity`에 커밋 후 push (2026-09-27부터)
+- ⚠️ **유니티 저장소를 절대 공개(Public)로 바꾸지 말 것** — 구매 에셋(Honeti GUI, SPUM)과 재배포 금지 에셋(Cainos)이 들어 있어 공개 시 라이선스 위반
 
 ---
 
@@ -210,7 +212,7 @@ npx skills update           # npx로 받은 스킬 갱신
 4. `recompile` → `console --level Error`로 검증, 에러 시 수정 반복 (최대 3회)
 5. Inspector 연결·레이어·임포트 설정은 **CLI로 직접 수행**
 6. 가능하면 `editor_play`로 실제 동작까지 검증 후 `editor_stop`
-7. `save_scene` → `git diff` 확인 → 커밋
+7. `save_scene` → `git diff` 확인 → 커밋 → push (유니티는 `master`, 문서는 `main`)
 8. **사람이 판단해야 하는 것만** `Guides/`에 문서화
    - 예: 타일을 어디에 그릴지, 스프라이트를 어떤 걸 쓸지 같은 디자인 결정
    - 완료된 가이드는 `Guides/Done/`으로 이동
