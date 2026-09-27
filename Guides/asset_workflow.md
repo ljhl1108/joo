@@ -7,12 +7,18 @@
 
 ## A. SPUM — 인간형 캐릭터 만들기
 
-### A-1. 최초 1회: 설치
+### A-1. 최초 1회: 패키지 등록
+
+> ⚠️ SPUM README의 `Install` 버튼 설명은 **구버전 기준**이다. 현재 버전(1.8.8)에는 그 버튼이 없다.
 
 1. 유니티에서 `Assets/SPUM/Scene/SPUM_Scene.unity` 열기
 2. Hierarchy에서 **`SPUM_Manager`** 오브젝트 선택
-3. Inspector 맨 위의 **`Install`** 버튼 클릭
-4. `Assets/Resources/SPUM/SPUM_Sprites` 폴더가 생겼는지 확인 (안 생겼으면 맨 아래 **`Reset Resources Data`**)
+3. Inspector를 **맨 아래까지 스크롤** → **`REGENERATE DATA & LOAD PACKAGES`** 버튼 클릭
+   - 버튼은 **맨 위가 아니라 맨 아래**에 있다 (기본 필드들 밑)
+4. Console에 `Found N animation clips…` 같은 로그가 잔뜩 뜨면 정상
+5. Inspector의 `Spum Packages` 목록에 **Legacy / Ver121 / Ver300** 3개가 생겼는지 확인
+
+> 상단 메뉴의 `SPUM → Clean Install`은 패키지를 **다시 설치**하는 기능이라 지금은 쓰지 않는다.
 
 ### A-2. 캐릭터 만들기
 
