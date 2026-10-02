@@ -171,3 +171,25 @@
 - 파티클 양 (히트 이펙트, 사망 이펙트)
 - 적 텔레그래프 표시 시간 (공격 예고를 얼마나 일찍 보여줄지)
 - 역할별 난이도 옵션에서 조절할 항목 (위 표의 **굵은 항목**들이 후보)
+
+---
+
+## 10. 코어 시스템 (2026-10-03 1차 구현) — 테스트하며 조절할 값
+
+| 항목 | 위치 | 기본값 | 의미 |
+|---|---|---|---|
+| Cooldown / Range / Arc Angle | `Player_Cat` → CatKick | 4초 / 1.7 / 120° | 걷어차기 재사용·범위 |
+| Launch Speed / Duration | CatKick | 16 / 0.4초 | 걷어찬 적이 날아가는 세기 (넉백 저항만큼 감소) |
+| Impact Damage | CatKick | 3 | 날아간 적이 벽·적에 부딪힐 때 (CRASH) |
+| Base Charges / Auto Aim Range | `Player_Cat` → CatThrow | 1 / 9 | 털뭉치 개수·자동 조준 거리 |
+| Auto Return Time / Slow | `Prefabs/Core/Hairball` | 4초 / 0.6배 2초 | 털뭉치 자동 회수·둔화 |
+| Combo / KickCombo / Parry / Teamwork Gain | `Player_Cat` → JointUltimate | 8 / 15 / 10 / 20 | 합동 게이지 충전량 (100이 가득) |
+| **Press Window** | JointUltimate | 1.5초 | 두 사람이 합동기를 눌러야 하는 허용 시간 — 난이도 후보 |
+| Duration / Pulse Damage | JointUltimate | 2초 / 3 | ONION STORM 위력 |
+| Give Duration | `Player_Cat` → BagController | 0.5초 | 아이템 건네는 시간 |
+| Base Damage / Radius | `Prefabs/Plants/Plant_Bomb` | 4 / 1.6 | 박 폭발 (레벨당 +1 / +0.2) |
+| Kick Combo Multiplier | Plant_Bomb | 1.5 | 걷어찬 적으로 터뜨렸을 때 보너스 |
+| Radius / Slow Multiplier | `Prefabs/Plants/Plant_Spicy` | 1.8 / 0.5 | 매운 양파 범위·둔화 |
+| Cooldown | `Data/Skills/*.asset` | 4~12초 | 스킬별 쿨다운 (레벨당 10% 감소) |
+| Item Drop Chance | `Data/RewardTable.asset` | 0.6 | 방 클리어 시 아이템 드롭 확률 |
+| Lit Duration | Room_02 → TwinSwitch → Crystal | 2.5초 | 쌍둥이 스위치 타이밍 여유 — 난이도 후보 |
