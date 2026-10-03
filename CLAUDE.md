@@ -221,7 +221,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - 음량·음높이·연타 간격은 `Assets/Resources/Audio/SoundBank.asset`. 음원은 전부 CC0 (`Assets/Audio/LICENSE_AUDIO.txt`에 출처 기록 유지)
   - Claude는 소리를 들을 수 없음 → 소리 품질 판단은 사람에게
 - **방 배치** (2026-10-04, 가이드 `Guides/room_layout.md`)
-  - 방 모양은 `Assets/Data/RoomLayouts/*.asset`(16×8 글자) → 메뉴 **OnionCat > Rooms > Apply Room Layouts**로 씬에 찍는다. 씬의 Layout 자식을 손으로 고치지 말 것 (다시 적용하면 지워짐)
+  - 방 모양은 `Assets/Data/RoomLayouts/*.asset`(글자 지도, W 벽·X 벽 덩어리·D 출구 포함 시 크기·모양 자유 — 최대 40×20) → 메뉴 **OnionCat > Rooms > Apply Room Layouts**로 씬에 찍는다. 씬의 Layout 자식을 손으로 고치지 말 것 (다시 적용하면 지워짐)
   - 장애물 = Wall 레이어·태그(탄 막음·CRASH), 구덩이 = `Pit`(Props 레이어, 걷어찬 적만 낙사, 보스 `immuneToPits`)
   - Unity 6에서 스프라이트 9-slice 테두리는 `TextureImporter.spriteBorder`가 안 먹힘 → `SpriteDataProviderFactories`로 설정
 - **UI 문구는 영어로** — TMP 폰트에 한글 글리프가 없음 (로컬라이제이션 작업 전까지)
