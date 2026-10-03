@@ -198,18 +198,23 @@ npx skills update           # npx로 받은 스킬 갱신
 - **업그레이드 스탯**: 기본값은 Inspector, 보정은 `PlayerStats.Current`에서 읽어 합산/곱셈. 컴포넌트 필드를 직접 바꾸지 말 것.
   새 스탯 = `StatType` 추가 + `PlayerStats.Modify` 분기 + 사용하는 곳에서 읽기
 - **입력**: 컨트롤 스킴 `Cat`(키보드·게임패드 둘 다 선택) / `Onion`(마우스). 배치는 `CoopInputLayout`이 자동 전환
-  - 패드 모드(패드 연결): 고양이 = 패드만 / 양파 = 마우스 + Q W E R 스킬 · 1~5 아이템 · Shift+숫자 건네기 · Space 합동기
-  - 키보드 모드(패드 없음): 고양이 = WASD · Space 대쉬 · F 할퀴기 · G 걷어차기 · H 던지기 · T 합동기 · Z/X/C 가방
-    / 양파 = 마우스 + 1~4 스킬 · 6~0 아이템 · 휠 클릭 합동기 (W가 이동과 겹쳐서 숫자로)
+  - 패드 모드(패드 연결): 고양이 = 패드만 / 양파 = 마우스 + Q W E R 스킬 · 1~5 가방 · Space 합동기
+  - 키보드 모드(패드 없음): 고양이 = WASD · Space 대쉬 · **왼쪽 Shift 할퀴기 · 왼쪽 Ctrl 걷어차기** · Q 던지기 · E 합동기 · Z/X 가방
+    / 양파 = 마우스 + 1~4 스킬 · 6~0 가방 · 휠 클릭 합동기 (W가 이동과 겹쳐서 숫자로)
   - 양파 키보드 키는 페어링과 무관한 독립 InputAction(`OnionInputKeys`)으로 읽는다
-- **코어 시스템** (2026-10-03, 설계 `Design/07_CoreSystem.md`, 테스트 `Guides/coresystem_playtest.md`)
+- **코어 시스템** (설계 `Design/07_CoreSystem.md` v3, 테스트 `Guides/coresystem_playtest.md`)
+  - 성장 3축: 체급(`StatUpgrade`) / 패시브(`Passive`, 세트 햇살·바람 — 고양이·양파 조각 합산) / 특수(양파 `OnionSkill`, 고양이 `ClawStyle`)
+  - 보상: 방마다 고양이·양파가 **동시에** 각자 3장 중 1장 (`UpgradeSelectUI`), 출구 표식 = 다음 방 중점 축(`RewardAxis`)
+  - 세트 보너스는 `PassiveHost.Recalculate` → `CombatModifiers`(정적, 읽기 전용)로 반영
   - 적에게 피해를 줄 때 `TakeDamage(..., Attacker.Cat/Onion)`을 넘길 것 — 협동 콤보가 "누가 때렸나" 기준
   - 적 목록은 `EnemyBase.Active` (FindObjectsByType 금지). 상태이상은 `ApplyBurn / ApplySlow / ApplyStun / Launch`
-  - 새 스킬 = `OnionSkill` 상속 · 새 축복 = `Blessing` 상속(훅 override) · 새 아이템 = `ItemData` 상속
-    → 에셋 생성 → `Assets/Data/RewardTable.asset` 목록에 추가. **ScriptableObject는 클래스마다 같은 이름 파일 필수**
-  - 런 상태(스킬·축복·가방·게이지)는 `RunData`에, 쿨다운처럼 씬에 묶인 값은 컴포넌트에
+    (`Launch(..., interruptTelegraph: true)`는 걷어차기 전용 — 예고를 끊음. 보스는 `kickInterruptsTelegraph` 끔)
+  - 새 카드 = `OnionSkill` / `Passive` / `ClawStyle` / `StatUpgrade` 에셋 → `Assets/Data/RewardTable.asset`의 축별 목록에 추가
+    새 아이템 = `ItemData` 상속 → `itemDrops`. **ScriptableObject는 클래스마다 같은 이름 파일 필수**
+  - 런 상태(스킬·패시브·할퀴기 변형·공유 가방·게이지)는 `RunData`에, 쿨다운처럼 씬에 묶인 값은 컴포넌트에
   - 코어 HUD(`CoreHUD`)는 코드로 생성. HUD 캔버스는 **1920×1080 고정 픽셀**이라 `uiScale` 2배 기준으로 배치
-  - 플레이 테스트 메뉴 `OnionCat > Debug` (스킬·축복 지급, 게이지, 적 제거, 무적)
+  - 대쉬는 충전식(`Dash_Default.Charges`), 고양이 발밑 탄창은 `CatPips` (고양이 스프라이트 바닥에 자동 정렬)
+  - 플레이 테스트 메뉴 `OnionCat > Debug` (Kick Test, 세트·할퀴기 변형 지급, 게이지, 적 제거, 무적)
 - **UI 문구는 영어로** — TMP 폰트에 한글 글리프가 없음 (로컬라이제이션 작업 전까지)
 - **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
