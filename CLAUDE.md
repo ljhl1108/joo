@@ -215,6 +215,11 @@ npx skills update           # npx로 받은 스킬 갱신
   - 코어 HUD(`CoreHUD`)는 코드로 생성. HUD 캔버스는 **1920×1080 고정 픽셀**이라 `uiScale` 2배 기준으로 배치
   - 대쉬는 충전식(`Dash_Default.Charges`), 고양이 발밑 탄창은 `CatPips` (고양이 스프라이트 바닥에 자동 정렬)
   - 플레이 테스트 메뉴 `OnionCat > Debug` (Kick Test, 세트·할퀴기 변형 지급, 게이지, 적 제거, 무적)
+- **사운드** (2026-10-04, 확인 가이드 `Guides/sound_check.md`)
+  - 효과음 `Sfx.Play(SfxId.X)`, 음악 `Music.Play(MusicId.X)` — `AudioManager`가 자동 생성·씬 유지 (씬에 배치 불필요)
+  - 새 효과음 = `SfxId` 추가 → `Assets/Audio/SFX/<이름>_0.ogg …` → 메뉴 **OnionCat > Audio > Rebuild Sound Bank**
+  - 음량·음높이·연타 간격은 `Assets/Resources/Audio/SoundBank.asset`. 음원은 전부 CC0 (`Assets/Audio/LICENSE_AUDIO.txt`에 출처 기록 유지)
+  - Claude는 소리를 들을 수 없음 → 소리 품질 판단은 사람에게
 - **UI 문구는 영어로** — TMP 폰트에 한글 글리프가 없음 (로컬라이제이션 작업 전까지)
 - **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
