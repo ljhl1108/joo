@@ -24,6 +24,9 @@
 4. [ ] **아트 바이블 작성** → `Design/08_ArtBible.md`: 해상도·팔레트·외곽선·애니 프레임 수·금지 색
 5. [ ] **고양이 제작** — idle / walk / attack(할퀴기) / kick / dash / hurt / death (Aseprite 태그 = 클립 이름)
 6. [ ] **양파·화분 재작업** — 고양이 크기에 맞춰
+       · 시트 구성(추천): **고양이 시트 1벌 + 작물 시트 작물별 1벌**. 고양이 시트에 작물 위치 표식(프레임마다 "등 위" 점)을 넣어 작물이 따라 움직이게
+       · 2026-10-04 임시 숨김: 양파 스프라이트·할퀴기 빨간 이펙트 렌더러 끔 (유니티 `41d3020`, 기능·판정은 그대로)
+         되살리기 = 씬의 `CropHolder/OnionSprite`, `MeleePivot/AttackSprite/SpriteRenderer_Melee` SpriteRenderer 켜기
 
 ---
 
