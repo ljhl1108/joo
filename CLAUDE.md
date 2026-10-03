@@ -222,6 +222,8 @@ npx skills update           # npx로 받은 스킬 갱신
   - Claude는 소리를 들을 수 없음 → 소리 품질 판단은 사람에게
 - **방 배치** (2026-10-04, 가이드 `Guides/room_layout.md`)
   - 방 모양은 `Assets/Data/RoomLayouts/*.asset`(글자 지도, W 벽·X 벽 덩어리·D 출구 포함 시 크기·모양 자유 — 최대 40×20) → 메뉴 **OnionCat > Rooms > Apply Room Layouts**로 씬에 찍는다. 씬의 Layout 자식을 손으로 고치지 말 것 (다시 적용하면 지워짐)
+  - 적은 지도 글자로 (1 슬라임·2 원거리·3 분열·4 방패병·B 보스). 런의 방 순서는 `DungeonManager`가 시작방 + 전투방 풀(난이도 tier) + 보스방으로 무작위 생성
+  - **정렬 순서 구간**: 바닥 -1000~-900 (바닥 타일·구덩이·장판·벽 타일) / 서 있는 물체 -100~99 (`YSort`가 발 높이로 보정) / 항상 위 100+ (투사체·이펙트·숫자·라벨). 새 그림을 추가할 때 이 구간을 지킬 것
   - 장애물 = Wall 레이어·태그(탄 막음·CRASH), 구덩이 = `Pit`(Props 레이어, 걷어찬 적만 낙사, 보스 `immuneToPits`)
   - Unity 6에서 스프라이트 9-slice 테두리는 `TextureImporter.spriteBorder`가 안 먹힘 → `SpriteDataProviderFactories`로 설정
 - **UI 문구는 영어로** — TMP 폰트에 한글 글리프가 없음 (로컬라이제이션 작업 전까지)
