@@ -1,6 +1,6 @@
 # OnionCat — Claude Code 지침서
 
-게임 컨셉 상세는 `GameConcept.md`, 로드맵/할일은 `TODO.md` 참고.
+게임 컨셉 상세는 `GameConcept.md`, 로드맵/할일은 `TODO.md`, 아트 할일은 `TODO_Art.md` 참고.
 
 ---
 
