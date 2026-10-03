@@ -220,6 +220,10 @@ npx skills update           # npx로 받은 스킬 갱신
   - 새 효과음 = `SfxId` 추가 → `Assets/Audio/SFX/<이름>_0.ogg …` → 메뉴 **OnionCat > Audio > Rebuild Sound Bank**
   - 음량·음높이·연타 간격은 `Assets/Resources/Audio/SoundBank.asset`. 음원은 전부 CC0 (`Assets/Audio/LICENSE_AUDIO.txt`에 출처 기록 유지)
   - Claude는 소리를 들을 수 없음 → 소리 품질 판단은 사람에게
+- **방 배치** (2026-10-04, 가이드 `Guides/room_layout.md`)
+  - 방 모양은 `Assets/Data/RoomLayouts/*.asset`(16×8 글자) → 메뉴 **OnionCat > Rooms > Apply Room Layouts**로 씬에 찍는다. 씬의 Layout 자식을 손으로 고치지 말 것 (다시 적용하면 지워짐)
+  - 장애물 = Wall 레이어·태그(탄 막음·CRASH), 구덩이 = `Pit`(Props 레이어, 걷어찬 적만 낙사, 보스 `immuneToPits`)
+  - Unity 6에서 스프라이트 9-slice 테두리는 `TextureImporter.spriteBorder`가 안 먹힘 → `SpriteDataProviderFactories`로 설정
 - **UI 문구는 영어로** — TMP 폰트에 한글 글리프가 없음 (로컬라이제이션 작업 전까지)
 - **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
