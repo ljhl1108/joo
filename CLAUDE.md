@@ -212,6 +212,9 @@ npx skills update           # npx로 받은 스킬 갱신
   - 새 카드 = `OnionSkill` / `Passive` / `ClawStyle` / `StatUpgrade` 에셋 → `Assets/Data/RewardTable.asset`의 축별 목록에 추가
     새 아이템 = `ItemData` 상속 → `itemDrops`. **ScriptableObject는 클래스마다 같은 이름 파일 필수**
   - 런 상태(스킬·패시브·할퀴기 변형·공유 가방·게이지)는 `RunData`에, 쿨다운처럼 씬에 묶인 값은 컴포넌트에
+  - **성장은 장비 v4** (`Design/05_Items.md`): `GearItem` 에셋(`Assets/Data/Gear`) → `RewardTable.catGear/cropGear`. 능력치·효과·할퀴기·스킬은 `RunData.RecomputeGear`가 장비에서 다시 계산 (Passive·ClawStyle을 직접 넣지 말 것)
+  - **새 장비·효과·소모품을 만들면 메뉴 `OnionCat > Rebuild Game Database`** (중간 저장이 이름으로 찾음)
+  - 런 순서는 `DungeonManager.stagePlan` 문자열, 특수 방(보물·상점·휴식)은 `Room_Special` 하나를 돌려 씀. 게임 상태 `Inventory` = 장비 화면
   - 코어 HUD(`CoreHUD`)는 코드로 생성. HUD 캔버스는 **1920×1080 고정 픽셀**이라 `uiScale` 2배 기준으로 배치
   - 대쉬는 충전식(`Dash_Default.Charges`), 고양이 발밑 탄창은 `CatPips` (고양이 스프라이트 바닥에 자동 정렬)
   - 플레이 테스트 메뉴 `OnionCat > Debug` (Kick Test, 세트·할퀴기 변형 지급, 게이지, 적 제거, 무적)
