@@ -111,7 +111,8 @@
 | 항목 | 위치 | 기본값 | 느낌 |
 |---|---|---|---|
 | Move Speed | CatController | 5 | 이동 속도 |
-| Dash Force / Duration / Cooldown | Dash_Default | 20 / 0.2 / 0.5초 | 대쉬 거리·시간·재사용 |
+| Dash Force / Duration | Dash_Default | 20 / 0.2초 | 대쉬 거리·시간 |
+| Max Charges / Recharge Time / Min Interval | Dash_Default | 2 / 0.9초 / 0.12초 | 충전식 대쉬 칸 수·1칸 충전 시간·연속 대쉬 최소 간격 |
 | Cooldown / Attack Duration | MeleeAttack_Slash | 0.2 / 0.1초 | 할퀴기 연타 속도 |
 | Range / Angle | MeleeAttack_Slash | 1.5 / 150° | 할퀴기 범위 (넉넉할수록 캐주얼) |
 | Attack Slow Multiplier | MeleeAttack_Slash | 0.7 | 공격 중 이동 속도 |
@@ -157,24 +158,22 @@
 | 항목 | 위치 | 기본값 | 느낌 |
 |---|---|---|---|
 | Fade Duration | DungeonManager | 0.4초 | 방 이동 암전 |
-| Reward Delay | DungeonManager | 0.6초 | 방 클리어 후 카드가 뜨기까지 |
+| Reward Delay | DungeonManager | 0.6초 | 방 클리어 후 보상 카드가 뜨기까지 |
 | Victory Delay | DungeonManager | 1.0초 | 마지막 방 클리어 후 Stage Clear까지 |
 | Fade Delay / Fade Duration | GameOverManager | 0.8 / 0.6초 | 사망 후 게임오버 화면 |
-| Time Limit | UpgradeSelectUI | 30초 | 카드 선택 제한 시간 |
 | Hover Scale | UpgradeCardView | 1.06 | 카드 위에 커서가 있을 때 커지는 정도 |
 
 ---
 
 ## 앞으로 이 목록에 추가될 것
 
-- 사운드 볼륨·타격음 (M3)
 - 파티클 양 (히트 이펙트, 사망 이펙트)
-- 적 텔레그래프 표시 시간 (공격 예고를 얼마나 일찍 보여줄지)
 - 역할별 난이도 옵션에서 조절할 항목 (위 표의 **굵은 항목**들이 후보)
+- 사운드 음량·음높이·연타 간격은 `Assets/Resources/Audio/SoundBank.asset` (확인 가이드 `Guides/sound_check.md`)
 
 ---
 
-## 10. 코어 시스템 (2026-10-03 1차 구현) — 테스트하며 조절할 값
+## 10. 코어 시스템 — 테스트하며 조절할 값
 
 | 항목 | 위치 | 기본값 | 의미 |
 |---|---|---|---|
@@ -186,10 +185,20 @@
 | Combo / KickCombo / Parry / Teamwork Gain | `Player_Cat` → JointUltimate | 8 / 15 / 10 / 20 | 합동 게이지 충전량 (100이 가득) |
 | **Press Window** | JointUltimate | 1.5초 | 두 사람이 합동기를 눌러야 하는 허용 시간 — 난이도 후보 |
 | Duration / Pulse Damage | JointUltimate | 2초 / 3 | ONION STORM 위력 |
-| Give Duration | `Player_Cat` → BagController | 0.5초 | 아이템 건네는 시간 |
 | Base Damage / Radius | `Prefabs/Plants/Plant_Bomb` | 4 / 1.6 | 박 폭발 (레벨당 +1 / +0.2) |
 | Kick Combo Multiplier | Plant_Bomb | 1.5 | 걷어찬 적으로 터뜨렸을 때 보너스 |
 | Radius / Slow Multiplier | `Prefabs/Plants/Plant_Spicy` | 1.8 / 0.5 | 매운 양파 범위·둔화 |
 | Cooldown | `Data/Skills/*.asset` | 4~12초 | 스킬별 쿨다운 (레벨당 10% 감소) |
 | Item Drop Chance | `Data/RewardTable.asset` | 0.6 | 방 클리어 시 아이템 드롭 확률 |
 | Lit Duration | Room_02 → TwinSwitch → Crystal | 2.5초 | 쌍둥이 스위치 타이밍 여유 — 난이도 후보 |
+
+---
+
+## 11. 장비 (v4) — 테스트하며 조절할 값
+
+| 항목 | 위치 | 기본값 | 의미 |
+|---|---|---|---|
+| Rarity Weights | `Data/RewardTable.asset` | 60 / 28 / 10 / 2 | 보상 카드에 일반·희귀·에픽·전설이 뽑힐 비중 |
+| Stats (Per Level) / Max Level | `Data/Gear/Gear_*.asset` | 장비마다 (할퀴기 +1, 이동 +3% 등) / 5 (마법서 3) | 레벨마다 붙는 기본 능력치 |
+| 분해 씨앗 | `GearItem.SeedValue` (코드) | 일반 5 · 희귀 10 · 에픽 20 · 전설 40 × 레벨 | 분해했을 때 받는 씨앗 |
+| Passive Limit / Spellbook Slots | `Loadout` (코드) | 6 / 3 | 패시브 최대 개수·마법서 칸 |
