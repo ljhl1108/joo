@@ -119,6 +119,7 @@
 | 사운드 | CC0 효과음 43종 + 칩튠 BGM 5곡, `Sfx.Play` / `Music.Play` (`d6b193a`). 확인 가이드 `Guides/sound_check.md` |
 | 풀링 | 투사체·데미지 숫자·파티클 (`PoolManager`) |
 | 메인 메뉴 CONTINUE | 저장이 있을 때만. 저장이 있는데 START RUN을 누르면 "OVERWRITE SAVE?"로 한 번 더 확인 |
+| 에디터 도구 | `OnionCat > Play From Main Menu` (끄면 열린 씬에서 바로 시작) · 픽셀아트 임포터(`Assets/Sprite/` 자동 설정, PPU 32) · 레이어 8~14 + 충돌 무시 설정 |
 | 디버그 메뉴 | `OnionCat > Debug` — 장비 지급(세트·할퀴기·마법서), 씨앗 100, 게이지, 적 제거, 무적, 킥 테스트 |
 
 ---

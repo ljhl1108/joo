@@ -202,7 +202,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - 키보드 모드(패드 없음): 고양이 = WASD · Space 대쉬 · **왼쪽 Shift 할퀴기 · 왼쪽 Ctrl 걷어차기** · Q 던지기 · E 합동기 · Z/X 가방
     / 양파 = 마우스 + 1~4 스킬 · 6~0 가방 · 휠 클릭 합동기 (W가 이동과 겹쳐서 숫자로)
   - 양파 키보드 키는 페어링과 무관한 독립 InputAction(`OnionInputKeys`)으로 읽는다
-- **코어 시스템** (설계 `Design/04_Combat.md`·`05_Items.md`, 구현 목록 `Design/00_Implemented.md`, 테스트 `Guides/coresystem_playtest.md`)
+- **코어 시스템** (설계 `Design/04_Combat.md`·`05_Items.md`, 구현 목록 `Design/00_Implemented.md`, 테스트 `Guides/v4_playtest.md`)
   - 성장 3축: 체급(`StatUpgrade`) / 패시브(`Passive`, 세트 햇살·바람 — 고양이·양파 조각 합산) / 특수(양파 `OnionSkill`, 고양이 `ClawStyle`)
   - 보상: 방마다 고양이·양파가 **동시에** 각자 3장 중 1장 (`UpgradeSelectUI`), 출구 표식 = 다음 방 중점 축(`RewardAxis`)
   - 세트 보너스는 `PassiveHost.Recalculate` → `CombatModifiers`(정적, 읽기 전용)로 반영
