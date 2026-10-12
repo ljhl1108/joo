@@ -202,7 +202,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - 키보드 모드(패드 없음): 고양이 = WASD · Space 대쉬 · **왼쪽 Shift 할퀴기 · 왼쪽 Ctrl 걷어차기** · Q 던지기 · E 합동기 · Z/X 가방
     / 양파 = 마우스 + 1~4 스킬 · 6~0 가방 · 휠 클릭 합동기 (W가 이동과 겹쳐서 숫자로)
   - 양파 키보드 키는 페어링과 무관한 독립 InputAction(`OnionInputKeys`)으로 읽는다
-- **코어 시스템** (설계 `Design/04_Combat.md`·`05_Items.md`, 구현 목록 `Design/00_Implemented.md`, 테스트 `Guides/v4_playtest.md`)
+- **코어 시스템** (설계 `Design/04_Combat.md`·`05_Items.md`, 구현 목록 `Design/00_Implemented.md`, 테스트 결과 `Guides/Done/v4_playtest.md`)
   - 성장 3축: 체급(`StatUpgrade`) / 패시브(`Passive`, 세트 햇살·바람 — 고양이·양파 조각 합산) / 특수(양파 `OnionSkill`, 고양이 `ClawStyle`)
   - 보상: 방마다 고양이·양파가 **동시에** 각자 3장 중 1장 (`UpgradeSelectUI`), 출구 표식 = 다음 방 중점 축(`RewardAxis`)
   - 세트 보너스는 `PassiveHost.Recalculate` → `CombatModifiers`(정적, 읽기 전용)로 반영
@@ -229,7 +229,8 @@ npx skills update           # npx로 받은 스킬 갱신
   - **정렬 순서 구간**: 바닥 -1000~-900 (바닥 타일·구덩이·장판·벽 타일) / 서 있는 물체 -100~99 (`YSort`가 발 높이로 보정) / 항상 위 100+ (투사체·이펙트·숫자·라벨). 새 그림을 추가할 때 이 구간을 지킬 것
   - 장애물 = Wall 레이어·태그(탄 막음·CRASH), 구덩이 = `Pit`(Props 레이어, 걷어찬 적만 낙사, 보스 `immuneToPits`)
   - Unity 6에서 스프라이트 9-slice 테두리는 `TextureImporter.spriteBorder`가 안 먹힘 → `SpriteDataProviderFactories`로 설정
-- **UI 문구는 영어로** — TMP 폰트에 한글 글리프가 없음 (로컬라이제이션 작업 전까지)
+- **UI 문구는 한글로** (2026-10-13~) — 글꼴은 **Galmuri11** (`Assets/Fonts/Galmuri`, SIL OFL)로 통일, TMP 기본·대체 폰트로 지정. 언어 선택(영어 등)은 나중에 로컬라이제이션으로
+  - Galmuri SDF는 동적 아틀라스라 플레이하면 에셋이 커진다 → 커밋 전에 `ClearFontAssetData(true)`로 비우기 (6KB)
 - **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
 
