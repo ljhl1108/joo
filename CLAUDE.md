@@ -232,6 +232,10 @@ npx skills update           # npx로 받은 스킬 갱신
   - Unity 6에서 스프라이트 9-slice 테두리는 `TextureImporter.spriteBorder`가 안 먹힘 → `SpriteDataProviderFactories`로 설정
 - **UI 문구는 한글로** (2026-10-13~) — 글꼴은 **Galmuri11** (`Assets/Fonts/Galmuri`, SIL OFL)로 통일, TMP 기본·대체 폰트로 지정. 언어 선택(영어 등)은 나중에 로컬라이제이션으로
   - Galmuri SDF는 동적 아틀라스라 플레이하면 에셋이 커진다 → 커밋 전에 `ClearFontAssetData(true)`로 비우기 (6KB)
+- **적 콘텐츠** (2026-10-15, 목록 `Design/02_Enemies_Content.md`)
+  - 새 적 = `Assets/Editor/EnemyBuilder.cs` 표에 한 줄 (조합형 `ModularEnemy`: 움직임 + 공격 + 특성) → 메뉴 **OnionCat > Enemies > Build Enemies** (프리팹 `Prefabs/Enemies` + 명단 `Resources/EnemyRoster` 갱신)
+  - 고양이를 아프게 하는 장판·충격은 `EnemyHazard` (적을 아프게 하는 건 `EffectZone`). 방의 적 자리는 `EnemyRoster.Resolve`가 스테이지 테마에 맞게 일부 교체
+  - 조합형 적은 `EnemyBase`의 private 메시지 메서드(Update·OnCollisionEnter2D)를 다시 정의하지 말 것 → `FixedUpdate` override와 `InterceptDamage`·`OnDamaged` 훅을 쓴다
 - **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
 
