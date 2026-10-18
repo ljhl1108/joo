@@ -236,9 +236,9 @@ npx skills update           # npx로 받은 스킬 갱신
   - 새 적 = `Assets/Editor/EnemyBuilder.cs` 표에 한 줄 (조합형 `ModularEnemy`: 움직임 + 공격 + 특성) → 메뉴 **OnionCat > Enemies > Build Enemies** (프리팹 `Prefabs/Enemies` + 명단 `Resources/EnemyRoster` 갱신)
   - 고양이를 아프게 하는 장판·충격은 `EnemyHazard` (적을 아프게 하는 건 `EffectZone`). 방의 적 자리는 `EnemyRoster.Resolve`가 스테이지 테마에 맞게 일부 교체
   - 조합형 적은 `EnemyBase`의 private 메시지 메서드(Update·OnCollisionEnter2D)를 다시 정의하지 말 것 → `FixedUpdate` override와 `InterceptDamage`·`OnDamaged` 훅을 쓴다
-- **공용 데이터 표** (2026-10-18, `Design/Data/README.md`) — 사람과 같이 고치는 표. **지금은 적만** (`enemies.csv`)
-  - 작업 시작 시 `git diff Design/Data`로 사람이 고친 칸 확인 → 숫자·글 변경은 `EnemyBuilder.cs` 표에 반영 후 Build Enemies, **'요청' 열은 처리하고 비운다**
-  - 반대로 적을 코드에서 바꾸거나 추가하면 CSV에도 같은 내용 반영 (둘이 어긋나지 않게). ID·프리팹 열은 유지
+- **공용 데이터 표** (2026-10-18, `Design/Data/README.md`) — 사람과 같이 고치는 표. 적 `enemies.csv` · 아이템 `items.csv` · 세트 `sets.csv`
+  - 작업 시작 시 `git diff Design/Data`로 사람이 고친 칸 확인 (엑셀이 `2.0`→`2`처럼 숫자 모양만 바꾼 건 무시) → 적은 `EnemyBuilder.cs`, 아이템·세트는 `ContentBuilder.cs`·`PassiveSetBonus.cs`에 반영 후 빌드 메뉴, **'요청' 열은 처리하고 비운다**
+  - 반대로 코드에서 적·아이템을 바꾸거나 추가하면 CSV에도 같은 내용 반영 (둘이 어긋나지 않게). ID·프리팹·에셋 열은 유지
   - CSV 저장은 `utf-8-sig`(BOM) + 쉼표 — 엑셀 호환. 보기 화면은 `python Design/Data/build_viewer.py` (HTML은 gitignore)
 - **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
