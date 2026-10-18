@@ -241,7 +241,8 @@ npx skills update           # npx로 받은 스킬 갱신
   - 반대로 코드에서 적·아이템을 바꾸거나 추가하면 CSV에도 같은 내용 반영 (둘이 어긋나지 않게). ID·프리팹·에셋 열은 유지
   - CSV 저장은 `utf-8-sig`(BOM) + 쉼표 — 엑셀 호환. 보기 화면은 `python Design/Data/build_viewer.py` (HTML은 gitignore)
   - 사람이 엑셀로 열어 두면 파일이 잠긴다 (PermissionError) — 덮어쓰지 말고 닫아 달라고 할 것
-- **한 판의 흐름** (2026-10-18, `Design/08_RunFlow.md`): `DungeonManager`가 스테이지(정원 고정 → 가운데 고르기 → 탑 고정) × 갈림길 지도(`RunMap.cs`, 8층)를 돈다. 방은 씬의 것을 재사용(`Room.ResetForReuse`). 지도 UI `MapScreen`(GameState.Map). 해금 `MetaProgress`(meta.json — 테스트 후 지울 것). 스테이지 보스는 `EnemyRoster.bossFirst/Middle/Last`
+- **한 판의 흐름** (2026-10-18, `Design/08_RunFlow.md`): `DungeonManager`가 스테이지(정원 고정 → 가운데 고르기 → 탑 고정) × 갈림길 지도(`RunMap.cs`, 8층)를 돈다. 방은 씬의 것을 재사용(`Room.ResetForReuse`). 지도 UI `MapScreen`(GameState.Map). 해금 `MetaProgress`(meta.json — **사람의 실제 진행이 들어 있음. 보스를 잡는 테스트는 파편·퀘스트를 바꾸므로 조심**, 테스트로 바꿨으면 되돌릴 것). 스테이지 보스는 `EnemyRoster.bossFirst/Middle/Last`
+  - 고르기 화면(지도·스테이지·물음표)은 `MapScreen` 하나 — 둘이 같으면 바로, 한 명이면 5초. 물음표 이벤트 `RunEvents.cs`, 새 방 모양 `RoomShapeBuilder.cs`, 덩어리 `RoomChunks`(템플릿 `?`)
 - **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
 
