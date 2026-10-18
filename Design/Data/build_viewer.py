@@ -227,9 +227,48 @@ def stages():
             'fields': ['해금', '보스', '분위기', '바닥', '벽', '장애물·소품', '특수 지형'], 'notes': ['메모'], 'groupInfo': {}}
 
 
+def roster(key, title, owners_csv, items_csv, owner_col, fields, owner_fields, owner_prompt_style, item_prompt_style):
+    """고양이·작물: 위에 캐릭터 소개 상자, 아래에 그 캐릭터 전용 장비 카드"""
+    owners = read_csv(owners_csv)
+    removed = mark_changes(owners_csv, owners)
+    rows = read_csv(items_csv)
+    removed += mark_changes(items_csv, rows)
+    sty = styles()
+    groups, info = [], {}
+    for o in owners:
+        g = o.get('이름', '')
+        groups.append(g)
+        info[g] = {'color': '#C9A8FF' if o.get('상태', '').startswith('구현') else '#888888',
+                   'profile': [[k, o.get(k, ''), k in o['_changed'] or o['_new']] for k in owner_fields if o.get(k) or k in o['_changed']],
+                   'prompt': prompt(sty.get(owner_prompt_style), o.get('그림 프롬프트')),
+                   'id': o.get('ID', ''), 'req': o.get('요청', ''), 'status': o.get('상태', '')}
+    for r in rows:
+        r['_img'] = ''
+        r['_group'] = r.get(owner_col, '')
+        r['_sub'] = r.get('ID', '')
+        r['_rarity'] = RARITY_COLOR.get(r.get('등급', ''), '')
+        r['_chips'] = [[r.get('등급', ''), 'rar', '등급'], [r.get('상태', ''), 'st', '상태']]
+        r['_prompts'] = [['그림', prompt(sty.get(item_prompt_style), r.get('그림 프롬프트'))]] if r.get('그림 프롬프트') else []
+    groups += sorted({r['_group'] for r in rows} - set(groups))
+    return {'key': key, 'title': title, 'csv': f'{owners_csv} + {items_csv}', 'rows': rows, 'removed': removed, 'groups': groups,
+            'fields': fields, 'notes': ['메모'], 'groupInfo': info}
+
+
+def cats():
+    return roster('cats', '고양이', 'cats.csv', 'cat_weapons.csv', '고양이',
+                  ['기본 공격 변화', '특수 공격', '특수 공격 설명', '게이지'],
+                  ['무기 종류', '기본 공격', '특성', '특성 설명', '야성 게이지', '기본 무기', '해금', '플레이 느낌', '상태', '메모'], 'character', 'weapon')
+
+
+def crops():
+    return roster('crops', '작물', 'crops.csv', 'crop_seeds.csv', '작물',
+                  ['기본 탄 변화', 'R 강화'],
+                  ['기본 탄', '특성', '특성 설명', '전용 스킬(R)', 'R 설명', 'R 쿨다운', '기본 씨앗', '해금', '플레이 느낌', '상태', '메모'], 'character', 'icon')
+
+
 def build():
     tables = []
-    for make, name in ((stages, 'stages.csv'), (enemies, 'enemies.csv'), (items, 'items.csv')):
+    for make, name in ((stages, 'stages.csv'), (cats, 'cats.csv'), (crops, 'crops.csv'), (enemies, 'enemies.csv'), (items, 'items.csv')):
         if os.path.exists(os.path.join(HERE, name)):
             tables.append(make())
     for t in tables:
@@ -240,7 +279,7 @@ def build():
     open(OUT, 'w', encoding='utf-8').write(TEMPLATE.replace('__DATA__', data.replace('</', '<\\/')))
     for t in tables:
         changed = sum(1 for r in t['rows'] if r['_isChanged']) + sum(
-            1 for g in t['groupInfo'].values() for s in g['rows'] if s['_new'] or s['_changed'])
+            1 for g in t['groupInfo'].values() for s in g.get('rows', []) if s['_new'] or s['_changed'])
         print(f"{t['title']}: {len(t['rows'])}개, 바뀐 것 {changed}개, 지운 것 {len(t['removed'])}개")
     for w in warnings:
         print('경고:', w)
@@ -330,6 +369,11 @@ function card(t, r) {
   </article>`;
 }
 function bonus(info) {
+  if (info.profile) {
+    return `<div class="bonus" style="--gc:${esc(info.color)}">${info.profile.map(([k, v, ch]) => `<b>${esc(k)}</b><span${ch ? ' class="hl"' : ''}>${esc(v)}</span>`).join('')}
+      ${info.prompt ? `<b></b><span class="prompt" style="padding:0"><button class="copy" data-p="${esc(info.prompt)}">캐릭터 그림 프롬프트 복사</button></span>` : ''}
+      ${info.req ? `<b style="color:var(--reqb)">요청</b><span>${esc(info.req)}</span>` : ''}</div>`;
+  }
   return `<div class="bonus" style="--gc:${esc(info.color)}">${info.rows.map(s => {
     const mark = s._new || s._changed.length;
     return `<b>${val(s, '조각')}세트</b><span${mark ? ' class="hl"' : ''}>${esc(s['보너스'])}${s['요청'] ? ` — <span style="color:var(--reqb)">요청: ${esc(s['요청'])}</span>` : ''}</span>`;
@@ -351,8 +395,9 @@ function render() {
   let out = '';
   for (const g of t.groups) {
     const part = list.filter(r => r._group === g);
-    if (!part.length) continue;
     const info = t.groupInfo[g];
+    const showEmptyProfile = info && info.profile && (group === '전체' || group === g) && !q && !onlyChanged && !onlyReq;
+    if (!part.length && !showEmptyProfile) continue;
     out += `<h2 style="${info ? '--gc:' + esc(info.color) : ''}">${esc(g)} (${part.length})</h2>${info ? bonus(info) : ''}<div class="grid">${part.map(r => card(t, r)).join('')}</div>`;
   }
   if (!out) out = '<div class="empty">조건에 맞는 항목이 없어요</div>';
