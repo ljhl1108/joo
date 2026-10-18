@@ -140,13 +140,27 @@ def shape_image(shape, color_hex):
 
 # ── 표마다 ─────────────────────────────────────────────────────────────────
 
+def styles():
+    """style.csv: 그림 종류별 공통 프롬프트 (적·보스·아이콘·타일·소품)"""
+    if not os.path.exists(os.path.join(HERE, 'style.csv')):
+        return {}
+    return {r['ID']: r.get('공통 프롬프트', '') for r in read_csv('style.csv')}
+
+
+def prompt(style, subject):
+    return f'{style}, {subject}' if style and subject else subject
+
+
 RARITY_COLOR = {'일반': '#9a9a9a', '희귀': '#4f9dff', '에픽': '#b06cff', '전설': '#ff9a26'}
 
 
 def enemies():
     rows = read_csv('enemies.csv')
     removed = mark_changes('enemies.csv', rows)
+    st = styles()
     for r in rows:
+        boss = r.get('분류') in ('보스', '엘리트')
+        r['_prompts'] = [['그림', prompt(st.get('boss' if boss else 'enemy'), r.get('그림 프롬프트'))]] if r.get('그림 프롬프트') else []
         r['_img'] = asset_image(r['그림']) if r.get('그림') else shape_image(r.get('도형', 'Square'), r.get('색'))
         r['_group'] = '보스·엘리트' if r.get('분류') in ('보스', '엘리트') else (r.get('스테이지') or '기타')
         r['_sub'] = f"{r.get('ID')} · {r.get('프리팹') or '프리팹 없음'}"
@@ -164,7 +178,9 @@ def items():
     set_removed = mark_changes('sets.csv', sets)
     set_color = {s['세트']: s.get('색', '#888') for s in sets}
     set_order = list(dict.fromkeys(s['세트'] for s in sets))
+    st = styles()
     for r in rows:
+        r['_prompts'] = [['아이콘', prompt(st.get('icon'), r.get('그림 프롬프트'))]] if r.get('그림 프롬프트') else []
         r['_img'] = asset_image(r['아이콘']) if r.get('아이콘') else ''
         st = r.get('세트', '없음')
         if r.get('상태') == '보류':
@@ -194,9 +210,26 @@ def items():
             'notes': ['설명', '메모'], 'groupInfo': info}
 
 
+def stages():
+    rows = read_csv('stages.csv')
+    removed = mark_changes('stages.csv', rows)
+    st = styles()
+    for r in rows:
+        r['_img'] = ''
+        r['_swatch'] = [r.get('주색') or '#888', r.get('보조색') or '#ccc']
+        order = r.get('순서', '')
+        r['_group'] = '처음 (고정)' if order.startswith('1') else '가운데 (무작위)' if '가운데' in order else '마지막'
+        r['_sub'] = r.get('ID', '')
+        r['_chips'] = [[r.get('순서', ''), '', '순서'], [r.get('상태', ''), 'st', '상태']]
+        r['_prompts'] = [p for p in (['타일', prompt(st.get('tile'), r.get('타일 프롬프트'))], ['소품', prompt(st.get('prop'), r.get('소품 프롬프트'))]) if p[1]]
+    groups = [g for g in ('처음 (고정)', '가운데 (무작위)', '마지막') if any(r['_group'] == g for r in rows)]
+    return {'key': 'stages', 'title': '스테이지', 'csv': 'stages.csv (+ style.csv)', 'rows': rows, 'removed': removed, 'groups': groups,
+            'fields': ['해금', '보스', '분위기', '바닥', '벽', '장애물·소품', '특수 지형'], 'notes': ['메모'], 'groupInfo': {}}
+
+
 def build():
     tables = []
-    for make, name in ((enemies, 'enemies.csv'), (items, 'items.csv')):
+    for make, name in ((stages, 'stages.csv'), (enemies, 'enemies.csv'), (items, 'items.csv')):
         if os.path.exists(os.path.join(HERE, name)):
             tables.append(make())
     for t in tables:
@@ -251,6 +284,10 @@ dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:1px 8px;font-size:13
 .new{background:var(--hlb);color:#000;border-radius:6px;padding:0 6px;font-size:12px;font-weight:700}
 .removed{background:var(--req);border-radius:8px;padding:8px 12px;margin-top:12px}
 .empty{color:var(--sub);padding:30px;text-align:center}
+.prompt{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;font-size:12px;color:var(--sub)}
+.prompt details{flex:1;min-width:120px}.prompt summary{cursor:pointer}
+.copy{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:6px;padding:2px 8px;cursor:pointer;font:inherit;font-size:12px}
+.copy.done{background:var(--hl)}
 </style></head><body>
 <header>
 <div class="head"><h1>OnionCat 도감</h1><div class="tabs" id="tabs"></div></div>
@@ -284,11 +321,12 @@ function card(t, r) {
     `<dt>${k}</dt><dd>${r._stars === k && !r._changed.includes(k) ? '★'.repeat(+r[k] || 0) : val(r, k)}</dd>`).join('');
   const notes = t.notes.filter(k => r[k] || r._changed.includes(k)).map(k => `<div class="full${k === '메모' ? ' memo' : ''}">${val(r, k)}</div>`).join('');
   return `<article class="card${r._isChanged ? ' changed' : ''}" style="${r._rarity ? '--rc:' + r._rarity : ''}">
-    <div class="pic">${r._img ? `<img src="${r._img}" alt="" loading="lazy">` : '<span class="none">그림 없음</span>'}</div>
+    <div class="pic" style="${r._swatch ? `background:linear-gradient(135deg,${r._swatch[0]} 55%,${r._swatch[1]} 55%)` : ''}">${r._img ? `<img src="${r._img}" alt="" loading="lazy">` : r._swatch ? '' : '<span class="none">그림 없음</span>'}</div>
     <div><div class="top"><span class="name">${val(r, '이름')}</span><span class="id">${esc(r._sub)}</span>${r._new ? '<span class="new">새로 추가</span>' : ''}</div>
       <div class="chips">${r._chips.map(c => chip(c, r)).join('')}</div>
       <dl>${fields}</dl></div>
-    ${notes}${r['요청'] ? `<div class="req"><b>요청</b> ${val(r, '요청')}</div>` : ''}
+    ${notes}${(r._prompts || []).map(([label, text]) => `<div class="full prompt"><button class="copy" data-p="${esc(text)}">${esc(label)} 프롬프트 복사</button><details><summary>보기</summary>${esc(text)}</details></div>`).join('')}
+    ${r['요청'] ? `<div class="req"><b>요청</b> ${val(r, '요청')}</div>` : ''}
   </article>`;
 }
 function bonus(info) {
@@ -321,6 +359,14 @@ function render() {
   if (t.removed.length) out += `<div class="removed">마지막 커밋 이후 지운 ID: ${t.removed.map(esc).join(', ')}</div>`;
   document.getElementById('main').innerHTML = out;
 }
+document.getElementById('main').addEventListener('click', e => {
+  const b = e.target.closest('.copy'); if (!b) return;
+  const text = b.dataset.p;
+  const done = () => { const t = b.textContent; b.textContent = '복사됨!'; b.classList.add('done'); setTimeout(() => { b.textContent = t; b.classList.remove('done'); }, 1200); };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, () => fallback());
+  else fallback();
+  function fallback() { const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); done(); }
+});
 document.getElementById('fChanged').onclick = e => { onlyChanged = !onlyChanged; e.target.classList.toggle('on', onlyChanged); render(); };
 document.getElementById('fReq').onclick = e => { onlyReq = !onlyReq; e.target.classList.toggle('on', onlyReq); render(); };
 document.getElementById('q').oninput = e => { query = e.target.value; render(); };

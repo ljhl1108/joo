@@ -240,6 +240,8 @@ npx skills update           # npx로 받은 스킬 갱신
   - 작업 시작 시 `git diff Design/Data`로 사람이 고친 칸 확인 (엑셀이 `2.0`→`2`처럼 숫자 모양만 바꾼 건 무시) → 적은 `EnemyBuilder.cs`, 아이템·세트는 `ContentBuilder.cs`·`PassiveSetBonus.cs`에 반영 후 빌드 메뉴, **'요청' 열은 처리하고 비운다**
   - 반대로 코드에서 적·아이템을 바꾸거나 추가하면 CSV에도 같은 내용 반영 (둘이 어긋나지 않게). ID·프리팹·에셋 열은 유지
   - CSV 저장은 `utf-8-sig`(BOM) + 쉼표 — 엑셀 호환. 보기 화면은 `python Design/Data/build_viewer.py` (HTML은 gitignore)
+  - 사람이 엑셀로 열어 두면 파일이 잠긴다 (PermissionError) — 덮어쓰지 말고 닫아 달라고 할 것
+- **한 판의 흐름** (2026-10-18, `Design/08_RunFlow.md`): `DungeonManager`가 스테이지(정원 고정 → 가운데 고르기 → 탑 고정) × 갈림길 지도(`RunMap.cs`, 8층)를 돈다. 방은 씬의 것을 재사용(`Room.ResetForReuse`). 지도 UI `MapScreen`(GameState.Map). 해금 `MetaProgress`(meta.json — 테스트 후 지울 것). 스테이지 보스는 `EnemyRoster.bossFirst/Middle/Last`
 - **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
 
