@@ -178,9 +178,9 @@ def items():
     set_removed = mark_changes('sets.csv', sets)
     set_color = {s['세트']: s.get('색', '#888') for s in sets}
     set_order = list(dict.fromkeys(s['세트'] for s in sets))
-    st = styles()
+    sty = styles()
     for r in rows:
-        r['_prompts'] = [['아이콘', prompt(st.get('icon'), r.get('그림 프롬프트'))]] if r.get('그림 프롬프트') else []
+        r['_prompts'] = [['아이콘', prompt(sty.get('icon'), r.get('그림 프롬프트'))]] if r.get('그림 프롬프트') else []
         r['_img'] = asset_image(r['아이콘']) if r.get('아이콘') else ''
         st = r.get('세트', '없음')
         if r.get('상태') == '보류':
