@@ -199,7 +199,8 @@ npx skills update           # npx로 받은 스킬 갱신
   새 스탯 = `StatType` 추가 + `PlayerStats.Modify` 분기 + 사용하는 곳에서 읽기
 - **입력**: 컨트롤 스킴 `Cat`(키보드·게임패드 둘 다 선택) / `Onion`(마우스). 배치는 `CoopInputLayout`이 자동 전환
   - 패드 모드(패드 연결): 고양이 = 패드만 / 양파 = 마우스 + Q W E R 스킬 · 1~5 가방 · Space 합동기
-  - 키보드 모드(패드 없음): 고양이 = WASD · Space 대쉬 · **왼쪽 Shift 할퀴기 · 왼쪽 Ctrl 걷어차기** · Q 던지기 · E 합동기 · Z/X 가방
+  - 고양이 특수 공격(야성 게이지, `CatSpecial`) = 키보드 **F** / 패드 **LB** (Player1/Special)
+  - 키보드 모드(패드 없음): 고양이 = WASD · Space 대쉬 · **왼쪽 Shift 할퀴기 · 왼쪽 Ctrl 걷어차기** · Q 던지기 · F 특수 공격 · E 합동기 · Z/X 가방
     / 양파 = 마우스 + 1~4 스킬 · 6~0 가방 · 휠 클릭 합동기 (W가 이동과 겹쳐서 숫자로)
   - 양파 키보드 키는 페어링과 무관한 독립 InputAction(`OnionInputKeys`)으로 읽는다
 - **코어 시스템** (설계 `Design/04_Combat.md`·`05_Items.md`, 구현 목록 `Design/00_Implemented.md`, 테스트 결과 `Guides/Done/v4_playtest.md`)
