@@ -199,9 +199,9 @@ npx skills update           # npx로 받은 스킬 갱신
   새 스탯 = `StatType` 추가 + `PlayerStats.Modify` 분기 + 사용하는 곳에서 읽기
 - **입력**: 컨트롤 스킴 `Cat`(키보드·게임패드 둘 다 선택) / `Onion`(마우스). 배치는 `CoopInputLayout`이 자동 전환
   - 패드 모드(패드 연결): 고양이 = 패드만 / 양파 = 마우스 + Q W E R 스킬 · 1~5 가방 · Space 합동기
-  - 고양이 특수 공격(야성 게이지, `CatSpecial`) = 키보드 **F** / 패드 **LB** (Player1/Special)
-  - 키보드 모드(패드 없음): 고양이 = WASD · Space 대쉬 · **왼쪽 Shift 할퀴기** · Q 던지기 · F 특수 공격 · E 합동기 · Z/X 가방
-  - **걷어차기는 꺼 둠** (2026-10-21, `GameFeatures.Kick = false` — 입력 Ctrl·패드 Y는 남아 있지만 무시). 걷어차기에 기대는 장비는 `GameFeatures.IsAvailable`로 보상에서 제외
+  - 고양이 특수 공격(야성 게이지, `CatSpecial`) = 키보드 **왼쪽 Ctrl** / 패드 **Y** (Player1/Special). 장비 효과 발동 `EffectTrigger.SpecialHit`
+  - 키보드 모드(패드 없음): 고양이 = WASD · Space 대쉬 · **왼쪽 Shift 할퀴기 · 왼쪽 Ctrl 특수 공격** · Q 던지기 · E 합동기 · Z/X 가방
+  - **걷어차기는 꺼 둠** (2026-10-21, `GameFeatures.Kick = false` — 키 F·패드 LB는 남아 있지만 무시). 걷어차기에 기대는 장비가 생기면 `GameFeatures.IsAvailable`이 보상에서 제외
   - 적 크기는 4등급만 (작음 0.5 · 보통 0.6 · 큼 0.75 · 보스 1.1) — `EnemyBuilder.SizeOf`
     / 양파 = 마우스 + 1~4 스킬 · 6~0 가방 · 휠 클릭 합동기 (W가 이동과 겹쳐서 숫자로)
   - 양파 키보드 키는 페어링과 무관한 독립 InputAction(`OnionInputKeys`)으로 읽는다
