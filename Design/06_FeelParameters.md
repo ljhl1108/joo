@@ -267,6 +267,13 @@
 | 도박하는 거북 | 최소 20 / 0.34 / ×3 | 걸 수 있는 최소 씨앗 / 이길 확률 / 배수 |
 | 기억의 꽃 | 파편 2 / 2방 | 기억 파편 / 받는 피해 증가가 이어지는 방 수 |
 
+## 14.5 온실 (`Design/07_StoryMeta.md` 2장)
+
+| 항목 | 위치 | 지금 값 | 의미 |
+|---|---|---|---|
+| 📊 해금 가격 | `Design/Data/items.csv` `해금` 열 = 🛠 `Editor/GreenhouseBuilder.cs` → 메뉴 **OnionCat > Content > Apply Greenhouse Unlock Costs** | 에픽 12개 × 파편 2 · 전설 2개 × 파편 4 | 빈칸 = 처음부터 보상에 나옴. 장비 에셋의 Unlock Cost 칸에 들어감 (Inspector에서 고쳐도 되지만 다음 빌드 때 표 값으로 돌아감) |
+| 🛠 기억 파편 얻는 양 | `MetaProgress.OnBossDefeated` · RunTuning(유물 3 · 꽃 2) | 보스 +1 | 한 판에 3~6개 |
+
 ## 15. 고양이 특수 공격 · 야성 게이지 (`Design/01_Characters.md` 0-1)
 
 | 항목 | 위치 | 지금 값 | 의미 |

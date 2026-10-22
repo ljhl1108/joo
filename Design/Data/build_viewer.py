@@ -206,7 +206,7 @@ def items():
     for s in sets:   # 세트 묶음 위에 단계별 보너스 (sets.csv — 같이 고칠 수 있음)
         info.setdefault(f"{s['세트']} 세트", {'color': s.get('색', '#888'), 'rows': []})['rows'].append(s)
     return {'key': 'items', 'title': '아이템', 'csv': 'items.csv + sets.csv', 'rows': rows, 'removed': removed + set_removed,
-            'groups': groups, 'fields': ['효과 이름', '효과', '능력치(Lv1)', '스킬', '스킬 설명', '할퀴기', '최대 레벨'],
+            'groups': groups, 'fields': ['효과 이름', '효과', '능력치(Lv1)', '스킬', '스킬 설명', '할퀴기', '최대 레벨', '해금'],
             'notes': ['설명', '메모'], 'groupInfo': info}
 
 
