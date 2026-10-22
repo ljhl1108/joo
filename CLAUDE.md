@@ -239,6 +239,9 @@ npx skills update           # npx로 받은 스킬 갱신
   - 새 적 = `Assets/Editor/EnemyBuilder.cs` 표에 한 줄 (조합형 `ModularEnemy`: 움직임 + 공격 + 특성) → 메뉴 **OnionCat > Enemies > Build Enemies** (프리팹 `Prefabs/Enemies` + 명단 `Resources/EnemyRoster` 갱신)
   - 고양이를 아프게 하는 장판·충격은 `EnemyHazard` (적을 아프게 하는 건 `EffectZone`). 방의 적 자리는 `EnemyRoster.Resolve`가 스테이지 테마에 맞게 일부 교체
   - 조합형 적은 `EnemyBase`의 private 메시지 메서드(Update·OnCollisionEnter2D)를 다시 정의하지 말 것 → `FixedUpdate` override와 `InterceptDamage`·`OnDamaged` 훅을 쓴다
+  - **체력 기준선** (2026-10-22): 표의 hp는 예전 눈금, 빌드 시 ×5 (소환물·보스 ×3, `EnemyBuilder.HpOf`). `enemies.csv` 체력 칸은 최종값 → CSV를 표에 옮길 때 5(또는 3)로 나눌 것. 기존 적 5종은 메뉴 `Apply Size Classes To Old Enemies`가 크기·체력을 같이 넣음
+  - **적 조합**: 전투방 70%는 `EnemyRoster.squads` (표 `EnemyBuilder.BuildSquads`, 스테이지 -1 공통·0~4 테마) → `EnemyRoster.ResolveRoom`
+  - **물음표 방 손해 규칙**: 능력치 손해(최대 체력·받는 피해·대쉬 봉인 등)는 영구 금지 → `TimedEffects`로 "방 N개 동안"만. 바로 끝나는 손해(체력·씨앗·매복)는 OK. 매복 = `DungeonManager.StartAmbush(마릿수, 이기면)`
 - **공용 데이터 표** (2026-10-18, `Design/Data/README.md`) — 사람과 같이 고치는 표. 적 `enemies.csv` · 아이템 `items.csv` · 세트 `sets.csv` · 스테이지 `stages.csv` · 고양이 `cats.csv`+`cat_weapons.csv` · 작물 `crops.csv`+`crop_seeds.csv` (고양이·작물은 아직 아이디어 — 구현 전)
   - 작업 시작 시 `git diff Design/Data`로 사람이 고친 칸 확인 (엑셀이 `2.0`→`2`처럼 숫자 모양만 바꾼 건 무시) → 적은 `EnemyBuilder.cs`, 아이템·세트는 `ContentBuilder.cs`·`PassiveSetBonus.cs`에 반영 후 빌드 메뉴, **'요청' 열은 처리하고 비운다**
   - 반대로 코드에서 적·아이템을 바꾸거나 추가하면 CSV에도 같은 내용 반영 (둘이 어긋나지 않게). ID·프리팹·에셋 열은 유지
