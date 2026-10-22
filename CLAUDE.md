@@ -250,6 +250,7 @@ npx skills update           # npx로 받은 스킬 갱신
 - **한 판의 흐름** (2026-10-18, `Design/08_RunFlow.md`): `DungeonManager`가 스테이지(정원 고정 → 가운데 고르기 → 탑 고정) × 갈림길 지도(`RunMap.cs`, 8층)를 돈다. 방은 씬의 것을 재사용(`Room.ResetForReuse`). 지도 UI `MapScreen`(GameState.Map). 해금 `MetaProgress`(meta.json — **사람의 실제 진행이 들어 있음. 보스를 잡는 테스트는 파편·퀘스트를 바꾸므로 조심**, 테스트로 바꿨으면 되돌릴 것). 스테이지 보스는 `EnemyRoster.bossFirst/Middle/Last`
   - 고르기 화면(지도·스테이지·물음표)은 `MapScreen` 하나 — 둘이 같으면 바로, 한 명이면 5초. 물음표 이벤트 `RunEvents.cs`, 새 방 모양 `RoomShapeBuilder.cs`, 덩어리 `RoomChunks`(템플릿 `?`)
 - **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
+  - **조절 수치를 새로 만들거나 기본값을 바꾸면 `06_FeelParameters.md`에도 한 줄** (⚡ 에셋 / 🧩 씬·프리팹 / 🛠 코드 / 📊 CSV 표시 + 실제 저장된 값). 사람이 "그 수치 어디서 고쳐?"를 이 문서 하나로 찾게
 - **PPU 32** 고정 (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360
 
 ---

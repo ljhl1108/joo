@@ -1,10 +1,19 @@
-# 감각 조절 파라미터 목록
+# 조절 수치 목록
 
-게임이 "어떻게 느껴지는지"를 결정하는 수치를 한곳에 모은 목록.
-**완성 후에도 주기적으로 이 목록을 따라가며 한 번씩 점검**하는 용도.
+게임에서 **사람이 만져 볼 만한 수치를 전부 한곳에** 모은 목록 — "어디서(어느 asset·컴포넌트·코드) 고치는지 + 지금 값 + 의미".
+1~9장 = 감각(얼마나 시원한가·잘 보이는가), 10장~ = 시스템·밸런스(얼마나 센가·얼마나 자주 나오나).
+**완성 후에도 주기적으로 이 목록을 따라가며 한 번씩 점검**하는 용도. 새 조절 수치가 생기면 Claude가 여기에 한 줄 추가한다.
 
-> 밸런스 수치(체력·데미지 같은 "얼마나 센가")는 여기가 아니라 `TODO.md` 11. 밸런스 · 출시 준비 (M5)에서 다룬다.
-> 여기는 "얼마나 시원한가 / 잘 보이는가"를 다룬다.
+### 위치 표시
+
+| 표시 | 뜻 | 고치는 법 |
+|---|---|---|
+| ⚡ | 에셋 (`.asset`) | 유니티 Project 창에서 에셋 선택 → Inspector. **플레이 중에 바꿔도 유지됨** |
+| 🧩 | 씬·프리팹 컴포넌트 | Hierarchy·프리팹 선택 → Inspector. 플레이 중에 바꾼 값은 Play를 끄면 사라짐 |
+| 🛠 | 코드·표 | Claude에게 요청 (코드 표를 고치고 빌드 메뉴를 다시 돌려야 함) |
+| 📊 | 공용 CSV (`Design/Data`) | 엑셀에서 고치면 Claude가 코드·에셋에 반영 |
+
+> 값은 2026-10-23 기준 **실제 저장된 값** (코드 기본값이 아니라 에셋·씬에 들어 있는 값). 밸런스는 아직 임시.
 
 ---
 
@@ -177,9 +186,9 @@
 
 | 항목 | 위치 | 기본값 | 의미 |
 |---|---|---|---|
-| Cooldown / Range / Arc Angle | `Player_Cat` → CatKick | 4초 / 1.7 / 120° | 걷어차기 재사용·범위 |
-| Launch Speed / Duration | CatKick | 16 / 0.4초 | 걷어찬 적이 날아가는 세기 (넉백 저항만큼 감소) |
-| Impact Damage | CatKick | 3 | 날아간 적이 벽·적에 부딪힐 때 (CRASH) |
+| ⏸ Cooldown / Range / Arc Angle | `Player_Cat` → CatKick | 4초 / 1.7 / 120° | 걷어차기 재사용·범위 — **걷어차기는 꺼 둠** (`GameFeatures.Kick`) |
+| ⏸ Launch Speed / Duration | CatKick | 16 / 0.4초 | 걷어찬 적이 날아가는 세기 (넉백 저항만큼 감소) |
+| ⏸ Impact Damage | CatKick | 3 | 날아간 적이 벽·적에 부딪힐 때 (CRASH) |
 | Base Charges / Auto Aim Range | `Player_Cat` → CatThrow | 1 / 9 | 털뭉치 개수·자동 조준 거리 |
 | Auto Return Time / Slow | `Prefabs/Core/Hairball` | 4초 / 0.6배 2초 | 털뭉치 자동 회수·둔화 |
 | Combo / KickCombo / Parry / Teamwork Gain | `Player_Cat` → JointUltimate | 8 / 15 / 10 / 20 | 합동 게이지 충전량 (100이 가득) |
@@ -202,3 +211,57 @@
 | Stats (Per Level) / Max Level | `Data/Gear/Gear_*.asset` | 장비마다 (할퀴기 +1, 이동 +3% 등) / 5 (마법서 3) | 레벨마다 붙는 기본 능력치 |
 | 분해 씨앗 | `GearItem.SeedValue` (코드) | 일반 5 · 희귀 10 · 에픽 20 · 전설 40 × 레벨 | 분해했을 때 받는 씨앗 |
 | Passive Limit / Spellbook Slots | `Loadout` (코드) | 6 / 3 | 패시브 최대 개수·마법서 칸 |
+| ⚡ Gear Drop Chance | `Data/RewardTable.asset` | 0.5 | 방 클리어 시 장비가 바닥에 떨어질 확률 |
+| ⚡ Cards Per Role | RewardTable | 3 | 보상 화면에서 고양이·양파가 각자 보는 카드 수 |
+| ⚡ Combat / Elite Clear Seeds | RewardTable | 5 / 15 | 전투방·엘리트방 클리어 씨앗 (보스 = 엘리트 ×2) |
+| ⚡ Shop Prices | RewardTable | 15 / 30 / 60 / 120 | 상점 가격 (일반·희귀·에픽·전설) |
+| ⚡ Reroll Base Cost / Step | RewardTable | 10 / +5 | 상점 새로고침 가격 (누를 때마다 오름) |
+| ⚡ Shop Items Per Role | RewardTable | 3 | 상점 가판대 개수 (역할마다) |
+| ⚡ Rest Heal | RewardTable | 40 | 휴식 정원 샘물 회복량 |
+| 🛠 Max Loot Per Room | `DungeonManager` (코드) | 3 | 한 방에 떨어지는 장비 최대 개수 |
+
+---
+
+## 12. 한 판 흐름 · 지도 (`Design/08_RunFlow.md`)
+
+| 항목 | 위치 | 지금 값 | 의미 |
+|---|---|---|---|
+| 🧩 Health Per Stage | GameScene → `DungeonManager` | 1.35 | 스테이지마다 적 체력 배율 (2스테이지 ×1.35, 3스테이지 ×1.82). 보스는 제외 |
+| 🛠 스테이지마다 위험도 + | `DungeonManager.BeginStage` (코드) | +1 / 스테이지 | 뒤 스테이지일수록 위험한 적·조합이 나옴 |
+| 🛠 스테이지 수 | `MetaProgress.StageCount` (코드) | 3 (해금마다 +1, 최대 5) | 한 판 길이 |
+| 🛠 층 수 / 길 수 / 칸 수 | `RunMap.cs` 상수 | 갈림길 5층 + 휴식 + 보스 / 3갈래 / 4칸 | 지도 모양 |
+| 🛠 방 종류 확률 | `RunMap.cs` `Roll` | 물음표 14% · 보물 13% · 상점 13% · 엘리트 12%(3층~) · 휴식 10%(3~4층) · 나머지 전투 | 2~5층 칸이 무엇이 될지 (1층은 전투만) |
+| 🛠 층별 난이도 | `RunMap.TierFor` | 1~2층 = 1 · 3~4층 = 2 · 5층~ = 3 | 방 난이도 → 나오는 적 위험도 상한 |
+| 🛠 고르기 대기 | `MapScreen.VoteWait` | 5초 | 한 명만 골랐을 때 기다리는 시간 (둘이 같으면 바로) |
+| 🧩 Fade / Reward / Victory Delay | GameScene → `DungeonManager` | 0.4 / 0.6 / 1.0초 | 9장과 같음 |
+
+## 13. 적 구성 · 체력 (`Design/02_Enemies.md` 1-1)
+
+| 항목 | 위치 | 지금 값 | 의미 |
+|---|---|---|---|
+| ⚡ Squad Chance | `Resources/EnemyRoster.asset` → 조합 | 0.7 | 전투방이 **조합**(서로 돕는 묶음)으로 나올 확률. 아니면 자리마다 무작위 |
+| ⚡ Stage Weight | EnemyRoster | 2 | 지금 스테이지 전용 적·조합의 뽑힘 비중 (공통 = 1) |
+| ⚡ Replace Chance | EnemyRoster | 0.6 | 무작위일 때 방의 적 자리 하나를 스테이지 적·공통 적으로 바꿀 확률 |
+| 🛠 조합 목록 | `Editor/EnemyBuilder.cs` `BuildSquads` → 메뉴 **OnionCat > Enemies > Build Enemies** | 14개 | 구성 적·힌트·스테이지·위험도. Inspector에서 고치면 다음 빌드에 덮어써짐 |
+| 🛠 체력 배율 | `EnemyBuilder.HpScale` / `HpScaleHelper` / `HpScaleBoss` | ×5 / ×3 / ×3 | 표의 hp(예전 눈금)에 곱해서 프리팹에 넣음 — 처치 시간 기준선 |
+| 📊 적마다 체력·속도 | `Design/Data/enemies.csv` | 슬라임 30 · 방패병 60 · 보스 360~600 | 게임 안 최종값. 고치면 Claude가 표에 반영 |
+| 🛠 엘리트 강화 | `Room.SpawnOne` (코드) | 체력 ×2 · 크기 ×1.2 · 금빛 | 엘리트방·매복 적 |
+| 🛠 적 크기 등급 | `EnemyBuilder.SizeOf` | 작음 0.5 · 보통 0.6 · 큼 0.75 · 보스 1.1 | 4등급만 |
+
+## 14. 물음표 방 (`Design/08_RunFlow.md` 2장, 코드 `RunEvents.cs` · `TimedEffects.cs`)
+
+| 항목 | 위치 | 지금 값 | 의미 |
+|---|---|---|---|
+| 🛠 저주 기본 지속 | `RunEvents.CurseRooms` | 3방 | "방 N개 동안" 효과의 기본 길이 (이벤트마다 ±1) |
+| 🛠 효과 세기 | `TimedEffects` | 최대 체력 ×0.7 · 받는 피해 ×2 · 주는 피해 ×2 · 적 체력 ×0.5 · 방마다 체력 -8 · 보스 체력 ×1.5 | 각 효과의 강도 |
+| 🛠 이벤트별 보상·대가 | `RunEvents.Build` | 표는 `08_RunFlow.md` 2장 | 등급(전설·에픽), 씨앗, 파편, 확률(반반·34%) |
+| 🛠 매복 | `DungeonManager.StartAmbush` | 엘리트 3마리 · 위험도 = 스테이지 + 2 | 도박꾼의 상자·영웅의 짐에서 지면 |
+
+## 15. 고양이 특수 공격 · 야성 게이지 (`Design/01_Characters.md` 0-1)
+
+| 항목 | 위치 | 지금 값 | 의미 |
+|---|---|---|---|
+| 🧩 Wild Per Hit | GameScene → `Player_Cat` → MeleeAttack_Slash | 8 | 할퀴기가 맞을 때 게이지 (가득 = 100) |
+| 🧩 Back Hit Wild Multiplier | MeleeAttack_Slash | 2 | 등을 쳤을 때 배율 (발톱 고양이 "사냥 본능") |
+| 🧩 Cost | `Player_Cat` → CatSpecial | 100 | 특수 공격에 드는 게이지 |
+| 🛠 무기별 특수 공격 | `CatSpecial.cs` | 난무 8연타 · 회오리 3초 · 덮치기 · 찢어발기기 X자 2번 · 광란 6초 (공속 ×2, 이동 ×1.3) | 무기마다 다른 특수 공격 |
