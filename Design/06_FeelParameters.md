@@ -140,6 +140,10 @@
 | Prewarm Count | OnionController | 20 | 미리 만들어 둘 씨앗 수 (많을수록 첫 연사가 매끄러움) |
 | Speed / Lifetime | Projectile 프리팹 | 10 / 3초 | 씨앗 속도·사거리 |
 | Shield Duration / Parry Window / Cooldown | OnionShield | 0.5 / 0.25 / 3초 | 실드 지속·패링 판정·재사용 → **양파 난이도 조절 후보** |
+| ⚡ 작물별 탄 (Shot Tint / Speed / Damage / Fire Rate) | `Resources/Crops/Crop_*.asset` | 양파 1 / 0 / 1 · 해바라기 1.5 / 0 / 1 | 작물마다 탄 색·속도 배율·피해 보정·연사 배율 📊 `crops.csv` |
+| ⚡ Seeds Per Room (광합성) | `Crop_Sunflower.asset` | 3 | 싸움 방에 들어갈 때마다 씨앗 |
+| ⚡ 고유기 쿨다운 | `Data/Skills/Skill_SpicyOnion` · `Skill_SunPillar` | 매운 양파 · 햇빛 기둥 18초 | 작물 R |
+| 🧩 햇빛 기둥 (Radius / Heal Per Tick / Tick / Lifetime) | `Prefabs/Plants/Plant_Sunbeam.prefab` | 1.6 (+0.2/레벨) / 2 (+1/레벨) / 0.5초 / 8초 | 안의 고양이 회복량 |
 
 ---
 
