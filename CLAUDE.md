@@ -247,7 +247,8 @@ npx skills update           # npx로 받은 스킬 갱신
   - 반대로 코드에서 적·아이템을 바꾸거나 추가하면 CSV에도 같은 내용 반영 (둘이 어긋나지 않게). ID·프리팹·에셋 열은 유지
   - CSV 저장은 `utf-8-sig`(BOM) + 쉼표 — 엑셀 호환. 보기 화면은 `python Design/Data/build_viewer.py` (HTML은 gitignore)
   - 사람이 엑셀로 열어 두면 파일이 잠긴다 (PermissionError) — 덮어쓰지 말고 닫아 달라고 할 것
-- **한 판의 흐름** (2026-10-27 이야기 구조, `Design/07_StoryMeta.md` 1장): `StoryRoute`가 길을 만든다 — 스테이지와 마을이 번갈아 (농장(시작, 노트·온실·화분) → 1 → 2 → 마을 → 3·4 → 등대 입구 → 5 → 등대탑 → 6 최종), 테마는 무작위(고르기 없음). 이야기 단계 `MetaProgress.Chapter` 1~4가 판이 끝나는 마을을 정한다. 스테이지마다 갈림길 지도(`RunMap.cs`, 8층), 마을은 방 하나짜리 지도(`StepKind.Village`, `Room_Special` 재사용 — 등불·샘물·가판대). 방은 씬의 것을 재사용(`Room.ResetForReuse`). 지도 UI `MapScreen`(GameState.Map)
+- **한 판의 흐름** (2026-10-27 이야기 구조, `Design/07_StoryMeta.md` 1장): `StoryRoute`가 길을 만든다 — 스테이지와 마을이 번갈아 (언덕 위 농장(시작, 말하는 책·온실·화분) → 1 → 2 → 마을 → 3·4 → 등대 입구 → 5 → 등대탑 → 6 최종), 테마는 무작위(고르기 없음). 이야기 단계 `MetaProgress.Chapter` 1~4가 판이 끝나는 마을을 정한다. 스테이지마다 갈림길 지도(`RunMap.cs`, 8층), 마을은 방 하나짜리 지도(`StepKind.Village`, `Room_Special` 재사용 — 등불·샘물·가판대). 방은 씬의 것을 재사용(`Room.ResetForReuse`). 지도 UI `MapScreen`(GameState.Map)
+  - **대사 = 말풍선** `Dialogue.Play(lines)` (`Dialogue.Say(말하는 쪽 Transform, 이름, 문구, 이름표 색)` — 글자가 한 자씩, 클릭·Enter·패드 A로 넘김, 게임이 멈추면 숨음). 이야기 대사는 `StoryLines.cs` (책 = 깐깐한 존댓말, 이름표 "낡은 책" → 4단계부터 "그리모", 고양이 "새벽"). **반전 전 대사·이름에 마녀의 정체를 드러내지 말 것**
   - **빛 색깔 퀘스트**: 마을 등불에 작물의 빛(`LightColor`, 판마다 쌓여 섞임)을 비추면 다음 단계. 필요한 빛 `StoryRoute.NeedOf`, 작물 목록·빛 `StoryRoute.Crops` (지금 양파뿐 → 낼 수 있는 빛만 요구). 등대탑 = 작물 종류 모으기. 최종 보스 처치 = 엔딩
   - meta.json — **사람의 실제 진행이 들어 있음** (이야기 단계·등불 빛·파편·해금). 테스트 전에 백업하고 끝나면 되돌릴 것 + 에디터 메모리의 `MetaProgress.data`도 null로 (안 그러면 다음 저장 때 테스트 값이 다시 써짐). 디버그 메뉴 `OnionCat > Debug > Story` (사람용 안내 `Guides/story_debug.md`)
   - 보스는 자리별 `EnemyRoster.BossFor(RouteSlot)` (bossFirst/Middle/Last + 비어 있는 bossFinal)
