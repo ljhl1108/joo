@@ -142,6 +142,9 @@
 | Shield Duration / Parry Window / Cooldown | OnionShield | 0.5 / 0.25 / 3초 | 실드 지속·패링 판정·재사용 → **양파 난이도 조절 후보** |
 | ⚡ 작물별 탄 (Shot Tint / Speed / Damage / Fire Rate) | `Resources/Crops/Crop_*.asset` | 양파 1 / 0 / 1 · 해바라기 1.5 / 0 / 1 | 작물마다 탄 색·속도 배율·피해 보정·연사 배율 📊 `crops.csv` |
 | ⚡ Seeds Per Room (광합성) | `Crop_Sunflower.asset` | 3 | 싸움 방에 들어갈 때마다 씨앗 |
+| ⚡ Shot Poison (포자탄) | `Crop_Mushroom.asset` | 1 (탄 속도 0.8) | 맞은 적에게 독 중첩 |
+| ⚡ 버섯밭 Count / Spread | `Data/Skills/Skill_MushroomPatch` | 3개 / 1.1 · 쿨다운 14초 | 한 번에 심는 버섯 수·간격 (식물 최대 수는 그대로 3) |
+| 🧩 버섯 (Trigger / Spore Radius / Poison / Cooldown / Lifetime) | `Prefabs/Plants/Plant_Mushroom.prefab` | 0.9 / 1.4 / 2 (+1/레벨) / 1.2초 / 10초 | 다가온 적에게 포자 |
 | ⚡ 고유기 쿨다운 | `Data/Skills/Skill_SpicyOnion` · `Skill_SunPillar` | 매운 양파 · 햇빛 기둥 18초 | 작물 R |
 | 🧩 햇빛 기둥 (Radius / Heal Per Tick / Tick / Lifetime) | `Prefabs/Plants/Plant_Sunbeam.prefab` | 1.6 (+0.2/레벨) / 2 (+1/레벨) / 0.5초 / 8초 | 안의 고양이 회복량 |
 
