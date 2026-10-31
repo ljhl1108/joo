@@ -254,6 +254,11 @@
 | 📊 적마다 체력·속도 | `Design/Data/enemies.csv` | 슬라임 30 · 방패병 60 · 보스 360~600 | 게임 안 최종값. 고치면 Claude가 표에 반영 |
 | ⚡ Elite Health / Scale | RunTuning → 엘리트 | ×2 / ×1.2 (금빛) | 엘리트방·매복 적 |
 | 🛠 적 크기 등급 | `EnemyBuilder.SizeOf` | 작음 0.5 · 보통 0.6 · 큼 0.75 · 보스 1.1 | 4등급만 |
+| 🧩 그림자 마녀 체력 | `Prefabs/Enemies/ShadowWitch.prefab` (🛠 `ShadowWitchBuilder.Health`) | 420 · 페이즈 2 = 60% 아래 | 등대탑 이야기 보스. 빌더를 다시 돌리면 코드 값으로 |
+| 🧩 그림자 막 Veil Hits / Veil Down Time | ShadowWitch.prefab | 6번 (페이즈 2 = 8번) / 4.5초 | 양파가 몇 번 맞혀야 깨지나 · 휘청이는(고양이가 때릴) 시간 |
+| 🧩 패턴 간격 · 탄 | ShadowWitch.prefab | 1.1초 (페이즈 2 ×0.7) · 밤 구슬 12발 ×2겹 속도 0.7 · 부채 5발 50° · 탄 피해 10 | |
+| 🧩 그림자 고양이 | ShadowWitch.prefab Cats Per Summon / Max Cats · 📊 `enemies.csv` X04 | 2마리 (페이즈 2 = 3) / 최대 3 · 체력 6 · 접촉 8 | |
+| 🧩 등불 끄기 Darkness Time / Cooldown / Sight | ShadowWitch.prefab | 5초 / 15초 / 3칸 | 어둠 진하기 0.88은 🛠 `NightDarkness.Darkness` |
 
 ## 14. 물음표 방 — ⚡ `Assets/Resources/RunTuning.asset` (`Design/08_RunFlow.md` 2장)
 
