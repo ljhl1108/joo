@@ -231,7 +231,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - 방 모양은 `Assets/Data/RoomLayouts/*.asset`(글자 지도, W 벽·X 벽 덩어리·D 출구 포함 시 크기·모양 자유 — 최대 40×20) → 메뉴 **OnionCat > Rooms > Apply Room Layouts**로 씬에 찍는다. 씬의 Layout 자식을 손으로 고치지 말 것 (다시 적용하면 지워짐)
   - 적은 지도 글자로 (1 슬라임·2 원거리·3 분열·4 방패병·B 보스). 런의 방 순서는 `DungeonManager`가 시작방 + 전투방 풀(난이도 tier) + 보스방으로 무작위 생성
   - **정렬 순서 구간**: 바닥 -1000~-900 (바닥 타일·구덩이·장판·벽 타일) / 서 있는 물체 -100~99 (`YSort`가 발 높이로 보정) / 항상 위 100+ (투사체·이펙트·숫자·라벨). 새 그림을 추가할 때 이 구간을 지킬 것
-  - **배경은 겹 쌓기** (2026-11-07, `Guides/tileset_request.md`): ① 방 바깥 채우기 · ② 바닥 타일 · ③ 바닥 장식 · ④ 벽·담 · ⑤ 소품 · ⑥ 조명. 시점은 **사선 탑다운** (방을 돌리지 않음 — 아이소메트릭 ✗). 고정 장소(농장·마을·등대탑)만 큰 그림 가능
+  - **배경은 겹 쌓기** (2026-11-07, 그릴 목록 `Design/Data/backgrounds.csv` · 규격 `Design/Data/README.md` 배경 표): ① 방 바깥 채우기 · ② 바닥 타일 · ③ 바닥 장식 · ④ 벽·담 · ⑤ 소품 · ⑥ 조명. 시점은 **사선 탑다운** (방을 돌리지 않음 — 아이소메트릭 ✗). 고정 장소(농장·마을·등대탑)만 큰 그림 가능
   - 바닥 장식 = `StageDecor` 에셋(`Resources/StageDecor.asset`, 테마별 묶음 + 공통) → `RoomDecor.Scatter`가 방에 들어갈 때마다 흩뿌림 (정렬 -995, 벽·Props 충돌체 위는 피함). 에셋은 메뉴 `OnionCat > Rooms > Build Stage Decor` (지금 Cainos 임시)
   - 장애물 = Wall 레이어·태그(탄 막음·CRASH), 구덩이 = `Pit`(Props 레이어, 걷어찬 적만 낙사, 보스 `immuneToPits`)
   - Unity 6에서 스프라이트 9-slice 테두리는 `TextureImporter.spriteBorder`가 안 먹힘 → `SpriteDataProviderFactories`로 설정
@@ -245,6 +245,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - **적 조합**: 전투방 70%는 `EnemyRoster.squads` (표 `EnemyBuilder.BuildSquads`, 스테이지 -1 공통·0~4 테마) → `EnemyRoster.ResolveRoom`
   - **물음표 방 손해 규칙**: 능력치 손해(최대 체력·받는 피해·대쉬 봉인 등)는 영구 금지 → `TimedEffects`로 "방 N개 동안"만. 바로 끝나는 손해(체력·씨앗·매복)는 OK. 매복 = `DungeonManager.StartAmbush(마릿수, 이기면)`
 - **공용 데이터 표** (2026-10-18, `Design/Data/README.md`) — 사람과 같이 고치는 표. 적 `enemies.csv` · 아이템 `items.csv` · 세트 `sets.csv` · 스테이지 `stages.csv` · 고양이 `cats.csv`+`cat_weapons.csv` · 작물 `crops.csv`+`crop_seeds.csv` (고양이·작물은 아직 아이디어 — 구현 전)
+  - ID 접두어: **임시 `TMP-`**(지금 쓰지만 교체할 것) · **폐기 `OLD-`**(안 쓰기로 한 것 — 지우지 않고 남김). 원래 번호를 붙여 아트 폴더와 이어지게, 한 번 쓴 번호는 다시 쓰지 않음
   - 작업 시작 시 `git diff Design/Data`로 사람이 고친 칸 확인 (엑셀이 `2.0`→`2`처럼 숫자 모양만 바꾼 건 무시) → 적은 `EnemyBuilder.cs`, 아이템·세트는 `ContentBuilder.cs`·`PassiveSetBonus.cs`에 반영 후 빌드 메뉴, **'요청' 열은 처리하고 비운다**
   - 반대로 코드에서 적·아이템을 바꾸거나 추가하면 CSV에도 같은 내용 반영 (둘이 어긋나지 않게). ID·프리팹·에셋 열은 유지
   - CSV 저장은 `utf-8-sig`(BOM) + 쉼표 — 엑셀 호환. 보기 화면은 `python Design/Data/build_viewer.py` (HTML은 gitignore)
