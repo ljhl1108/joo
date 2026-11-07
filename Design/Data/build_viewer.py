@@ -495,7 +495,7 @@ dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:1px 8px;font-size:13
 <header>
 <div class="head"><h1>OnionCat 도감</h1><div class="tabs" id="tabs"></div></div>
 <div class="meta" id="meta"></div><div class="warn" id="warn"></div>
-<div class="meta"><a href="../../Art/Characters/Cats_Four_Directions_v1/index.html">고양이 8종 · 4방향 32자세</a> · <a href="../../Art/Characters/CAT1_CR1_Four_Directions_v5/index.html">CAT1·CR1 4방향 v5 · 밀착 끈 반영</a> · <a href="../../Art/Characters/Modular_Cats_and_Pots_v1/index.html">용기 분리 고양이 8종 · 용기 10종</a> · <a href="../../Art/Weapons/Cat_Weapons_Ingame_v1/index.html">고양이 무기 35종 · 이미지/Aseprite/32px</a> · <a href="../../Art/Characters/Crops_Ingame_Library_v1/index.html">작물 인게임 8종 · 본체/화분/장착</a> · <a href="../../Art/Characters/Cats_Ingame_Library_v1/index.html">고양이 인게임 8종 · 이미지/Aseprite 비교</a> · <a href="../../Art/Enemies/Ingame_Library_v2/index.html">전체 적 인게임 47종 · 크기 보정</a> · <a href="../../Art/Library_v1/index.html">전체 아트 갤러리 (소품·문·특수 지형 포함)</a> · <a href="../../Art/Enemies/Library_v2/index.html">초기 적 그림과 비교</a></div>
+<div class="meta">아트 최종본: <a href="../../Art/Final/index.html">전체</a> · <a href="../../Art/Final/Cats/index.html">고양이 8종</a> · <a href="../../Art/Final/Crops/index.html">작물 8종</a> · <a href="../../Art/Final/Enemies/index.html">적 47종</a> · <a href="../../Art/Final/Enemies/References.html">기준 그림</a> · <a href="../../Art/Weapons/Cat_Weapons_Ingame_v1/index.html">고양이 무기 35종</a></div>
 <div class="bar" id="groups"></div>
 <div class="bar"><button id="fChanged">바뀐 것만</button><button id="fReq">요청 있는 것만</button><input id="q" placeholder="이름·효과·특성 검색"></div>
 </header>
