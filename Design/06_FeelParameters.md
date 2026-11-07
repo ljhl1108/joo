@@ -241,6 +241,8 @@
 | 🛠 층별 난이도 | `RunMap.TierFor` | 1~2층 = 1 · 3~4층 = 2 · 5층~ = 3 | 방 난이도 → 나오는 적 위험도 상한 |
 | ⚡ Vote Wait | RunTuning → 고르기 | 5초 | 한 명만 골랐을 때 기다리는 시간 (둘이 같으면 바로) |
 | 🧩 Fade / Reward / Victory Delay | GameScene → `DungeonManager` | 0.4 / 0.6 / 1.0초 | 9장과 같음 |
+| ⚡ 바닥 장식 Density | `Resources/StageDecor.asset` (테마별 · 공통) | 0.1 | 바닥 한 칸에 장식이 놓일 확률 — 방에 들어갈 때마다 다시 뿌림 |
+| 🛠 바닥 장식 흔들림 | `RoomDecor.Jitter` | 0.3칸 | 칸 가운데에서 벗어나는 정도 |
 
 ## 13. 적 구성 · 체력 (`Design/02_Enemies.md` 1-1)
 

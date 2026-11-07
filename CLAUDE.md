@@ -231,6 +231,8 @@ npx skills update           # npx로 받은 스킬 갱신
   - 방 모양은 `Assets/Data/RoomLayouts/*.asset`(글자 지도, W 벽·X 벽 덩어리·D 출구 포함 시 크기·모양 자유 — 최대 40×20) → 메뉴 **OnionCat > Rooms > Apply Room Layouts**로 씬에 찍는다. 씬의 Layout 자식을 손으로 고치지 말 것 (다시 적용하면 지워짐)
   - 적은 지도 글자로 (1 슬라임·2 원거리·3 분열·4 방패병·B 보스). 런의 방 순서는 `DungeonManager`가 시작방 + 전투방 풀(난이도 tier) + 보스방으로 무작위 생성
   - **정렬 순서 구간**: 바닥 -1000~-900 (바닥 타일·구덩이·장판·벽 타일) / 서 있는 물체 -100~99 (`YSort`가 발 높이로 보정) / 항상 위 100+ (투사체·이펙트·숫자·라벨). 새 그림을 추가할 때 이 구간을 지킬 것
+  - **배경은 겹 쌓기** (2026-11-07, `Guides/tileset_request.md`): ① 방 바깥 채우기 · ② 바닥 타일 · ③ 바닥 장식 · ④ 벽·담 · ⑤ 소품 · ⑥ 조명. 시점은 **사선 탑다운** (방을 돌리지 않음 — 아이소메트릭 ✗). 고정 장소(농장·마을·등대탑)만 큰 그림 가능
+  - 바닥 장식 = `StageDecor` 에셋(`Resources/StageDecor.asset`, 테마별 묶음 + 공통) → `RoomDecor.Scatter`가 방에 들어갈 때마다 흩뿌림 (정렬 -995, 벽·Props 충돌체 위는 피함). 에셋은 메뉴 `OnionCat > Rooms > Build Stage Decor` (지금 Cainos 임시)
   - 장애물 = Wall 레이어·태그(탄 막음·CRASH), 구덩이 = `Pit`(Props 레이어, 걷어찬 적만 낙사, 보스 `immuneToPits`)
   - Unity 6에서 스프라이트 9-slice 테두리는 `TextureImporter.spriteBorder`가 안 먹힘 → `SpriteDataProviderFactories`로 설정
 - **UI 문구는 한글로** (2026-10-13~) — 글꼴은 **Galmuri11** (`Assets/Fonts/Galmuri`, SIL OFL)로 통일, TMP 기본·대체 폰트로 지정. 언어 선택(영어 등)은 나중에 로컬라이제이션으로
