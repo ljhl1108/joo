@@ -232,7 +232,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - 적은 지도 글자로 (1 슬라임·2 원거리·3 분열·4 방패병·B 보스). 런의 방 순서는 `DungeonManager`가 시작방 + 전투방 풀(난이도 tier) + 보스방으로 무작위 생성
   - **정렬 순서 구간**: 바닥 -1000~-900 (바닥 타일·구덩이·장판·벽 타일) / 서 있는 물체 -100~99 (`YSort`가 발 높이로 보정) / 항상 위 100+ (투사체·이펙트·숫자·라벨). 새 그림을 추가할 때 이 구간을 지킬 것
   - **배경은 겹 쌓기** (2026-11-07, 그릴 목록 `Design/Data/backgrounds.csv` · 규격 `Design/Data/README.md` 배경 표): ① 방 바깥 채우기 · ② 바닥 타일 · ③ 바닥 장식 · ④ 벽·담 · ⑤ 소품 · ⑥ 조명. 시점은 **사선 탑다운** (방을 돌리지 않음 — 아이소메트릭 ✗). 고정 장소(농장·마을·등대탑)만 큰 그림 가능
-  - 바닥 장식 = `StageDecor` 에셋(`Resources/StageDecor.asset`, 테마별 묶음 + 공통) → `RoomDecor.Scatter`가 방에 들어갈 때마다 흩뿌림 (정렬 -995, 벽·Props 충돌체 위는 피함). 에셋은 메뉴 `OnionCat > Rooms > Build Stage Decor` (지금 Cainos 임시)
+  - 바닥 장식 = `StageDecor` 에셋(`Resources/StageDecor.asset`, 테마별 묶음 + 공통) → `RoomDecor.Scatter`가 방에 들어갈 때마다 흩뿌림 (정렬 -995, 벽·Props 충돌체 위는 피함). 테마별 장식은 배경 가져오기가 채움 (`common`만 Cainos 임시 — `Build Stage Decor`)
   - 장애물 = Wall 레이어·태그(탄 막음·CRASH), 구덩이 = `Pit`(Props 레이어, 걷어찬 적만 낙사, 보스 `immuneToPits`)
   - Unity 6에서 스프라이트 9-slice 테두리는 `TextureImporter.spriteBorder`가 안 먹힘 → `SpriteDataProviderFactories`로 설정
 - **UI 문구는 한글로** (2026-10-13~) — 글꼴은 **Galmuri11** (`Assets/Fonts/Galmuri`, SIL OFL)로 통일, TMP 기본·대체 폰트로 지정. 언어 선택(영어 등)은 나중에 로컬라이제이션으로
@@ -263,7 +263,9 @@ npx skills update           # npx로 받은 스킬 갱신
 - **픽셀 밀도** (2026-11-08): **타일 1칸 = 64px**, 캐릭터는 `Art/Final` 그대로 (고양이 약 86px ≈ 1.3칸). Pixel Perfect Camera **PPU 96 · 1920×1080** (= 30×17칸, 월드 1유닛 = 96px = 타일 1.5칸 — 화면에 보이는 월드 범위·이동·사거리 수치는 예전과 같음)
   - Final 그림 = 메뉴 **OnionCat > Art > Import Final Art** (Art/Final → `Assets/Art/Final` 복사·자르기, `Assets/Data/Art` 묶음, 적 프리팹·씬 고양이 연결). 적 ID ↔ 프리팹은 `enemies.csv` '프리팹' 열. 적 그림 PPU = 96 × 크기 등급 (루트 크기가 충돌체라서)
   - 고양이 = `CatArtRenderer` (몸 = CatBody SpriteRenderer, 꼬리·화분·흙·작물 자식, 작물은 `attachment_config.json` 소켓), 적 = `DirectionalSprite` (4방향 SW·SE·NW·NE, Idle·Walk만 — 대쉬·공격 동작 그림은 아직 없음)
-  - 바닥·벽은 아직 Cainos 32px 임시(3배로 보임). 방 지도 글자 1칸 = 1유닛 그대로 (64px 타일 그림이 오면 지도를 타일 단위로 다시 짤지 결정)
+  - **스테이지 배경** (2026-11-08): 메뉴 **OnionCat > Art > Import Backgrounds** (Import Final Art도 같이) → `Resources/StageArt` (ST1~ST6 = 테마 0~4 + 최종). `RoomArt.Apply`가 방에 들어갈 때 자식 `Art`(64px = 2/3 유닛 칸 타일맵: 바깥·바닥·구덩이·벽)를 다시 그림
+    - 판정은 예전 1유닛 `FloorMap`·`WallMap` 그대로 (그림만 끔) — 지도 한 글자 = 타일 1.5칸이라 벽 그림이 판정과 최대 1/3 유닛 어긋남. 지도를 타일 단위로 다시 짤지는 미정
+    - 덩어리 X는 방 템플릿 글자로, 구덩이는 `Pit` 위치로 이어 그림. 장애물 소품(# c b t p → PROP 1~5)·출구 문 그림도 교체. 고정 장소(농장·마을·등대 입구·등대탑) 그림은 아직 미연결
 
 ---
 
