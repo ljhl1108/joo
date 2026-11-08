@@ -1,6 +1,6 @@
 # OnionCat — Claude Code 지침서
 
-게임 컨셉 상세는 `GameConcept.md`, 로드맵/할일은 `TODO.md`, 아트 할일은 `TODO_Art.md` 참고.
+게임 컨셉 상세는 `GameConcept.md`, 로드맵/할일은 `TODO.md`, 아트 할일은 `TODO_Art.md`, 문서 지도는 `README.md` 참고.
 
 ---
 
@@ -301,4 +301,6 @@ npx skills update           # npx로 받은 스킬 갱신
 
 - `Design/IdeaPool/` 루트 = 이번 달 파일. 월이 끝나면 `YYYY-MM/` 폴더로 아카이브
 - 루틴이 `Design/References/` 루트에 게임 파일을 만들면 `Game/`으로 이동
+- 위 두 가지 + 색인(`IdeaPool/README.md`·`BY_TOPIC.md`·`References/README.md`) 갱신은 `python Design/tidy.py` 한 번으로. `git pull` 뒤에 돌릴 것
+- 문서 쓰는 법(머리말·표시·끝난 일 옮기기)은 `Design/README.md`
 - 같은 게임을 재리서치한 중복이 생길 수 있음 — 최신본을 메인으로 두고 구본은 `<details>`로 보존
