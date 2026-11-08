@@ -260,7 +260,10 @@ npx skills update           # npx로 받은 스킬 갱신
   - 고르기 화면(지도·스테이지·물음표)은 `MapScreen` 하나 — 둘이 같으면 바로, 한 명이면 5초. 물음표 이벤트 `RunEvents.cs`, 새 방 모양 `RoomShapeBuilder.cs`, 덩어리 `RoomChunks`(템플릿 `?`)
 - **타격감·연출 수치는 `Assets/Resources/HitFeelSettings.asset`** (플레이 중 조절 가능). 전체 조절 항목은 `Design/06_FeelParameters.md`
   - **조절 수치를 새로 만들거나 기본값을 바꾸면 `06_FeelParameters.md`에도 한 줄** (⚡ 에셋 / 🧩 씬·프리팹 / 🛠 코드 / 📊 CSV 표시 + 실제 저장된 값). 사람이 "그 수치 어디서 고쳐?"를 이 문서 하나로 찾게
-- **PPU 32** (타일 1칸 = 32px = 1유닛). Pixel Perfect Camera 640×360 — ⚠ 2026-11-08 결정: **타일 1칸 = 64px**, 캐릭터는 `Art/Final` 그대로 (고양이 약 86px ≈ 1.3칸, 화면 기준 1920×1080 = 30×17칸 예정). 게임 적용 전까지 지금 값 유지 (TODO "픽셀 밀도 64 적용")
+- **픽셀 밀도** (2026-11-08): **타일 1칸 = 64px**, 캐릭터는 `Art/Final` 그대로 (고양이 약 86px ≈ 1.3칸). Pixel Perfect Camera **PPU 96 · 1920×1080** (= 30×17칸, 월드 1유닛 = 96px = 타일 1.5칸 — 화면에 보이는 월드 범위·이동·사거리 수치는 예전과 같음)
+  - Final 그림 = 메뉴 **OnionCat > Art > Import Final Art** (Art/Final → `Assets/Art/Final` 복사·자르기, `Assets/Data/Art` 묶음, 적 프리팹·씬 고양이 연결). 적 ID ↔ 프리팹은 `enemies.csv` '프리팹' 열. 적 그림 PPU = 96 × 크기 등급 (루트 크기가 충돌체라서)
+  - 고양이 = `CatArtRenderer` (몸 = CatBody SpriteRenderer, 꼬리·화분·흙·작물 자식, 작물은 `attachment_config.json` 소켓), 적 = `DirectionalSprite` (4방향 SW·SE·NW·NE, Idle·Walk만 — 대쉬·공격 동작 그림은 아직 없음)
+  - 바닥·벽은 아직 Cainos 32px 임시(3배로 보임). 방 지도 글자 1칸 = 1유닛 그대로 (64px 타일 그림이 오면 지도를 타일 단위로 다시 짤지 결정)
 
 ---
 
