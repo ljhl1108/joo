@@ -1,8 +1,10 @@
 # 조절 수치 목록
 
-게임에서 **사람이 만져 볼 만한 수치를 전부 한곳에** 모은 목록 — "어디서(어느 asset·컴포넌트·코드) 고치는지 + 지금 값 + 의미".
-1~9장 = 감각(얼마나 시원한가·잘 보이는가), 10장~ = 시스템·밸런스(얼마나 센가·얼마나 자주 나오나).
-**완성 후에도 주기적으로 이 목록을 따라가며 한 번씩 점검**하는 용도. 새 조절 수치가 생기면 Claude가 여기에 한 줄 추가한다.
+> **사람이 만져 볼 만한 수치를 전부 한곳에** — 어디서 고치는지 + 지금 값 + 의미. "그 수치 어디서 고쳐?"는 이 문서 하나로.
+> 기준 2026-11-08 · 1~9장 = 감각 (얼마나 시원한가·잘 보이는가) · 10장~ = 시스템·밸런스 (얼마나 센가·자주 나오나) · 장 번호는 코드 주석이 가리키므로 바꾸지 않는다
+
+**목차** — 감각: [1 타격감](#1-타격감---assetsresourceshitfeelsettingsasset) · [2 적 반응](#2-적-반응--적-프리팹-assetsprefabsslimeprefab-rangeslimeprefab) · [3 데미지 숫자](#3-데미지-숫자--씬의-damagenumbers--assetsprefabsdamagenumberprefab) · [3.5 공격 예고](#35-공격-예고-텔레그래프--적-프리팹-enemybase) · [4 화면](#4-화면--main-camera-cameracontroller) · [5 고양이](#5-고양이-조작감--player_cat) · [6 작물](#6-작물-조작감--cropholder) · [7 피격](#7-피격생존감--playerhealth) · [8 HUD](#8-hud--씬의-hud) · [9 화면 전환](#9-화면-전환--흐름)
+시스템: [10 코어](#10-코어-시스템--테스트하며-조절할-값) · [11 장비](#11-장비-v4--테스트하며-조절할-값) · [12 한 판·지도](#12-한-판-흐름--지도-design08_runflowmd) · [13 적 구성·보스](#13-적-구성--체력-design02_enemiesmd-3장) · [14 물음표 방](#14-물음표-방---assetsresourcesruntuningasset-design08_runflowmd-3장) · [14.5 온실](#145-온실-design07_storymetamd-2장) · [15 특수 공격](#15-고양이-특수-공격--야성-게이지-design01_charactersmd-1장) · [앞으로 추가될 것](#앞으로-이-목록에-추가될-것)
 
 ### 위치 표시
 
@@ -132,7 +134,7 @@
 
 ---
 
-## 6. 양파 조작감 — `CropHolder`
+## 6. 작물 조작감 — `CropHolder`
 
 | 항목 | 위치 | 기본값 | 느낌 |
 |---|---|---|---|
@@ -178,14 +180,6 @@
 | Victory Delay | DungeonManager | 1.0초 | 마지막 방 클리어 후 Stage Clear까지 |
 | Fade Delay / Fade Duration | GameOverManager | 0.8 / 0.6초 | 사망 후 게임오버 화면 |
 | Hover Scale | UpgradeCardView | 1.06 | 카드 위에 커서가 있을 때 커지는 정도 |
-
----
-
-## 앞으로 이 목록에 추가될 것
-
-- 파티클 양 (히트 이펙트, 사망 이펙트)
-- 역할별 난이도 옵션에서 조절할 항목 (위 표의 **굵은 항목**들이 후보)
-- 사운드 음량·음높이·연타 간격은 `Assets/Resources/Audio/SoundBank.asset` (확인 가이드 `Guides/sound_check.md`)
 
 ---
 
@@ -244,7 +238,7 @@
 | ⚡ 바닥 장식 Density | `Resources/StageDecor.asset` (테마별 · 공통) | 0.1 | 바닥 한 칸에 장식이 놓일 확률 — 방에 들어갈 때마다 다시 뿌림 |
 | 🛠 바닥 장식 흔들림 | `RoomDecor.Jitter` | 0.3칸 | 칸 가운데에서 벗어나는 정도 |
 
-## 13. 적 구성 · 체력 (`Design/02_Enemies.md` 1-1)
+## 13. 적 구성 · 체력 (`Design/02_Enemies.md` 3장)
 
 | 항목 | 위치 | 지금 값 | 의미 |
 |---|---|---|---|
@@ -262,7 +256,7 @@
 | 🧩 그림자 고양이 | ShadowWitch.prefab Cats Per Summon / Max Cats · 📊 `enemies.csv` X04 | 2마리 (페이즈 2 = 3) / 최대 3 · 체력 6 · 접촉 8 | |
 | 🧩 등불 끄기 Darkness Time / Cooldown / Sight | ShadowWitch.prefab | 5초 / 15초 / 3칸 | 어둠 진하기 0.88은 🛠 `NightDarkness.Darkness` |
 
-## 14. 물음표 방 — ⚡ `Assets/Resources/RunTuning.asset` (`Design/08_RunFlow.md` 2장)
+## 14. 물음표 방 — ⚡ `Assets/Resources/RunTuning.asset` (`Design/08_RunFlow.md` 3장)
 
 숫자를 바꾸면 **선택지 설명 문구도 같이 바뀐다** (다음 물음표 방부터). 이벤트의 동작 자체(무엇을 하는지)는 코드 `RunEvents.cs`.
 
@@ -288,7 +282,7 @@
 | 📊 해금 가격 | `Design/Data/items.csv` `해금` 열 = 🛠 `Editor/GreenhouseBuilder.cs` → 메뉴 **OnionCat > Content > Apply Greenhouse Unlock Costs** | 에픽 12개 × 파편 2 · 전설 2개 × 파편 4 | 빈칸 = 처음부터 보상에 나옴. 장비 에셋의 Unlock Cost 칸에 들어감 (Inspector에서 고쳐도 되지만 다음 빌드 때 표 값으로 돌아감) |
 | 🛠 기억 파편 얻는 양 | `MetaProgress.OnBossDefeated` · RunTuning(유물 3 · 꽃 2) | 보스 +1 | 한 판에 3~6개 |
 
-## 15. 고양이 특수 공격 · 야성 게이지 (`Design/01_Characters.md` 0-1)
+## 15. 고양이 특수 공격 · 야성 게이지 (`Design/01_Characters.md` 1장)
 
 | 항목 | 위치 | 지금 값 | 의미 |
 |---|---|---|---|
@@ -296,3 +290,12 @@
 | 🧩 Back Hit Wild Multiplier | MeleeAttack_Slash | 2 | 등을 쳤을 때 배율 (발톱 고양이 "사냥 본능") |
 | 🧩 Cost | `Player_Cat` → CatSpecial | 100 | 특수 공격에 드는 게이지 |
 | 🛠 무기별 특수 공격 | `CatSpecial.cs` | 난무 8연타 · 회오리 3초 · 덮치기 · 찢어발기기 X자 2번 · 광란 6초 (공속 ×2, 이동 ×1.3) | 무기마다 다른 특수 공격 |
+
+---
+
+## 앞으로 이 목록에 추가될 것
+
+- 파티클 양 (히트 이펙트, 사망 이펙트)
+- 역할별 난이도 옵션에서 조절할 항목 (위 표의 **굵은 항목**들이 후보)
+- 사운드 음량·음높이·연타 간격은 `Assets/Resources/Audio/SoundBank.asset` (확인 가이드 `Guides/sound_check.md`)
+

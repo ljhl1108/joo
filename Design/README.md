@@ -8,15 +8,15 @@
 |---|---|
 | [00_Implemented](00_Implemented.md) | ✅ 지금 게임에 들어간 것 + 진행 기록 + 버린 설계 |
 | [01_Characters](01_Characters.md) | 고양이·작물 종류, 기본기, 마법서 스킬, 조작 설계 |
-| [02_Enemies](02_Enemies.md) | 예고(텔레그래프) 규칙, 적 설계 원칙, 보스 |
-| [02_Enemies_Content](02_Enemies_Content.md) | 적 목록 — 스테이지별 적 · 공통 적 · 조합형 부품 |
-| [03_Maps](03_Maps.md) | 방 연결형 진행, 방 종류 |
+| [02_Enemies](02_Enemies.md) | 예고(텔레그래프) 규칙, 적 설계 원칙, 다양성, 보스 계획 |
+| [02_Enemies_Content](02_Enemies_Content.md) | 적 목록 — 조합 14개 · 공통 적 · 스테이지별 적 · 조합형 부품 |
+| [03_Maps](03_Maps.md) | 방 — 방 연결형 진행 · 방 종류 · 방 모양 · 특수 방 아이디어 |
 | [04_Combat](04_Combat.md) | 전투 원칙, 협동 (콤보·합동기·세트·가방), 2인 기믹 |
 | [05_Items](05_Items.md) | 런 안의 성장 — 장비 v4 규칙 (칸·등급·세트·분해·중간 저장) |
 | [05_Items_Content](05_Items_Content.md) | 장비 효과 · 세트 · 패시브 · 마법서 스킬 목록 |
 | [06_FeelParameters](06_FeelParameters.md) | 조절 수치 — 어느 파일에서 고치는지 |
-| [07_StoryMeta](07_StoryMeta.md) | 이야기, 런 밖의 성장 (온실·빛 퀘스트) |
-| [08_RunFlow](08_RunFlow.md) | 한 판의 흐름 — 갈림길 지도 · 물음표 방 · 방 모양 |
+| [07_StoryMeta](07_StoryMeta.md) | 이야기 (줄거리·인물·엔딩·빛 퀘스트·스테이지 테마), 런 밖의 성장 (온실) |
+| [08_RunFlow](08_RunFlow.md) | 한 판 — 길(마을·스테이지) · 갈림길 지도 · 물음표 방 · 해금 |
 | [Data/](Data/README.md) | 사람과 같이 고치는 표 (적·아이템·세트·스테이지·배경·고양이·작물) |
 | [IdeaPool/](IdeaPool/README.md) | 일일 루틴이 쌓는 아이디어 — [날짜별](IdeaPool/README.md) · [주제별](IdeaPool/BY_TOPIC.md) |
 | [References/](References/README.md) | 조사한 게임 · 기술 · 아트 |
@@ -30,6 +30,8 @@
 5. **한 줄에 한 가지.** 괄호는 한 겹까지, 날짜·커밋은 줄 끝에
 6. **같은 모양이 넷 이상이면 표로**
 7. 표시는 [README](../README.md#표시-규칙-모든-문서-공통)의 ✅ 🔶 📝 ❓ ⏸ 만
+8. **장 번호는 함부로 바꾸지 않는다** — 유니티 코드 주석이 "08_RunFlow.md 2장"처럼 가리킨다. 바꾸면 `grep -rn "문서이름" Assets/Scripts Assets/Editor`로 주석도 고친다
+9. 목록(적·아이템·세트)의 원본은 `Data/*.csv` — 설계 문서에는 설계 의도만, 수치·상태는 표에
 
 ## 정리 규칙
 
