@@ -3,9 +3,11 @@
 - 왼쪽: 문서 목록 (시작 · 설계 · 데이터 · 가이드 · 아이디어 · 레퍼런스) / 가운데: 문서 (장마다 카드) / 오른쪽: 목차
 - 파일을 저장하면 열려 있는 문서가 1~2초 안에 저절로 다시 그려진다 (스크롤 위치 유지)
 - 위쪽 검색: 모든 .md에서 찾기 (IdeaPool·레퍼런스 포함)
+- 체크 칸(목록 `- [ ]`, 표 칸 맨 앞 `[ ]`)을 누르면 그 .md 파일에 바로 저장된다 (그사이 파일이 바뀌었으면 저장하지 않고 새로 불러옴)
 - 이 PC(127.0.0.1)에서만 열린다. 표시는 브라우저가 marked.js(cdnjs)로 그리므로 인터넷이 필요하다
 """
 import json
+import re
 import os
 import socket
 import sys
@@ -17,6 +19,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 PORT = 8765
+NL = chr(10)  # 줄바꿈 — 체크 저장 때 원본의 줄 끝(\r\n 포함)을 그대로 두려고 \n으로만 나눈다
 SKIP_DIRS = {".git", ".claude", "Art", "Tools", "node_modules"}
 
 # 왼쪽 목록 — (묶음 이름, [(경로, 보이는 이름)]) . 목록에 없는 문서도 링크·검색으로 열 수 있다
@@ -121,6 +124,28 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
+    def do_POST(self):
+        # 체크박스 저장 — 다른 사이트가 보내지 못하게 전용 헤더 필수 (헤더가 붙으면 브라우저가 사전 확인을 하는데 이 서버는 답하지 않음)
+        if urlparse(self.path).path != "/api/toggle" or self.headers.get("X-OnionCat") != "1":
+            return self.send(json.dumps({"error": "허용되지 않음"}, ensure_ascii=False), code=403)
+        try:
+            req = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))).decode("utf-8"))
+            p = safe_path(req["path"])
+            line, col, checked = int(req["line"]), int(req["col"]), bool(req["checked"])
+        except (ValueError, KeyError, TypeError):
+            return self.send(json.dumps({"error": "잘못된 요청"}, ensure_ascii=False), code=400)
+        if not p:
+            return self.send(json.dumps({"error": "없는 문서"}, ensure_ascii=False), code=404)
+        if abs(p.stat().st_mtime - float(req.get("mtime", 0))) > 1e-6:
+            return self.send(json.dumps({"error": "그사이 파일이 바뀌었어요 — 새로 불러온 화면에서 다시 눌러 주세요"}, ensure_ascii=False), code=409)
+        raw = p.read_bytes().decode("utf-8")
+        lines = raw.split(NL)
+        if not (0 <= line < len(lines)) or not re.match(r"\[[ xX]\]", lines[line][col:col + 3]):
+            return self.send(json.dumps({"error": "체크 칸을 못 찾았어요 — 화면을 새로 고쳐 주세요"}, ensure_ascii=False), code=409)
+        lines[line] = lines[line][:col] + ("[x]" if checked else "[ ]") + lines[line][col + 3:]
+        p.write_bytes(NL.join(lines).encode("utf-8"))
+        return self.send(json.dumps({"ok": True, "mtime": p.stat().st_mtime}))
+
     def do_GET(self):
         url = urlparse(self.path)
         qs = parse_qs(url.query)
@@ -185,7 +210,10 @@ tr:hover td{background:color-mix(in srgb,var(--hl) 35%,transparent)}
 td.s-ok{background:var(--ok)}td.s-wip{background:var(--wip)}td.s-plan{background:var(--plan)}td.s-ask{background:var(--ask)}td.s-off{background:var(--off)}
 .b{display:inline-block;border-radius:6px;padding:0 6px;font-size:12px;font-weight:700;line-height:1.6}
 .b.ok{background:var(--ok);color:var(--okc)}.b.wip{background:var(--wip);color:var(--wipc)}.b.plan{background:var(--plan);color:var(--planc)}.b.ask{background:var(--ask);color:var(--askc)}.b.off{background:var(--off);color:var(--offc)}
-ul,ol{padding-left:22px}li{margin:2px 0}li.task{list-style:none;margin-left:-20px}li.task.done{color:var(--sub)}
+ul,ol{padding-left:22px}li{margin:2px 0}li.task{list-style:none;margin-left:-20px}li.task.done{color:var(--sub);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--sub) 60%,transparent)}
+input.ck{width:16px;height:16px;cursor:pointer;vertical-align:-3px}input.ck:disabled{cursor:default}
+tr.done td{color:var(--sub)}tr.done td:not(:first-child){text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--sub) 60%,transparent)}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:20}#toast.on{opacity:1}
 input[type=checkbox]{accent-color:var(--acc);margin-right:6px}
 details{background:var(--chip);border-radius:10px;padding:6px 12px;margin:10px 0}summary{cursor:pointer;color:var(--sub);font-weight:700}
 hr{display:none}
@@ -197,7 +225,7 @@ hr{display:none}
 </style></head><body>
 <header><button id="menu">☰</button><h1 onclick="go('README.md')">🧅🐱 OnionCat <span>문서</span></h1>
 <input id="q" placeholder="모든 문서에서 찾기 (두 글자 이상) — Enter" autocomplete="off"><span id="live">● 실시간</span></header>
-<div class="wrap"><nav id="nav"></nav><main id="main"></main><aside id="toc"></aside></div>
+<div id="toast"></div><div class="wrap"><nav id="nav"></nav><main id="main"></main><aside id="toc"></aside></div>
 <script>
 const $=s=>document.querySelector(s);
 let cur=null, curMtime=0;
@@ -218,6 +246,30 @@ function markNav(){document.querySelectorAll('nav a').forEach(a=>a.classList.tog
 // 한글 조사가 붙은 굵은 글씨(**"…"**으로)는 마크다운 규칙상 안 굵어진다 → 코드 밖의 **…**를 미리 <strong>으로
 function koBold(text){let fence=false;return text.split('\n').map(l=>{if(/^\s*```/.test(l)){fence=!fence;return l}if(fence)return l;
   return l.split(/(`[^`]*`)/).map((seg,i)=>i%2?seg:seg.replace(/\*\*([^*\n]+?)\*\*/g,'<strong>$1</strong>')).join('')}).join('\n')}
+// 원본 글에서 체크 칸 위치 (화면의 체크박스와 같은 순서) — 목록 "- [ ]" · 표 칸 맨 앞 "[ ]"
+function sourceBoxes(text){const out=[];let fence=false;
+  text.split('\n').forEach((l,i)=>{
+    if(/^\s*```/.test(l)){fence=!fence;return}if(fence)return;
+    const m=l.match(/^(\s*(?:[-*+]|\d+\.)\s+)\[[ xX]\]\s/);if(m){out.push({line:i,col:m[1].length});return}
+    if(/^\s*\|/.test(l)&&!/^\s*\|[\s:|-]+\|?\s*$/.test(l)){let pos=0;for(const cell of l.split('|')){const lead=cell.length-cell.trimStart().length;if(/^\[[ xX]\]/.test(cell.trimStart()))out.push({line:i,col:pos+lead});pos+=cell.length+1}}
+  });return out}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
+function wireChecks(doc,path,text){
+  doc.querySelectorAll('td').forEach(td=>{const w=document.createTreeWalker(td,NodeFilter.SHOW_TEXT);const n=w.nextNode();if(!n)return;
+    const m=n.nodeValue.match(/^(\s*)\[([ xX])\]\s?/);if(!m||td.textContent.trimStart().indexOf('[')!==0)return;
+    n.nodeValue=n.nodeValue.slice(m[0].length);const ck=document.createElement('input');ck.type='checkbox';ck.checked=m[2]!==' ';td.insertBefore(ck,td.firstChild);if(td.textContent.trim().length<=3)td.style.whiteSpace='nowrap'});
+  const boxes=[...doc.querySelectorAll('input[type=checkbox]')];const src=sourceBoxes(text);const ok=boxes.length===src.length;
+  boxes.forEach((ck,i)=>{ck.classList.add('ck');ck.disabled=!ok;
+    const mark=()=>{const li=ck.closest('li');if(li)li.classList.toggle('done',ck.checked);const td=ck.closest('td');if(td&&td.parentElement.firstElementChild===td)td.parentElement.classList.toggle('done',ck.checked)};
+    mark();
+    if(!ok){ck.title='이 문서는 체크 칸을 맞출 수 없어 보기만 돼요';return}
+    ck.title='누르면 바로 저장';
+    ck.addEventListener('change',async()=>{mark();
+      try{const r=await fetch('/api/toggle',{method:'POST',headers:{'Content-Type':'application/json','X-OnionCat':'1'},body:JSON.stringify({path,line:src[i].line,col:src[i].col,checked:ck.checked,mtime:curMtime})});
+        const d=await r.json();if(r.ok){curMtime=d.mtime;toast(ck.checked?'✔ 끝으로 표시했어요':'되돌렸어요')}else{toast(d.error);await open_(path,null,true)}
+      }catch(e){toast('저장 못 함 — 서버가 꺼져 있어요');ck.checked=!ck.checked;mark()}});
+  });
+}
 function render(path,text){
   const used=new Set();
   const r=new marked.Renderer();
@@ -250,6 +302,7 @@ function render(path,text){
     else if(target.endsWith('/'))a.href='#'+encodeURIComponent(target+'README.md');
   });
   doc.querySelectorAll('img[src]').forEach(i=>{const s=i.getAttribute('src');if(!/^https?:/.test(s))i.src='/'+resolve(path,s)});
+  wireChecks(doc,path,text);
   const main=$('#main');main.innerHTML=`<div class="crumb">${esc(path)}</div>`;main.appendChild(doc);
   // 목차
   const hs=[...doc.querySelectorAll('h2,h3')];
