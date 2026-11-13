@@ -228,7 +228,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - 음량·음높이·연타 간격은 `Assets/Resources/Audio/SoundBank.asset`. 음원은 전부 CC0 (`Assets/Audio/LICENSE_AUDIO.txt`에 출처 기록 유지)
   - Claude는 소리를 들을 수 없음 → 소리 품질 판단은 사람에게
 - **방 배치** (2026-10-04, 가이드 `Guides/room_layout.md`)
-  - 방 모양은 `Assets/Data/RoomLayouts/*.asset`(글자 지도, W 벽·X 벽 덩어리·D 출구 포함 시 크기·모양 자유 — 최대 40×20) → 메뉴 **OnionCat > Rooms > Apply Room Layouts**로 씬에 찍는다. 씬의 Layout 자식을 손으로 고치지 말 것 (다시 적용하면 지워짐)
+  - 방 모양은 `Assets/Data/RoomLayouts/*.asset`(글자 지도, W 벽·X 벽 덩어리·D 출구 포함 시 크기·모양 자유 — 최대 40×20글자, **한 글자 = 그림 타일 2×2칸 = 1.33유닛**) → 메뉴 **OnionCat > Rooms > Apply Room Layouts**로 씬에 찍는다. 씬의 Layout 자식을 손으로 고치지 말 것 (다시 적용하면 지워짐)
   - 적은 지도 글자로 (1 슬라임·2 원거리·3 분열·4 방패병·B 보스). 런의 방 순서는 `DungeonManager`가 시작방 + 전투방 풀(난이도 tier) + 보스방으로 무작위 생성
   - **정렬 순서 구간**: 바닥 -1000~-900 (바닥 타일·구덩이·장판·벽 타일) / 서 있는 물체 -100~99 (`YSort`가 발 높이로 보정) / 항상 위 100+ (투사체·이펙트·숫자·라벨). 새 그림을 추가할 때 이 구간을 지킬 것
   - **배경은 겹 쌓기** (2026-11-07, 그릴 목록 `Design/Data/backgrounds.csv` · 규격 `Design/Data/README.md` 배경 표): ① 방 바깥 채우기 · ② 바닥 타일 · ③ 바닥 장식 · ④ 벽·담 · ⑤ 소품 · ⑥ 조명. 시점은 **사선 탑다운** (방을 돌리지 않음 — 아이소메트릭 ✗). 고정 장소(농장·마을·등대탑)만 큰 그림 가능
@@ -264,11 +264,11 @@ npx skills update           # npx로 받은 스킬 갱신
   - Final 그림 = 메뉴 **OnionCat > Art > Import Final Art** (Art/Final → `Assets/Art/Final` 복사·자르기, `Assets/Data/Art` 묶음, 적 프리팹·씬 고양이 연결). 적 ID ↔ 프리팹은 `enemies.csv` '프리팹' 열. 적 그림 PPU = 96 × 크기 등급 (루트 크기가 충돌체라서)
   - 고양이 = `CatArtRenderer` (몸 = CatBody SpriteRenderer, 꼬리·화분·흙·작물 자식, 작물은 `attachment_config.json` 소켓), 적 = `DirectionalSprite` (4방향 SW·SE·NW·NE, Idle·Walk만 — 대쉬·공격 동작 그림은 아직 없음)
   - **스테이지 배경** (2026-11-08): 메뉴 **OnionCat > Art > Import Backgrounds** (Import Final Art도 같이) → `Resources/StageArt` (ST1~ST6 = 테마 0~4 + 최종). `RoomArt.Apply`가 방에 들어갈 때 자식 `Art`(64px = 2/3 유닛 칸 타일맵: 바깥·바닥·구덩이·벽)를 다시 그림
-    - 판정은 예전 1유닛 `FloorMap`·`WallMap` 그대로 (그림만 끔) — 지도 한 글자 = 타일 1.5칸이라 벽 그림이 판정과 최대 1/3 유닛 어긋남. 지도를 타일 단위로 다시 짤지는 미정
+    - **방 격자 = 그림 타일 한 칸** (2026-11-13): 방의 `Grid`는 2/3유닛 칸. `Apply Room Layouts`가 판정용 타일(`Assets/Data/RoomTiles` — RoomFloor·RoomWall·RoomBlock·RoomDoor, 이름으로 종류 구분)을 찍고 `RoomArt`가 같은 칸에 그림을 덮는다 (판정과 그림이 1:1). 물건은 글자 칸 가운데, 구덩이는 글자 칸 크기(`Pit` 크기만큼의 타일을 구덩이로 그림). 월드 유닛으로 적은 거리·사거리는 그대로 (방만 1.33배). 고정 장소 방(`Layout_Special`)은 안쪽이 그림 타일 24×12칸이어야 함 (= 글자 12×6)
     - 덩어리 X는 방 템플릿 글자로, 구덩이는 `Pit` 위치로 이어 그림. 장애물 소품(# c b t p → PROP 1~5)·출구 문(벽 방향별, 그림 타일 칸에 맞춰 자식 `Art`) 그림도 교체
     - **바닥 지형 얼룩** (2026-11-13): `StageArt.Set.terrains` (3×3 + 꺾인 곳 4장, 스테이지마다 2종) → `RoomArt.PaintTerrain`이 전투방 바닥에 얼룩으로 (정렬 -1001, 그림만 — 판정 없음). 그림이 못 그리는 모양(한 칸 폭·대각선 접촉)은 `TerrainPiece`가 -1 → 메우거나 깎음. 양은 `StageArt.terrainCoverage`
     - **고정 장소** (2026-11-13): `StageArt.places` — 마을 단계의 `Room_Special` 안쪽 바닥(그림 타일 24×12칸)에 한 장 + 물건 5개. 물건 자리는 가져오기가 합성 그림(Assembly) − 바닥 그림 차이로 찾음, 기능 짝은 `BackgroundArtImporter.Places` 표(역할 book·greenhouse·pot·lantern·fountain·stall). `DungeonManager.SetupSpecial`이 `Spot(role)`·`Dress(role)`로 표식을 그 물건 자리·그림으로
-    - 특수 방 물건(상자·가판대·샘물)은 `StageArt.chestClosed` 등 → `RewardMarker.SetArt`. 높은 윗벽은 `StageArt.tallWalls`(기본 끔)
+    - 특수 방 물건(상자·가판대·샘물)은 `StageArt.chestClosed` 등 → `RewardMarker.SetArt`. 높은 윗벽은 `StageArt.tallWalls`(켬 — 벽의 밑선은 그대로, 위(방 바깥)로 솟음)
   - **분위기** (2026-11-13, 수치 `Resources/AtmosphereSettings.asset` · `06_FeelParameters.md` 16장): `Atmosphere.Apply`가 방에 들어갈 때 전역 조명(스테이지·장소 색)·문 빛·고정 장소 물건 빛·후처리(가장자리 어둡게)를 맞춤. **배경만 따로 물들이지 말 것** — 색 분위기는 전역 조명으로 (배경·캐릭터가 같이). 새 조명은 고양이 `Lamp`를 복제 (코드로 AddComponent한 Light2D는 정렬 레이어가 빌 수 있음)
     - 서 있는 그림을 새로 만들면 `BlobShadow.Ensure(오브젝트)`로 발밑 그림자 (고양이·적 `DirectionalSprite`·소품·마을 물건·표식 그림은 이미 붙음)
 
