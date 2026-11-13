@@ -236,6 +236,8 @@
 | ⚡ Vote Wait | RunTuning → 고르기 | 5초 | 한 명만 골랐을 때 기다리는 시간 (둘이 같으면 바로) |
 | 🧩 Fade / Reward / Victory Delay | GameScene → `DungeonManager` | 0.4 / 0.6 / 1.0초 | 9장과 같음 |
 | ⚡ 바닥 장식 Density | `Resources/StageDecor.asset` (테마별 · 공통) | 0.1 | 바닥 한 칸에 장식이 놓일 확률 — 방에 들어갈 때마다 다시 뿌림 |
+| ⚡ 높은 윗벽 Tall Walls | `Resources/StageArt.asset` | 끔 | 윗줄 벽을 앞면이 보이는 64×128로 (켜면 앞면이 방 안쪽으로 2/3칸 — 판정과 어긋남) |
+| 🛠 큰 바깥 조각 확률 | `RoomArt.LargeOutsideChance` | 0.35 | 방 바깥 2×2칸 자리에 128px 조각을 놓을 확률 |
 | 🛠 바닥 장식 흔들림 | `RoomDecor.Jitter` | 0.3칸 | 칸 가운데에서 벗어나는 정도 |
 
 ## 13. 적 구성 · 체력 (`Design/02_Enemies.md` 3장)

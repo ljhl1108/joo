@@ -265,7 +265,9 @@ npx skills update           # npx로 받은 스킬 갱신
   - 고양이 = `CatArtRenderer` (몸 = CatBody SpriteRenderer, 꼬리·화분·흙·작물 자식, 작물은 `attachment_config.json` 소켓), 적 = `DirectionalSprite` (4방향 SW·SE·NW·NE, Idle·Walk만 — 대쉬·공격 동작 그림은 아직 없음)
   - **스테이지 배경** (2026-11-08): 메뉴 **OnionCat > Art > Import Backgrounds** (Import Final Art도 같이) → `Resources/StageArt` (ST1~ST6 = 테마 0~4 + 최종). `RoomArt.Apply`가 방에 들어갈 때 자식 `Art`(64px = 2/3 유닛 칸 타일맵: 바깥·바닥·구덩이·벽)를 다시 그림
     - 판정은 예전 1유닛 `FloorMap`·`WallMap` 그대로 (그림만 끔) — 지도 한 글자 = 타일 1.5칸이라 벽 그림이 판정과 최대 1/3 유닛 어긋남. 지도를 타일 단위로 다시 짤지는 미정
-    - 덩어리 X는 방 템플릿 글자로, 구덩이는 `Pit` 위치로 이어 그림. 장애물 소품(# c b t p → PROP 1~5)·출구 문 그림도 교체. 고정 장소(농장·마을·등대 입구·등대탑) 그림은 아직 미연결
+    - 덩어리 X는 방 템플릿 글자로, 구덩이는 `Pit` 위치로 이어 그림. 장애물 소품(# c b t p → PROP 1~5)·출구 문(벽 방향별, 그림 타일 칸에 맞춰 자식 `Art`) 그림도 교체
+    - **고정 장소** (2026-11-13): `StageArt.places` — 마을 단계의 `Room_Special` 안쪽 바닥(그림 타일 24×12칸)에 한 장 + 물건 5개. 물건 자리는 가져오기가 합성 그림(Assembly) − 바닥 그림 차이로 찾음, 기능 짝은 `BackgroundArtImporter.Places` 표(역할 book·greenhouse·pot·lantern·fountain·stall). `DungeonManager.SetupSpecial`이 `Spot(role)`·`Dress(role)`로 표식을 그 물건 자리·그림으로
+    - 특수 방 물건(상자·가판대·샘물)은 `StageArt.chestClosed` 등 → `RewardMarker.SetArt`. 높은 윗벽은 `StageArt.tallWalls`(기본 끔)
 
 ---
 
