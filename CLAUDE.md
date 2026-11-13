@@ -201,7 +201,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - 패드 모드(패드 연결): 고양이 = 패드만 / 양파 = 마우스 + Q W E R 스킬 · 1~5 가방 · Space 합동기
   - 고양이 특수 공격(야성 게이지, `CatSpecial`) = 키보드 **왼쪽 Ctrl** / 패드 **Y** (Player1/Special). 장비 효과 발동 `EffectTrigger.SpecialHit`
   - 키보드 모드(패드 없음): 고양이 = WASD · Space 대쉬 · **왼쪽 Shift 할퀴기 · 왼쪽 Ctrl 특수 공격** · Q 던지기 · E 합동기 · Z/X 가방
-  - **걷어차기는 꺼 둠** (2026-10-21, `GameFeatures.Kick = false` — 키 F·패드 LB는 남아 있지만 무시). 걷어차기에 기대는 장비가 생기면 `GameFeatures.IsAvailable`이 보상에서 제외
+  - **걷어차기는 삭제** (2026-11-14 — 코드·입력·에셋 모두. 필요해지면 새로 만든다). 적을 날려보내는 것은 강타·특수 공격·밀치는 효과 (`EnemyBase.Launch`), 날아간 적이 벽·적에 부딪히면 벽꽝 (`EffectTrigger.WallCrash`). `EffectTrigger.Reserved1`·`SfxId.Reserved12`는 에셋 번호를 유지하려고 남긴 빈자리 — 지우거나 쓰지 말 것
   - 적 크기는 4등급만 (작음 0.5 · 보통 0.6 · 큼 0.75 · 보스 1.1) — `EnemyBuilder.SizeOf`
     / 양파 = 마우스 + 1~4 스킬 · 6~0 가방 · 휠 클릭 합동기 (W가 이동과 겹쳐서 숫자로)
   - 양파 키보드 키는 페어링과 무관한 독립 InputAction(`OnionInputKeys`)으로 읽는다
@@ -211,7 +211,6 @@ npx skills update           # npx로 받은 스킬 갱신
   - 세트 보너스는 `PassiveHost.Recalculate` → `CombatModifiers`(정적, 읽기 전용)로 반영
   - 적에게 피해를 줄 때 `TakeDamage(..., Attacker.Cat/Onion)`을 넘길 것 — 협동 콤보가 "누가 때렸나" 기준
   - 적 목록은 `EnemyBase.Active` (FindObjectsByType 금지). 상태이상은 `ApplyBurn / ApplySlow / ApplyStun / Launch`
-    (`Launch(..., interruptTelegraph: true)`는 걷어차기 전용 — 예고를 끊음. 보스는 `kickInterruptsTelegraph` 끔)
   - 새 아이템 = `ItemData` 상속 → `itemDrops`. **ScriptableObject는 클래스마다 같은 이름 파일 필수**
   - 런 상태(스킬·패시브·할퀴기 변형·공유 가방·게이지)는 `RunData`에, 쿨다운처럼 씬에 묶인 값은 컴포넌트에
   - **성장은 장비 v4** (`Design/05_Items.md`): `GearItem` 에셋(`Assets/Data/Gear`) → `RewardTable.catGear/cropGear`. 능력치·효과·할퀴기·스킬은 `RunData.RecomputeGear`가 장비에서 다시 계산 (Passive·ClawStyle을 직접 넣지 말 것)
@@ -220,7 +219,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - 런 순서는 `DungeonManager.stagePlan` 문자열, 특수 방(보물·상점·휴식)은 `Room_Special` 하나를 돌려 씀. 게임 상태 `Inventory` = 장비 화면
   - 코어 HUD(`CoreHUD`)는 코드로 생성. HUD 캔버스는 **1920×1080 고정 픽셀**이라 `uiScale` 2배 기준으로 배치
   - 대쉬는 충전식(`Dash_Default.Charges`), 고양이 발밑 탄창은 `CatPips` (고양이 스프라이트 바닥에 자동 정렬)
-  - 플레이 테스트 메뉴 `OnionCat > Debug` (Kick Test, 세트·할퀴기 변형 지급, 게이지, 적 제거, 무적)
+  - 플레이 테스트 메뉴 `OnionCat > Debug` (세트·할퀴기 변형 지급, 게이지, 적 제거, 무적)
 - **사운드** (2026-10-04, 확인 가이드 `Guides/sound_check.md`)
   - 효과음 `Sfx.Play(SfxId.X)`, 음악 `Music.Play(MusicId.X)` — `AudioManager`가 자동 생성·씬 유지 (씬에 배치 불필요)
   - 새 효과음 = `SfxId` 추가 → `Assets/Audio/SFX/<이름>_0.ogg …` → 메뉴 **OnionCat > Audio > Rebuild Sound Bank**
@@ -232,7 +231,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - **정렬 순서 구간**: 바닥 -1000~-900 (바닥 타일·구덩이·장판·벽 타일) / 서 있는 물체 -100~99 (`YSort`가 발 높이로 보정) / 항상 위 100+ (투사체·이펙트·숫자·라벨). 새 그림을 추가할 때 이 구간을 지킬 것
   - **배경은 겹 쌓기** (2026-11-07, 그릴 목록 `Design/Data/backgrounds.csv` · 규격 `Design/Data/README.md` 배경 표): ① 방 바깥 채우기 · ② 바닥 타일 · ③ 바닥 장식 · ④ 벽·담 · ⑤ 소품 · ⑥ 조명. 시점은 **사선 탑다운** (방을 돌리지 않음 — 아이소메트릭 ✗). 고정 장소(농장·마을·등대탑)만 큰 그림 가능
   - 바닥 장식 = `StageDecor` 에셋(`Resources/StageDecor.asset`, 테마별 묶음 + 공통) → `RoomDecor.Scatter`가 방에 들어갈 때마다 흩뿌림 (정렬 -995, 벽·Props 충돌체 위는 피함). 테마별 장식은 배경 가져오기가 채움 (공통 묶음 `common`은 비어 있음)
-  - 장애물 = Wall 레이어·태그(탄 막음·CRASH), 구덩이 = `Pit`(Props 레이어, 걷어찬 적만 낙사, 보스 `immuneToPits`)
+  - 장애물 = Wall 레이어·태그(탄 막음·CRASH), 구덩이 = `Pit`(Props 레이어, 날려보낸 적만 낙사, 보스 `immuneToPits`)
   - Unity 6에서 스프라이트 9-slice 테두리는 `TextureImporter.spriteBorder`가 안 먹힘 → `SpriteDataProviderFactories`로 설정
 - **UI 문구는 한글로** (2026-10-13~) — 글꼴은 **Galmuri11** (`Assets/Fonts/Galmuri`, SIL OFL)로 통일, TMP 기본·대체 폰트로 지정. 언어 선택(영어 등)은 나중에 로컬라이제이션으로
   - Galmuri SDF는 동적 아틀라스라 플레이하면 에셋이 커진다 → 커밋 전에 `ClearFontAssetData(true)`로 비우기 (6KB)
