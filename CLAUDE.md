@@ -309,6 +309,7 @@ npx skills update           # npx로 받은 스킬 갱신
 - `Design/IdeaPool/` 루트 = 이번 달 파일. 월이 끝나면 `YYYY-MM/` 폴더로 아카이브
 - 루틴이 `Design/References/` 루트에 게임 파일을 만들면 `Game/`으로 이동
 - 위 두 가지 + 색인(`IdeaPool/README.md`·`BY_TOPIC.md`·`References/README.md`) 갱신은 `python Design/tidy.py` 한 번으로. `git pull` 뒤에 돌릴 것
+- **아트 요청** (2026-11-13): 프롬프트는 `Guides/art_requests.md`에 쓰고, `TODO_Art.md` "아트 요청 목록" 표에 한 줄 (번호 R#). 사람이 '도착' 칸을 체크하면(또는 말하면) → 합격 기준을 재 봄 → 가져오기·연결 → 표를 '끝남'으로, 프롬프트는 문서의 "끝난 요청" 표로 옮김
 - 문서 쓰는 법(머리말·표시·끝난 일 옮기기)은 `Design/README.md`. 사람은 `문서_보기.bat`(`Design/docs_viewer.py`, 127.0.0.1:8765 — 저장하면 자동 갱신)로 읽는다 → 새 문서를 만들면 `docs_viewer.py`의 `NAV` 목록에도 한 줄
 - **사람은 문서 보기 화면에서 체크 칸을 눌러 `[x]`로 바로 저장한다** (목록 `- [ ]`, 표 칸 맨 앞 `[ ]`). 작업 시작 때 `TODO.md`·`TODO_Art.md`에 새로 체크된 줄(`git diff`)이 있으면: 끝난 일 → `00_Implemented.md` 진행 기록으로 옮기고 지움, "해 보고 알려 줄 것"은 소감을 물어본 뒤 지움
 - 같은 게임을 재리서치한 중복이 생길 수 있음 — 최신본을 메인으로 두고 구본은 `<details>`로 보존
