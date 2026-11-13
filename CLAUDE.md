@@ -82,7 +82,7 @@ P="C:/workspace/unity/Onioncat_AG"
   캡처 후에는 반드시 `isPaused = false`로 되돌릴 것
 - **씬 diff가 수천 줄이어도 당황하지 말 것**: 오브젝트를 추가하면 Unity가 파일 내 순서를 재정렬한다.
   `grep -c '^--- !u!1 &'`로 GameObject 수가 (이전 + 추가분)과 맞는지, 삭제된 이름이 다시 추가됐는지 확인
-- **에셋스토어 패키지가 ProjectSettings를 덮어쓸 수 있다** (실제로 Cainos 팩이 레이어·태그·물리·품질 설정을 날림).
+- **에셋스토어 패키지가 ProjectSettings를 덮어쓸 수 있다** (실제로 Cainos 타일 팩이 레이어·태그·물리·품질 설정을 날린 적이 있다 — 그 팩은 2026-11-14에 삭제).
   증상: 월드가 전혀 렌더링되지 않음. 확인: 임포트 직후 `git status ProjectSettings`.
   복구: 에디터 종료 → `git checkout -- ProjectSettings` → 에디터 재기동 (ProjectSettings는 기동 시 읽으므로 재시작 필수)
 - **대용량 패키지 임포트 중에는 MCP 명령이 모두 타임아웃된다** (메인 스레드 점유).
@@ -173,7 +173,7 @@ npx skills update           # npx로 받은 스킬 갱신
 - 에디터를 조작하는 변경 후에는 **`git diff`로 실제 파일 변경을 확인**할 것 (의도치 않은 대량 변경 탐지)
 - `[SerializeField]` 변수가 생기면 CLI로 직접 연결하고, 못 하면 그때 안내
 - 유니티 프로젝트는 **비공개** 원격 `OnionCat-Unity`에 커밋 후 push (2026-09-27부터)
-- ⚠️ **유니티 저장소를 절대 공개(Public)로 바꾸지 말 것** — 구매 에셋(Honeti GUI, SPUM)과 재배포 금지 에셋(Cainos)이 들어 있어 공개 시 라이선스 위반
+- ⚠️ **유니티 저장소를 절대 공개(Public)로 바꾸지 말 것** — 구매 에셋(Honeti GUI의 그림 29장 — `Assets/Art/UI/GUI`)이 들어 있고, 지운 팩(SPUM·Cainos·Honeti 나머지)도 git 기록에 남아 있어 공개 시 라이선스 위반
 
 ---
 
@@ -206,14 +206,13 @@ npx skills update           # npx로 받은 스킬 갱신
     / 양파 = 마우스 + 1~4 스킬 · 6~0 가방 · 휠 클릭 합동기 (W가 이동과 겹쳐서 숫자로)
   - 양파 키보드 키는 페어링과 무관한 독립 InputAction(`OnionInputKeys`)으로 읽는다
 - **코어 시스템** (설계 `Design/04_Combat.md`·`05_Items.md`, 구현 목록 `Design/00_Implemented.md`, 테스트 결과 `Guides/Done/v4_playtest.md`)
-  - 성장 3축: 체급(`StatUpgrade`) / 패시브(`Passive`, 세트 햇살·바람 — 고양이·양파 조각 합산) / 특수(양파 `OnionSkill`, 고양이 `ClawStyle`)
-  - 보상: 방마다 고양이·양파가 **동시에** 각자 3장 중 1장 (`UpgradeSelectUI`), 출구 표식 = 다음 방 중점 축(`RewardAxis`)
+  - 성장은 장비 하나로 (아래 "성장은 장비 v4"). `Passive`·`ClawStyle`·`OnionSkill` 에셋은 장비가 감싸서 쓰는 부품 — 예전 카드 방식(중점 축 `RewardAxis`·스탯 카드 `StatUpgrade`·`UpgradePool`)은 2026-11-14에 삭제
+  - 보상: 방마다 고양이·양파가 **동시에** 각자 장비 3개 중 1개 (`UpgradeSelectUI` ← `RewardTable.RollFor`)
   - 세트 보너스는 `PassiveHost.Recalculate` → `CombatModifiers`(정적, 읽기 전용)로 반영
   - 적에게 피해를 줄 때 `TakeDamage(..., Attacker.Cat/Onion)`을 넘길 것 — 협동 콤보가 "누가 때렸나" 기준
   - 적 목록은 `EnemyBase.Active` (FindObjectsByType 금지). 상태이상은 `ApplyBurn / ApplySlow / ApplyStun / Launch`
     (`Launch(..., interruptTelegraph: true)`는 걷어차기 전용 — 예고를 끊음. 보스는 `kickInterruptsTelegraph` 끔)
-  - 새 카드 = `OnionSkill` / `Passive` / `ClawStyle` / `StatUpgrade` 에셋 → `Assets/Data/RewardTable.asset`의 축별 목록에 추가
-    새 아이템 = `ItemData` 상속 → `itemDrops`. **ScriptableObject는 클래스마다 같은 이름 파일 필수**
+  - 새 아이템 = `ItemData` 상속 → `itemDrops`. **ScriptableObject는 클래스마다 같은 이름 파일 필수**
   - 런 상태(스킬·패시브·할퀴기 변형·공유 가방·게이지)는 `RunData`에, 쿨다운처럼 씬에 묶인 값은 컴포넌트에
   - **성장은 장비 v4** (`Design/05_Items.md`): `GearItem` 에셋(`Assets/Data/Gear`) → `RewardTable.catGear/cropGear`. 능력치·효과·할퀴기·스킬은 `RunData.RecomputeGear`가 장비에서 다시 계산 (Passive·ClawStyle을 직접 넣지 말 것)
   - **장비·효과·스킬 콘텐츠는 `Assets/Editor/ContentBuilder.cs` 표에서 고치고 메뉴 `OnionCat > Content > Build v4 Content`** (에셋·보상표·GameDatabase까지 갱신). 효과는 조합형 `GearEffect`(발동 → 행동 → 대상), 상태이상은 `EnemyBase.Status.cs`, 세트 단계는 `CombatModifiers.Has(세트, 단계)`
@@ -232,7 +231,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - 적은 지도 글자로 (1 슬라임·2 원거리·3 분열·4 방패병·B 보스). 런의 방 순서는 `DungeonManager`가 시작방 + 전투방 풀(난이도 tier) + 보스방으로 무작위 생성
   - **정렬 순서 구간**: 바닥 -1000~-900 (바닥 타일·구덩이·장판·벽 타일) / 서 있는 물체 -100~99 (`YSort`가 발 높이로 보정) / 항상 위 100+ (투사체·이펙트·숫자·라벨). 새 그림을 추가할 때 이 구간을 지킬 것
   - **배경은 겹 쌓기** (2026-11-07, 그릴 목록 `Design/Data/backgrounds.csv` · 규격 `Design/Data/README.md` 배경 표): ① 방 바깥 채우기 · ② 바닥 타일 · ③ 바닥 장식 · ④ 벽·담 · ⑤ 소품 · ⑥ 조명. 시점은 **사선 탑다운** (방을 돌리지 않음 — 아이소메트릭 ✗). 고정 장소(농장·마을·등대탑)만 큰 그림 가능
-  - 바닥 장식 = `StageDecor` 에셋(`Resources/StageDecor.asset`, 테마별 묶음 + 공통) → `RoomDecor.Scatter`가 방에 들어갈 때마다 흩뿌림 (정렬 -995, 벽·Props 충돌체 위는 피함). 테마별 장식은 배경 가져오기가 채움 (`common`만 Cainos 임시 — `Build Stage Decor`)
+  - 바닥 장식 = `StageDecor` 에셋(`Resources/StageDecor.asset`, 테마별 묶음 + 공통) → `RoomDecor.Scatter`가 방에 들어갈 때마다 흩뿌림 (정렬 -995, 벽·Props 충돌체 위는 피함). 테마별 장식은 배경 가져오기가 채움 (공통 묶음 `common`은 비어 있음)
   - 장애물 = Wall 레이어·태그(탄 막음·CRASH), 구덩이 = `Pit`(Props 레이어, 걷어찬 적만 낙사, 보스 `immuneToPits`)
   - Unity 6에서 스프라이트 9-slice 테두리는 `TextureImporter.spriteBorder`가 안 먹힘 → `SpriteDataProviderFactories`로 설정
 - **UI 문구는 한글로** (2026-10-13~) — 글꼴은 **Galmuri11** (`Assets/Fonts/Galmuri`, SIL OFL)로 통일, TMP 기본·대체 폰트로 지정. 언어 선택(영어 등)은 나중에 로컬라이제이션으로
