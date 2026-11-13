@@ -271,6 +271,7 @@ npx skills update           # npx로 받은 스킬 갱신
     - 특수 방 물건(상자·가판대·샘물)은 `StageArt.chestClosed` 등 → `RewardMarker.SetArt`. 높은 윗벽은 `StageArt.tallWalls`(켬 — 벽의 밑선은 그대로, 위(방 바깥)로 솟음)
   - **분위기** (2026-11-13, 수치 `Resources/AtmosphereSettings.asset` · `06_FeelParameters.md` 16장): `Atmosphere.Apply`가 방에 들어갈 때 전역 조명(스테이지·장소 색)·문 빛·고정 장소 물건 빛·후처리(가장자리 어둡게)를 맞춤. **배경만 따로 물들이지 말 것** — 색 분위기는 전역 조명으로 (배경·캐릭터가 같이). 새 조명은 고양이 `Lamp`를 복제 (코드로 AddComponent한 Light2D는 정렬 레이어가 빌 수 있음)
     - 서 있는 그림을 새로 만들면 `BlobShadow.Ensure(오브젝트)`로 발밑 그림자 (고양이·적 `DirectionalSprite`·소품·마을 물건·표식 그림은 이미 붙음)
+    - **고양이 충돌체는 둘** (2026-11-13): 몸(첫 번째 BoxCollider2D — 적 접촉·피격, `excludeLayers`로 Wall·Props 무시) + 발(두 번째 — Wall·Props에만 막힘). 벽 앞에 서면 몸이 벽 그림에 겹쳐 보이게. 적은 아직 몸 전체로 벽에 막힘
 
 ---
 
