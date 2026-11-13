@@ -4,7 +4,7 @@
 > 기준 2026-11-08 · 1~9장 = 감각 (얼마나 시원한가·잘 보이는가) · 10장~ = 시스템·밸런스 (얼마나 센가·자주 나오나) · 장 번호는 코드 주석이 가리키므로 바꾸지 않는다
 
 **목차** — 감각: [1 타격감](#1-타격감---assetsresourceshitfeelsettingsasset) · [2 적 반응](#2-적-반응--적-프리팹-assetsprefabsslimeprefab-rangeslimeprefab) · [3 데미지 숫자](#3-데미지-숫자--씬의-damagenumbers--assetsprefabsdamagenumberprefab) · [3.5 공격 예고](#35-공격-예고-텔레그래프--적-프리팹-enemybase) · [4 화면](#4-화면--main-camera-cameracontroller) · [5 고양이](#5-고양이-조작감--player_cat) · [6 작물](#6-작물-조작감--cropholder) · [7 피격](#7-피격생존감--playerhealth) · [8 HUD](#8-hud--씬의-hud) · [9 화면 전환](#9-화면-전환--흐름)
-시스템: [10 코어](#10-코어-시스템--테스트하며-조절할-값) · [11 장비](#11-장비-v4--테스트하며-조절할-값) · [12 한 판·지도](#12-한-판-흐름--지도-design08_runflowmd) · [13 적 구성·보스](#13-적-구성--체력-design02_enemiesmd-3장) · [14 물음표 방](#14-물음표-방---assetsresourcesruntuningasset-design08_runflowmd-3장) · [14.5 온실](#145-온실-design07_storymetamd-2장) · [15 특수 공격](#15-고양이-특수-공격--야성-게이지-design01_charactersmd-1장) · [앞으로 추가될 것](#앞으로-이-목록에-추가될-것)
+시스템: [10 코어](#10-코어-시스템--테스트하며-조절할-값) · [11 장비](#11-장비-v4--테스트하며-조절할-값) · [12 한 판·지도](#12-한-판-흐름--지도-design08_runflowmd) · [13 적 구성·보스](#13-적-구성--체력-design02_enemiesmd-3장) · [14 물음표 방](#14-물음표-방---assetsresourcesruntuningasset-design08_runflowmd-3장) · [14.5 온실](#145-온실-design07_storymetamd-2장) · [15 특수 공격](#15-고양이-특수-공격--야성-게이지-design01_charactersmd-1장) · [16 분위기](#16-분위기-그림자조명---assetsresourcesatmospheresettingsasset) · [앞으로 추가될 것](#앞으로-이-목록에-추가될-것)
 
 ### 위치 표시
 
@@ -292,6 +292,27 @@
 | 🧩 Back Hit Wild Multiplier | MeleeAttack_Slash | 2 | 등을 쳤을 때 배율 (발톱 고양이 "사냥 본능") |
 | 🧩 Cost | `Player_Cat` → CatSpecial | 100 | 특수 공격에 드는 게이지 |
 | 🛠 무기별 특수 공격 | `CatSpecial.cs` | 난무 8연타 · 회오리 3초 · 덮치기 · 찢어발기기 X자 2번 · 광란 6초 (공속 ×2, 이동 ×1.3) | 무기마다 다른 특수 공격 |
+
+---
+
+## 16. 분위기 (그림자·조명) — ⚡ `Assets/Resources/AtmosphereSettings.asset`
+
+그림자는 새로 생기는 것부터, 조명·화면은 다음 방에 들어갈 때 반영된다.
+
+| 항목 | 값 | 의미 |
+|---|---|---|
+| Shadow Alpha | 0.42 | 발밑 그림자 진하기 |
+| Shadow Width / Flatness / Lift | 1.05 / 0.36 / -0.03 | 그림 폭 대비 그림자 폭 · 높이÷폭 · 발에서 위로 올리는 양 (음수 = 아래) |
+| Stages (ST1~ST6) Ambient · Intensity | 밀밭 따뜻한 0.80 · 늪 0.74 · 온실 0.78 · 과수원 0.86 · 오르는 길 푸른 0.70 · 별 없는 하늘 0.60 | 스테이지별 전역 조명 색·밝기 — 낮출수록 등불 빛이 도드라짐 |
+| Farm / Village / Gate / Tower | 0.95 / 0.82 / 0.72 / 0.66 | 고정 장소의 전역 조명 |
+| Night Multiplier | 0.8 | 밤 버전(3·4스테이지) 전역 조명에 곱함 |
+| Lamp Color / Intensity / Radius | 따뜻한 흰색 / 0.75 / 6.5 | 고양이 등불 |
+| Door Light Intensity / Radius | 1.0 / 4 | 출구 문의 따뜻한 빛 |
+| Object Light Intensity / Radius | 1.6 / 3.8 | 고정 장소의 가로등·등롱·창문 빛 (어느 물건인지는 🛠 `BackgroundArtImporter.Glow`) |
+| Vignette / Smoothness | 0.3 / 0.45 | 화면 가장자리 어둡게 (0 = 끔) |
+| Contrast / Saturation | 8 / 6 | 화면 대비·채도 |
+
+**점검 포인트**: 어두운 스테이지에서 적·예고가 잘 보이는가, 그림자가 발에 붙어 보이는가, 가장자리가 답답하게 어둡지 않은가.
 
 ---
 
