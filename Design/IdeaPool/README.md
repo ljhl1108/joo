@@ -3,12 +3,16 @@
 > 일일 루틴이 매일 한 장씩 쌓는 **받은 편지함**. 쓸 만한 것은 `Design/01~08` 설계 문서나 `TODO.md`로 옮긴다.
 > 주제별로 보려면 [BY_TOPIC.md](BY_TOPIC.md). 이 파일은 `python Design/tidy.py`가 만든다 (손으로 고치지 말 것).
 
-총 160일치 · 마지막 2026-11-09
+총 164일치 · 마지막 2026-11-13
 
 ## 2026-11
 
 | 날짜 | 조사한 게임 | 기술 주제 | 완성 기능 |
 |---|---|---|---|
+| [11-13](2026-11-13.md) | Lies of P / Neva | 게임패드 아날로그 스틱 보정 | 런 중간 나가기·이어하기 UX |
+| [11-12](2026-11-12.md) | Cassette Beasts | 스쿼시 앤 스트레치 | 게임 내 플레이어 설문 |
+| [11-11](2026-11-11.md) | Dave the Diver, Don't Starve Together | Utility AI for Enemy Decision Making | Persistent Overworld Visual Progression |
+| [11-10](2026-11-10.md) | Torchlight II, Neoverse | Stat Modifier Stack Runtime System | Indie QA Playtesting Process |
 | [11-09](2026-11-09.md) | Ultros | Poisson Disc Scatter System | Content Unlock Pacing Design |
 | [11-08](2026-11-08.md) | Nova Drift, Monster Sanctuary | GC-Free Unity Patterns | 이스터에그 & 숨겨진 콘텐츠 시스템 |
 | [11-07](2026-11-07.md) | Path of Achra | ScriptableObject Event Channel Architecture | Solo Co-op Fallback / AI Partner System |
