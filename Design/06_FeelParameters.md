@@ -331,6 +331,16 @@
 | Wall Height / Low / Cap | 1.0 / 0.12 / 0.5 | 북쪽 벽 앞면 높이(그림 96px = 1유닛) · 옆·아랫벽 높이 · 벽 윗면 두께 (유닛) |
 | Pit Round / Wobble / Depth | 0.45 / 0.06 / 0.4 | 구덩이 모서리를 깎는 거리 · 가장자리 흔들림 · 북쪽 가장자리의 깎인 벽면 높이 (그림만 — 판정은 네모 그대로라 Round를 키우면 모서리에서 어긋남) |
 
+### 돌담 조각 — ⚡ `Assets/Resources/StageArt.asset`
+
+| 항목 | 값 | 의미 |
+|---|---|---|
+| Stone Walls | 켬 | 바깥 벽을 띠 대신 서 있는 조각으로 (끄면 예전 띠 — 북쪽만 높음) |
+| Wall Piece Spacing | 0.85 | 조각 사이 간격 (조각 폭의 배수 — 작을수록 촘촘히 겹침) |
+| Wall Lip | 0.2 | 남쪽 담의 윗부분이 바닥에 걸치는 높이 (유닛) |
+
+임시 조각의 높이는 위 "곡선 외곽 방"의 Wall Height + Wall Cap. 새 그림(R4)이 오면 그림 크기가 높이.
+
 ### 방 바깥 풍경 — ⚡ `Assets/Resources/StageArt.asset`
 
 | 항목 | 값 | 의미 |
