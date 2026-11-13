@@ -331,6 +331,13 @@
 | Wall Height / Low / Cap | 1.0 / 0.12 / 0.5 | 북쪽 벽 앞면 높이(그림 96px = 1유닛) · 옆·아랫벽 높이 · 벽 윗면 두께 (유닛) |
 | Pit Round / Wobble / Depth | 0.45 / 0.06 / 0.4 | 구덩이 모서리를 깎는 거리 · 가장자리 흔들림 · 북쪽 가장자리의 깎인 벽면 높이 (그림만 — 판정은 네모 그대로라 Round를 키우면 모서리에서 어긋남) |
 
+### 방 바깥 풍경 — ⚡ `Assets/Resources/StageArt.asset`
+
+| 항목 | 값 | 의미 |
+|---|---|---|
+| Scenery Density | 1.5 | 바깥 풍경 소품의 양 (0 = 끔) |
+| Scenery Reach | 7 | 벽에서 이 거리(유닛)까지 세운다 |
+
 ### 바닥 지형 얼룩 — ⚡ `Assets/Resources/StageArt.asset`
 
 다음 방에 들어갈 때 반영된다.
