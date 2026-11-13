@@ -202,6 +202,8 @@ main{min-width:0}
 h3{font-size:17px;margin:20px 0 6px;padding-bottom:3px;border-bottom:1px dashed var(--line)}h4{font-size:15px;margin:16px 0 4px}
 a{color:var(--acc)}code{background:var(--chip);border-radius:5px;padding:1px 5px;font-size:.88em;font-family:Consolas,"D2Coding",monospace}
 pre{background:var(--chip);border-radius:10px;padding:12px;overflow:auto;line-height:1.4}pre code{background:none;padding:0}
+.prewrap{position:relative}.copybtn{position:absolute;top:8px;right:14px;font:inherit;font-size:.82em;padding:4px 12px;border-radius:7px;border:1px solid var(--acc);background:var(--acc);color:#fff;cursor:pointer;opacity:.92}
+.copybtn:hover{opacity:1}.copybtn.ok{background:#3a9d5d;border-color:#3a9d5d}
 .tw{overflow-x:auto;margin:10px 0}
 table{border-collapse:collapse;width:100%;font-size:14px}
 th{background:var(--chip);text-align:left;font-weight:700;white-space:nowrap}
@@ -270,6 +272,15 @@ function wireChecks(doc,path,text){
       }catch(e){toast('저장 못 함 — 서버가 꺼져 있어요');ck.checked=!ck.checked;mark()}});
   });
 }
+function wireCopy(doc){
+  doc.querySelectorAll('pre').forEach(pre=>{const code=pre.querySelector('code')||pre;const text=code.textContent;if(text.split(String.fromCharCode(10)).length<4)return;
+    const wrap=document.createElement('div');wrap.className='prewrap';pre.parentNode.insertBefore(wrap,pre);wrap.appendChild(pre);
+    const b=document.createElement('button');b.type='button';b.className='copybtn';b.textContent='복사';b.title='이 칸의 내용을 통째로 복사';wrap.appendChild(b);
+    b.addEventListener('click',async()=>{let ok=false;
+      try{await navigator.clipboard.writeText(text);ok=true}
+      catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{ok=document.execCommand('copy')}catch(_){}ta.remove()}
+      toast(ok?'복사했어요 ('+text.length.toLocaleString()+'자)':'복사 못 함 — 직접 선택해서 복사해 주세요');
+      if(ok){b.textContent='✔ 복사됨';b.classList.add('ok');clearTimeout(b._t);b._t=setTimeout(()=>{b.textContent='복사';b.classList.remove('ok')},1600)}})})}
 function render(path,text){
   const used=new Set();
   const r=new marked.Renderer();
@@ -302,7 +313,7 @@ function render(path,text){
     else if(target.endsWith('/'))a.href='#'+encodeURIComponent(target+'README.md');
   });
   doc.querySelectorAll('img[src]').forEach(i=>{const s=i.getAttribute('src');if(!/^https?:/.test(s))i.src='/'+resolve(path,s)});
-  wireChecks(doc,path,text);
+  wireChecks(doc,path,text);wireCopy(doc);
   const main=$('#main');main.innerHTML=`<div class="crumb">${esc(path)}</div>`;main.appendChild(doc);
   // 목차
   const hs=[...doc.querySelectorAll('h2,h3')];
