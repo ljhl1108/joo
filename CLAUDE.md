@@ -266,6 +266,7 @@ npx skills update           # npx로 받은 스킬 갱신
   - **스테이지 배경** (2026-11-08): 메뉴 **OnionCat > Art > Import Backgrounds** (Import Final Art도 같이) → `Resources/StageArt` (ST1~ST6 = 테마 0~4 + 최종). `RoomArt.Apply`가 방에 들어갈 때 자식 `Art`(64px = 2/3 유닛 칸 타일맵: 바깥·바닥·구덩이·벽)를 다시 그림
     - 판정은 예전 1유닛 `FloorMap`·`WallMap` 그대로 (그림만 끔) — 지도 한 글자 = 타일 1.5칸이라 벽 그림이 판정과 최대 1/3 유닛 어긋남. 지도를 타일 단위로 다시 짤지는 미정
     - 덩어리 X는 방 템플릿 글자로, 구덩이는 `Pit` 위치로 이어 그림. 장애물 소품(# c b t p → PROP 1~5)·출구 문(벽 방향별, 그림 타일 칸에 맞춰 자식 `Art`) 그림도 교체
+    - **바닥 지형 얼룩** (2026-11-13): `StageArt.Set.terrains` (3×3 + 꺾인 곳 4장, 스테이지마다 2종) → `RoomArt.PaintTerrain`이 전투방 바닥에 얼룩으로 (정렬 -1001, 그림만 — 판정 없음). 그림이 못 그리는 모양(한 칸 폭·대각선 접촉)은 `TerrainPiece`가 -1 → 메우거나 깎음. 양은 `StageArt.terrainCoverage`
     - **고정 장소** (2026-11-13): `StageArt.places` — 마을 단계의 `Room_Special` 안쪽 바닥(그림 타일 24×12칸)에 한 장 + 물건 5개. 물건 자리는 가져오기가 합성 그림(Assembly) − 바닥 그림 차이로 찾음, 기능 짝은 `BackgroundArtImporter.Places` 표(역할 book·greenhouse·pot·lantern·fountain·stall). `DungeonManager.SetupSpecial`이 `Spot(role)`·`Dress(role)`로 표식을 그 물건 자리·그림으로
     - 특수 방 물건(상자·가판대·샘물)은 `StageArt.chestClosed` 등 → `RewardMarker.SetArt`. 높은 윗벽은 `StageArt.tallWalls`(기본 끔)
   - **분위기** (2026-11-13, 수치 `Resources/AtmosphereSettings.asset` · `06_FeelParameters.md` 16장): `Atmosphere.Apply`가 방에 들어갈 때 전역 조명(스테이지·장소 색)·문 빛·고정 장소 물건 빛·후처리(가장자리 어둡게)를 맞춤. **배경만 따로 물들이지 말 것** — 색 분위기는 전역 조명으로 (배경·캐릭터가 같이). 새 조명은 고양이 `Lamp`를 복제 (코드로 AddComponent한 Light2D는 정렬 레이어가 빌 수 있음)
