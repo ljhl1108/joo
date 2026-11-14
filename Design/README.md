@@ -14,6 +14,7 @@
 | [04_Combat](04_Combat.md) | 전투 원칙, 협동 (콤보·합동기·세트·가방), 2인 기믹 |
 | [05_Items](05_Items.md) | 런 안의 성장 — 장비 v4 규칙 (칸·등급·세트·분해·중간 저장) |
 | [05_Items_Content](05_Items_Content.md) | 장비 효과 · 세트 · 패시브 · 마법서 스킬 목록 |
+| [05_Sets_Redesign](05_Sets_Redesign.md) | 📝 세트 효과 다시 짜기 — 설계안 (정해지면 05_Items_Content로 옮김) |
 | [06_FeelParameters](06_FeelParameters.md) | 조절 수치 — 어느 파일에서 고치는지 |
 | [07_StoryMeta](07_StoryMeta.md) | 이야기 (줄거리·인물·엔딩·빛 퀘스트·스테이지 테마), 런 밖의 성장 (온실) |
 | [08_RunFlow](08_RunFlow.md) | 한 판 — 길(마을·스테이지) · 갈림길 지도 · 물음표 방 · 해금 |

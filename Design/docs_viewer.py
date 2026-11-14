@@ -34,6 +34,7 @@ NAV = [
         ("Design/04_Combat.md", "04 전투 · 협동"),
         ("Design/05_Items.md", "05 아이템 — 규칙"),
         ("Design/05_Items_Content.md", "05 아이템 — 목록"),
+        ("Design/05_Sets_Redesign.md", "05 세트 다시 짜기 — 설계안"),
         ("Design/06_FeelParameters.md", "06 조절 수치"),
         ("Design/07_StoryMeta.md", "07 이야기 · 메타"),
         ("Design/08_RunFlow.md", "08 한 판의 흐름"),
