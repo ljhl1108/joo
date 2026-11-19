@@ -3,12 +3,17 @@
 > 일일 루틴이 매일 한 장씩 쌓는 **받은 편지함**. 쓸 만한 것은 `Design/01~08` 설계 문서나 `TODO.md`로 옮긴다.
 > 주제별로 보려면 [BY_TOPIC.md](BY_TOPIC.md). 이 파일은 `python Design/tidy.py`가 만든다 (손으로 고치지 말 것).
 
-총 165일치 · 마지막 2026-11-14
+총 170일치 · 마지막 2026-11-19
 
 ## 2026-11
 
 | 날짜 | 조사한 게임 | 기술 주제 | 완성 기능 |
 |---|---|---|---|
+| [11-19](2026-11-19.md) | Rotwood, HoloCure | 전장 설치 오브젝트 시스템 | 협동 UI 분할 소유권 |
+| [11-18](2026-11-18.md) | Alina of the Arena | 절차적 유기 방 형태 생성 | 기기별 버튼 프롬프트 자동 전환 |
+| [11-17](2026-11-17.md) | Rayman Legends | Wall Launch & Chain Damage System | Asymmetric Co-op Balance Design |
+| [11-16](2026-11-16.md) | Wildermyth, Crab Champions | Enemy Split Clone System | Platform Submission Certification Process |
+| [11-15](2026-11-15.md) | Cadence of Hyrule | Bezier Spline Path System | Tutorial Seen-State Persistence System |
 | [11-14](2026-11-14.md) | We Need to Go Deeper / Garden Story | Unity Sprite Shape 오가닉 지형 | 멀미 방지 카메라 접근성 |
 | [11-13](2026-11-13.md) | Lies of P / Neva | 게임패드 아날로그 스틱 보정 | 런 중간 나가기·이어하기 UX |
 | [11-12](2026-11-12.md) | Cassette Beasts | 스쿼시 앤 스트레치 | 게임 내 플레이어 설문 |
