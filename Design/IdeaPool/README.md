@@ -3,12 +3,21 @@
 > 일일 루틴이 매일 한 장씩 쌓는 **받은 편지함**. 쓸 만한 것은 `Design/01~08` 설계 문서나 `TODO.md`로 옮긴다.
 > 주제별로 보려면 [BY_TOPIC.md](BY_TOPIC.md). 이 파일은 `python Design/tidy.py`가 만든다 (손으로 고치지 말 것).
 
-총 170일치 · 마지막 2026-11-19
+총 179일치 · 마지막 2026-11-28
 
 ## 2026-11
 
 | 날짜 | 조사한 게임 | 기술 주제 | 완성 기능 |
 |---|---|---|---|
+| [11-28](2026-11-28.md) | Stardew Valley + Heave Ho | Crop Growth Resource System | Legal Notice / License Screen |
+| [11-27](2026-11-27.md) | Card-en-Ciel, Soul Knight Prequel | Room Prefab Reuse Architecture | Controller Hot-plug & Device Assignment |
+| [11-26](2026-11-26.md) | Towerborne | 상점 리롤 & 가격 에스컬레이션 | 인게임 조작 도움말 오버레이 |
+| [11-25](2026-11-25.md) | Trigger Witch, Bastion | Sprite 실루엣/오클루전 시스템 | Steam 트레이딩 카드 |
+| [11-24](2026-11-24.md) | Sifu, Monster Hunter World | Enemy Hearing/Sound Detection System | Softlock Prevention System |
+| [11-23](2026-11-23.md) | Steel Assault, Despot's Game | 발소리·표면 사운드 시스템 | 런 맵 갈림길 선택 UI |
+| [11-22](2026-11-22.md) | Bleed 2, Trinity Fusion | 장비 발동 효과 처리 파이프라인 | 비대칭 코-옵 튜토리얼 설계 |
+| [11-21](2026-11-21.md) | Inscryption, Panzer Paladin | 런타임 절차적 2D 메시 생성 | Unity Cloud Diagnostics |
+| [11-20](2026-11-20.md) | Victor Vran, Operation Tango | Sprite Trail Ghost Effect | Player Review Request System |
 | [11-19](2026-11-19.md) | Rotwood, HoloCure | 전장 설치 오브젝트 시스템 | 협동 UI 분할 소유권 |
 | [11-18](2026-11-18.md) | Alina of the Arena | 절차적 유기 방 형태 생성 | 기기별 버튼 프롬프트 자동 전환 |
 | [11-17](2026-11-17.md) | Rayman Legends | Wall Launch & Chain Damage System | Asymmetric Co-op Balance Design |
